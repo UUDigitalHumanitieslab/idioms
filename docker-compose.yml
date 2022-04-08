@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql:5.7-debian
+    container_name: idiomsdb
+    environment:
+      MYSQL_ROOT_PASSWORD: idiomsdb
+      MYSQL_DATABASE: idiomsdb
+    ports:
+      - 3307:3306
+    restart: unless-stopped
