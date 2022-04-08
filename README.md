@@ -6,9 +6,13 @@ This repository documents the conversion of the [idioms database](https://idioms
 
 `docker-compose up`
 
+Remove security definer to allow importing:
+
+`sed -i '/^\/\*\!50013/d' data/idioms.sql`
+
 Import the idioms database to the MySQL database running in Docker:
 
-`docker exec -i idiomsdb sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -D idiomsdb' < /path/to/idioms.sql`
+`docker exec -i idiomsdb sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -D idiomsdb' < data/idioms.sql`
 
 ## Datasette
 
@@ -17,7 +21,7 @@ Installation, assuming a Debian-based OS.
 ### Prerequisites
 
 - Python v3.8+
-- pip, pip-tools, toml
+- pip, pip-tools
 - virtualenv
 - libmysqlclient-dev
 
@@ -27,6 +31,11 @@ Installation, assuming a Debian-based OS.
     source .env/bin/activate
     pip install -r requirements.txt
 
-# Convert to SQLite
+### Convert to SQLite
 
-db-to-sqlite mysql://root:idiomsdb@127.0.0.1:3307/idiomsdb data/idiomsdb.db --all
+db-to-sqlite mysql://root:idiomsdb@127.0.0.1:3307/idiomsdb data/idioms.db --all
+
+### Test
+
+datasette data/idioms.db -o
+
