@@ -1,0 +1,18 @@
+.table {
+    display: table;
+    width: 100%;
+}
+
+.table-row {
+    display: table-row;
+}
+
+.table-cell,
+.table-head {
+    display: table-cell;
+    padding: 0.2em;
+}
+
+.table-head {
+    font-weight: bold;
+}
