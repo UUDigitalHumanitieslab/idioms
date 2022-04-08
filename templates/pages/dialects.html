@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Dialects{% endblock %}
+
+{% block content %}
+
+<h1>Dialects</h1>
+
+<div class="table">
+    <div class="table-row">
+        <div class="table-head">Name</div>
+        <div class="table-head">Principal location</div>
+    </div>
+    {% for row in sql("SELECT * FROM answerset") %}
+        <div class="table-row">
+            <div class="table-cell">{{ row.answerset_name }}</div>
+            <div class="table-cell">{{ row.answerset_description }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
