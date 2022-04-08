@@ -2,4 +2,7 @@
 .env
 
 # Project data
-data
+data/
+
+# ASDF
+.tool-versions
