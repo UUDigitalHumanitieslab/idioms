@@ -32,6 +32,10 @@ click-default-group==1.2.2
     #   datasette
     #   sqlite-utils
 datasette==0.61.1
+    # via
+    #   -r requirements.in
+    #   datasette-template-sql
+datasette-template-sql==1.0.2
     # via -r requirements.in
 db-to-sqlite[mysql]==1.4
     # via -r requirements.in
