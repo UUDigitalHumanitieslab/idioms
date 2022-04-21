@@ -16,6 +16,23 @@
     <p>Source: {{ dialect_source }}</p>
     <h2>Manipulations</h2>
     <h2>Idioms</h2>
+    <div class="table">
+        <div class="table-row">
+            <div class="table-head">Idiom</div>
+            <div class="table-head">Meaning</div>
+            <div class="table-head">Dialect</div>
+        </div>
+        {% for idiom in sql("""SELECT strategy_id, strategy_name, strategy_description, strategy_answerset_id
+                            FROM strategy
+                            WHERE strategy_answerset_id = :dialect_id
+                            """, {"dialect_id": dialect_id}) %}
+        <div class="table-row">
+            <div class="table-cell">{{ idiom.strategy_name }}</a></div>
+            <div class="table-cell">{{ idiom.strategy_description }}</div>
+            <div class="table-cell">{{ idiom.strategy_answerset_id }}</div>
+        </div>
+        {% endfor %}
+    </div>
 {% else %}
     {{ raise_404("Dialect not found") }}
 {% endif %}
