@@ -1,18 +1,23 @@
 {% extends "base.html" %}
 
+{% set dialect_row = sql("SELECT answerset_id FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect}) %}
+
 {% block title %}Dialect {% endblock %}
 
 {% block content %}
 
-{% if dialect %}
-    {% set dialect_name = sql("SELECT answerset_name FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect})[0][0] %}
-    {% set dialect_place = sql("SELECT answerset_description FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect})[0][0] %}
-    {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect})[0][0] %}
+{% if dialect_row %}
+    {% set dialect_id = dialect_row[0][0] %}
+    {% set dialect_name = sql("SELECT answerset_name FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect_id})[0][0] %}
+    {% set dialect_place = sql("SELECT answerset_description FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect_id})[0][0] %}
+    {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect_id})[0][0] %}
     <h1>{{ dialect_name }}</h1>
     <p>Principal location: {{ dialect_place }}</p>
     <p>Source: {{ dialect_source }}</p>
     <h2>Manipulations</h2>
     <h2>Idioms</h2>
+{% else %}
+    {{ raise_404("Dialect not found") }}
 {% endif %}
 
 {% endblock %}
