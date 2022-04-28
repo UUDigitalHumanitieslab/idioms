@@ -1,0 +1,35 @@
+{% extends "page_base.html" %}
+
+{% set idiom_row = sql("SELECT strategy_id, strategy_name, strategy_description, strategy_answerset_id FROM strategy WHERE strategy_id = :strategy_id", {"strategy_id": idiom}) %}
+
+{% block title %}Idiom{% endblock %}
+
+{% block content %}
+
+{% if idiom_row %}
+    <h1>Idiom</h1>
+
+    <dl>
+        <div>
+          <dt>Idiom</dt>
+          <dd style="font-weight: bold;">{{ idiom_row[0].strategy_name }}</dd>
+        </div>
+        <div>
+            <dt>Meaning</dt>
+            <dd>{{ idiom_row[0].strategy_description }}</dd>
+        </div>
+        <div>
+            <dt>Dialect</dt>
+            <dd><a href="/dialects/{{ idiom_row[0].strategy_answerset_id }}">{{ idiom_row[0].strategy_answerset_id }}</a></dd>
+        </div>
+        <div>
+          <dt>ID</dt>
+          <dd>{{ idiom_row[0].strategy_id }}</dd>
+        </div>
+      </dl>
+
+{% else %}
+    {{ raise_404("Idiom not found") }}
+{% endif %}
+
+{% endblock %}

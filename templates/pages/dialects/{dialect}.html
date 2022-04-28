@@ -20,7 +20,7 @@
         <div class="table-row">
             <div class="table-head">Idiom</div>
             <div class="table-head">Meaning</div>
-            <div class="table-head">Dialect</div>
+            <div class="table-head">Properties</div>
         </div>
         {% for idiom in sql("""SELECT strategy_id, strategy_name, strategy_description, strategy_answerset_id
                             FROM strategy
@@ -29,7 +29,7 @@
         <div class="table-row">
             <div class="table-cell">{{ idiom.strategy_name }}</a></div>
             <div class="table-cell">{{ idiom.strategy_description }}</div>
-            <div class="table-cell">{{ idiom.strategy_answerset_id }}</div>
+            <div class="table-cell"><a href="/idioms/{{ idiom.strategy_id }}">Properties</a></div>
         </div>
         {% endfor %}
     </div>

@@ -58,3 +58,25 @@ a:hover {
 .table-head {
     font-weight: bold;
 }
+
+dl {
+    display: table;
+}
+
+dl > div {
+    display: table-row;
+}
+
+dl>div>dt,
+dl>div>dd {
+    display: table-cell;
+    padding: .3em;
+}
+
+dl>div>dt {
+    background-color: #d1c6d5;
+}
+
+dl>div>dt {
+    font-weight: bold;
+}
