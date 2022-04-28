@@ -11,9 +11,22 @@
     {% set dialect_name = sql("SELECT answerset_name FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect_id})[0][0] %}
     {% set dialect_place = sql("SELECT answerset_description FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect_id})[0][0] %}
     {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect_id})[0][0] %}
+
     <h1>{{ dialect_name }}</h1>
-    <p>Principal location: {{ dialect_place }}</p>
-    <p>Source: {{ dialect_source }}</p>
+
+        <h2>Custom Properties</h2>
+
+        <dl>
+            <div>
+                <dt>Principal location</dt>
+                <dd>{{ dialect_place }}</dd>
+            </div>
+            <div>
+                <dt>Source</dt>
+                <dd>{{ dialect_source }}</dd>
+            </div>
+        </dl>
+
     <h2>Manipulations</h2>
     <h2>Idioms</h2>
     <div class="table">
