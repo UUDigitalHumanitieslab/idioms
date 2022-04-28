@@ -10,8 +10,9 @@ header {
 }
 
 header nav li {
-    float: left;
+    display: inline;
     padding: 0 2em 0 0;
+    list-style: none;
 }
 
 header nav a:link,
@@ -35,7 +36,7 @@ a:hover {
 	background: #d6bde1;
 } */
 
-ul {
+.content ul {
     list-style: disc inside;
 }
 

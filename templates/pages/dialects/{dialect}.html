@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "page_base.html" %}
 
 {% set dialect_row = sql("SELECT answerset_id FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect}) %}
 
