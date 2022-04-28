@@ -9,6 +9,24 @@ header {
     background-color: #ffecc0;
 }
 
+header nav li {
+    float: left;
+    padding: 0 2em 0 0;
+}
+
+header nav a:link,
+header nav a:visited,
+header nav a:hover,
+header nav a:focus,
+header nav a:active {
+    display: inline-block;
+    width: 7em;
+    margin-bottom: .5em;
+    text-align: center;
+    color: #0b72d7;
+    background-color: #72b3f5;
+}
+
 /* a, a:link {
     color: #000000;
 }
