@@ -35,6 +35,10 @@ a:hover {
 	background: #d6bde1;
 } */
 
+ul {
+    list-style: disc inside;
+}
+
 .table {
     display: table;
     width: 100%;
