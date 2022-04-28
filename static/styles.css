@@ -1,3 +1,22 @@
+body {
+    background-color: #ffecc0;
+    max-width: 120ch;
+    padding: 2ch;
+    margin: auto;
+}
+
+header {
+    background-color: #ffecc0;
+}
+
+/* a, a:link {
+    color: #000000;
+}
+
+a:hover {
+	background: #d6bde1;
+} */
+
 .table {
     display: table;
     width: 100%;
