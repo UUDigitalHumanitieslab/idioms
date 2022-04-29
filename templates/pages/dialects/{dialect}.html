@@ -1,25 +1,23 @@
 {% extends "page_base.html" %}
 
-{% set dialect_row = sql("SELECT answerset_id FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect}) %}
+{% set answerset_row = sql("SELECT answerset_id, answerset_name, answerset_description FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect}) %}
 
 {% block title %}Dialect {% endblock %}
 
 {% block content %}
 
-{% if dialect_row %}
-    {% set dialect_id = dialect_row[0][0] %}
-    {% set dialect_name = sql("SELECT answerset_name FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect_id})[0][0] %}
-    {% set dialect_place = sql("SELECT answerset_description FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect_id})[0][0] %}
+{% if answerset_row %}
+    {% set dialect_id = answerset_row[0].answerset_id %}
     {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect_id})[0][0] %}
 
-    <h1>{{ dialect_name }}</h1>
+    <h1>{{ answerset_row[0].answerset_name }}</h1>
 
         <h2>Custom Properties</h2>
 
         <dl>
             <div>
                 <dt>Principal location</dt>
-                <dd>{{ dialect_place }}</dd>
+                <dd>{{ answerset_row[0].answerset_description }}</dd>
             </div>
             <div>
                 <dt>Source</dt>
