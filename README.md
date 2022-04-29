@@ -35,7 +35,6 @@ Installation, assuming a Debian-based OS.
 
 db-to-sqlite mysql://root:idiomsdb@127.0.0.1:3307/idiomsdb data/idioms.db --all
 
-### Test
+### Run Datasette
 
-datasette data/idioms.db -o
-
+datasette data/idioms.db --template-dir=templates/ --metadata metadata.json --static static:static/ -o
