@@ -21,7 +21,8 @@ header nav a:hover,
 header nav a:focus,
 header nav a:active {
     display: inline-block;
-    width: 7em;
+    width: 8em;
+    padding: .5em 0;
     margin-bottom: .5em;
     text-align: center;
     color: #0b72d7;
