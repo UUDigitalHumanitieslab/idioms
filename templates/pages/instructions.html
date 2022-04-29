@@ -10,5 +10,199 @@
 
 {% block content %}
 <h1>Instructions</h1>
-<p>Under construction</p>
+
+<h2 id="Database_structure">Database structure</h2>
+
+<p>
+The database contains three types of entities: <b>Dialects, Idioms, and Sentences</b>.
+These are organised hierarchically: each idiom in the database belongs to one dialect only (even though similar or even identical idioms may sometimes be found in several dialects), and each sentence in the database is also linked to a single idiom.
+</p>
+
+<p>
+The <a href="/dialects">Browse</a> option will first take you to the list of dialects.
+The entry for each of the dialects gives the principal location where the data was collected, and the list of dictionaries or grammars used as sources, followed by a list of all the idioms belonging to the dialect.
+</p>
+
+<h3 id="Idiom_information">Idiom information</h3>
+
+<p>
+The list of idiom properties includes voice, tense, aspect, and modal information; furthermore, the following structural properties are recorded:
+</p>
+
+<ul>
+    <li>
+        General structure of the idiom, given in sentence element notation, e.g. V DO, or V DO PP
+    </li>
+    <li>
+        The open positions (if any) that the idiom contains: IO, DO, PP or a combination thereof
+    </li>
+    <li>
+        Whether the open position needs to be animate or inanimate
+    </li>
+    <li>
+        Whether the verb that is part of the idiom is either <i>zijn</i> ‘to be’ or <i>hebben</i> ‘to have’
+    </li>
+    <li>
+        The type of the direct object, e.g. definite, indefinite, bare, quantified, etc.
+    </li>
+    <li>
+        Whether or not the direct object is modified (usually by an adjective)
+    </li>
+    <li>
+        If the idiom contains a possessive structure, what its type is. E.g. possessive pronoun, PP, external possession
+    </li>
+    <li>
+        Whether the possession in question is alienable or inalienable
+    </li>
+</ul>
+
+<p>
+Some idioms are also provided with English glosses and translations (the ones used in questionnaires, see below).
+The abbreviations employed in glosses are standard and straightforward, with the exception of gender morphology, which requires a clarification.
+In dialects with a three-way gender distinction, the abbreviations are (F)eminine, (M)asculine, and (N)euter, while in dialects with a two-way system, (N)euter stands in opposition to NN for non-neuter, i.e. common gender.
+</p>
+
+<h3 id="Manipulated_idioms"> Manipulated idioms </h3>
+
+<p>
+A number of idioms have been used in questionnaires presented to native speakers of the dialects, with the goal of establishing the extent to which idioms are dependent on the functional material, and determining the level of morphosyntactic flexibility they allow (see also the home page of the  database).
+Each of these idioms is linked to several test sentences containing a manipulated form of the idiom.
+The properties listed for each sentence, in turn, include the test property of the base idiom we are interested in (e.g. deontic modality, or definite determiner), the way the idiom was manipulated in the sentence (e.g. (change to) epistemic modality, or topicalization of the DP), and the judgments speakers provided for the sentence.
+</p>
+
+<p>
+The possible judgments values are:
+</p>
+
+<ul>
+    <li>
+        Yes (“the idiomatic reading is available”)
+    </li>
+    <li>
+        No (“the idiomatic reading is not available”)
+    </li>
+    <li>
+        Marginal (“the idiomatic reading is marginally available”)
+    </li>
+    <li>
+        Base idiom unknown (“I do not know this idiom to start with”)
+    </li>
+    <li>
+        Not asked (the test sentence was not presented to this particular speaker)
+    </li>
+</ul>
+
+<p>
+An aggregate acceptability (note that this always refers to the availability of the idiomatic reading, not the grammaticality of the sentence as such) is calculated for each manipulated sentence from individual judgments in the following way:
+</p>
+
+<ul>
+    <li>
+        The non-responsive values, i.e. “Not asked” and “Base idiom unknown” are ignored (for the purpose of this calculation only)
+    </li>
+    <li>
+        If the judgments contain both “Yes” and “No”, even just one of each, we mark it “%” (“acceptability varies by speaker”)
+    </li>
+
+    <li> When speakers judge something marginal, we pay more attention to those who had a definite opinion. In particular:
+        <ul>
+            <li>if there are more “Yes” than “Marginal” judgments, we mark it “ok”; </li>
+            <li>if there are more “No” than “Marginal” judgments, we mark it “*”. </li>
+            <li> If there are more “Marginal” than “Yes” (respectively “No") judgments, or an equal number of them, mark it “?” for “Moderately acceptable” (respectively “?*” for “Barely acceptable”) </li>
+        </ul>
+    </li>
+</ul>
+
+<p>
+To summarize:
+</p>
+
+<table>
+    <tbody>
+        <tr>
+            <td>ok </td>
+            <td> “Yes” and (optionally) “Marginal” only, majority is “Yes” </td>
+        </tr>
+        <tr>
+            <td>? </td>
+            <td> “Yes” and “Marginal” only, no “Yes” majority </td>
+        </tr>
+        <tr>
+            <td>% </td>
+            <td> Both “yes” and “no” responses received </td>
+        </tr>
+        <tr>
+            <td>?* </td>
+            <td> “No” and “Marginal” only, no “No” majority </td>
+        </tr>
+        <tr>
+            <td>* </td>
+            <td> “No” and (optionally) “Marginal” only, majority is “No” </td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+Note that while these judgment aggregates provide a useful summary, all individual judgments by native speakers are still listed for each sentence.</p>
+
+<h2 id="Search_options">Search options</h2>
+
+<p>
+The <a href="">Search</a> page allows you to search for idioms or test sentences, using a combination of selection criteria.
+</p>
+
+<p>
+The top portion of the Search page allows you to choose whether the result of your search should be a list of idioms or a list of test sentences.
+You can only choose one, but you can click on the appropriate links in a results listing to view other entities.
+</p>
+
+<p>
+The remainder of the Search page consists of three sections, with search criteria for dialects, idioms, and sentences.
+You can combine search criteria from as many sections as you wish, regardless of the result type you have chosen.
+For example, you can choose to search for idioms, and specify that the translation of test sentences must contain the word drunk; you will then see a list of idioms linked to such sentences.
+</p>
+
+<p>
+The three sections are collapsed by default.
+Click on a header to expand the section and show its contents.
+<b>To select multiple elements in a list of search options, hold down the Control key as you click:</b>
+</p>
+
+<table>
+    <tbody>
+        <tr>
+            <td>Simple clicking with the mouse </td>
+            <td>selects a single element. </td>
+        </tr>
+        <tr>
+            <td>Clicking while holding down the Control key (“control-click”) </td>
+            <td>adds this element to the elements already selected.</td>
+        </tr>
+        <tr>
+            <td>Control-clicking on a selected element </td>
+            <td> de-selects this element. </td>
+        </tr>
+        <tr>
+            <td>Clicking while holding down the Shift key (“shift-click”) </td>
+            <td> selects all elements between the click and the last element clicked. </td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+If you select multiple values in a criterion, a record matching any one of them will be shown.
+If you search by multiple search criteria, a record must match all of them to be shown.
+If you do not select any values in a search criterion, it will not be used in the search.
+</p>
+
+<p>
+Simple free-text searches require every search term to be present, as a whole or partial word.
+For more complex queries you can use <tt>AND</tt>, <tt>OR</tt>, and negation (a minus sign), enclose <tt>"a string in quotes"</tt> to match it exactly, or search for the keyword <tt>NULL</tt>, which means the field must be empty.
+</p>
+
+<p>
+You can click the <b>Reset form</b> button to remove all currently entered criteria and start from scratch.
+After entering your search criteria, click on the <b>Search</b> button to carry out the search.
+</p>
+
 {% endblock %}
