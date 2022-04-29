@@ -56,6 +56,10 @@ a:hover {
     padding: 0.2em;
 }
 
+.table-cell.properties {
+    width: 13ch;
+}
+
 .table-head {
     font-weight: bold;
 }
