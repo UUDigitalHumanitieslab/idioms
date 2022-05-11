@@ -32,11 +32,13 @@
     </p>
     <div class="table">
         <div class="table-row">
+            <div class="table-head"></div>
             <div class="table-head">Idiom</div>
             <div class="table-head">Meaning</div>
             <div class="table-head">Properties</div>
         </div>
-        {% for idiom in sql("""SELECT strategy_id, strategy_name, strategy_description, strategy_answerset_id,
+        {% for idiom in sql("""SELECT ROW_NUMBER() OVER (ORDER BY strategy_name ASC) AS row_num,
+                                strategy_id, strategy_name, strategy_description, strategy_answerset_id,
                                 COUNT(sd.strategy_data_id) AS properties_cnt
                             FROM strategy s
                             JOIN strategy_data sd ON sd.strategy = s.strategy_id
@@ -45,7 +47,8 @@
                             ORDER BY strategy_name ASC;
                             """, {"dialect_id": dialect_id}) %}
         <div class="table-row">
-            <div class="table-cell">{{ idiom.strategy_name }}</a></div>
+            <div class="table-cell">{{ idiom.row_num }}</div>
+            <div class="table-cell">{{ idiom.strategy_name }}</div>
             <div class="table-cell">{{ idiom.strategy_description }}</div>
             <div class="table-cell properties"><a href="/idioms/{{ idiom.strategy_id }}">Properties ({{ idiom.properties_cnt }})</a></div>
         </div>
