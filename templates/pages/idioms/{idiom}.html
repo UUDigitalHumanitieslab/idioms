@@ -40,6 +40,33 @@
         {% include "_interlinear.html" %}
         {% endif %}
 
+    {% set idiom_properties_row = sql(" SELECT pg.group_label, pq.question_label, COALESCE(sd.value_shorttext, vd.value_label) AS value
+                                        FROM strategy_data sd
+                                        JOIN parameterDefinition pd ON sd.parameter_definition_id = pd.parameter_id
+                                        JOIN parameterQuestion pq ON pd.parameter_group_id = pq.question_id
+                                        JOIN parameterGroup pg ON pq.question_parent_id = pg.group_id
+                                        LEFT JOIN valueDefinition vd ON sd.value_definition_id = vd.value_id
+                                         AND pd.parameter_value_type_id = vd.value_type_id
+                                        WHERE strategy = :strategy_id
+                                         AND sd.parameter_definition_id != 'Gloss1'
+                                        ORDER BY group_label ASC, question_label ASC;
+                                        ", {"strategy_id": idiom}) %}
+
+        <dl>
+        {% set ns = namespace(group_prev=None) %}
+
+        {% for row in idiom_properties_row %}
+            {% if ns.group_prev != row.group_label %}
+                <div><h3>{{ row.group_label }}</h3></div>
+                {% set ns.group_prev = row.group_label %}
+            {% endif %}
+            <div>
+                <dt>{{ row.question_label }}</dt>
+                <dd>{{ row.value }}</dd>
+            </div>
+        {% endfor %}
+    </dl>
+
 {% else %}
     {{ raise_404("Idiom not found") }}
 {% endif %}
