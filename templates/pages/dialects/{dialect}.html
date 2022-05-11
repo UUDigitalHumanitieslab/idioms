@@ -41,7 +41,8 @@
                             FROM strategy s
                             JOIN strategy_data sd ON sd.strategy = s.strategy_id
                             WHERE strategy_answerset_id = :dialect_id
-                            GROUP BY strategy_id;
+                            GROUP BY strategy_id
+                            ORDER BY strategy_name ASC;
                             """, {"dialect_id": dialect_id}) %}
         <div class="table-row">
             <div class="table-cell">{{ idiom.strategy_name }}</a></div>
