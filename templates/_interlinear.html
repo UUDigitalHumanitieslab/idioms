@@ -1,0 +1,18 @@
+<div style="float:left;margin-right:1em;">
+    <table><td>({{ idiom_interlinear_row[0].grammaticality }})</td></table>
+</div>
+<div class="interlinear">
+    <table>
+        <tr>
+            {% for word in idiom_interlinear_row[0].original.split(' ') %}
+            <td>{{ word }}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for gloss in idiom_interlinear_row[0].gloss.split(' ') %}
+            <td>{{ gloss }}</td>
+            {% endfor %}
+        </tr>
+    </table>
+    <p class="translation">{{ idiom_interlinear_row[0].translation }}</p>
+</div>
