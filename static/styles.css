@@ -85,3 +85,11 @@ dl>div>dt {
 dl>div>dt {
     font-weight: bold;
 }
+
+td {
+    border: none;
+}
+
+p.translation {
+    font-style: italic;
+}

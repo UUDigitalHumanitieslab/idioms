@@ -28,6 +28,34 @@
         </div>
       </dl>
 
+    {% set idiom_interlinear_row = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
+                                        FROM sentence s
+                                        WHERE translation IS NOT NULL
+                                         AND sentence_strategy_id = :strategy_id;",
+                                        {"strategy_id": idiom}) %}
+        {% if idiom_interlinear_row %}
+        <h2>Properties</h2>
+        <h3>Translation</h3>
+        <div style="float:left;margin-right:1em;">
+            <table><td>({{ idiom_interlinear_row[0].grammaticality }})</td></table>
+        </div>
+        <div class="interlinear">
+            <table>
+                <tr>
+                    {% for word in idiom_interlinear_row[0].original.split(' ') %}
+                    <td>{{ word }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for gloss in idiom_interlinear_row[0].gloss.split(' ') %}
+                    <td>{{ gloss }}</td>
+                    {% endfor %}
+                </tr>
+            </table>
+            <p class="translation">{{ idiom_interlinear_row[0].translation }}</p>
+        </div>
+        {% endif %}
+
 {% else %}
     {{ raise_404("Idiom not found") }}
 {% endif %}
