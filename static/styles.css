@@ -94,3 +94,10 @@ td {
 p.translation {
     font-style: italic;
 }
+
+div.propertiesGroup > div {
+    display: inline-block;
+    min-width: 12em;
+    margin: 1em;
+    vertical-align: top;
+}
