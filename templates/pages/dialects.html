@@ -12,7 +12,9 @@
         <div class="table-head">Name</div>
         <div class="table-head">Principal location</div>
     </div>
-    {% for row in sql("SELECT ROW_NUMBER() OVER (ORDER BY answerset_name ASC) AS row_num, * FROM answerset") %}
+    {% for row in sql("SELECT ROW_NUMBER() OVER (ORDER BY answerset_name ASC) AS row_num, *
+                        FROM answerset
+                        ORDER BY answerset_name ASC;") %}
         <div class="table-row">
             <div class="table-cell">{{ row.row_num }}</div>
             <div class="table-cell"><a href="dialects/{{ row.answerset_id }}">{{ row.answerset_name }}</a></div>
