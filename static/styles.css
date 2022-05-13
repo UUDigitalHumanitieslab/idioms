@@ -80,6 +80,7 @@ dl>div>dd {
 
 dl>div>dt {
     background-color: #d1c6d5;
+    min-width: 10em;
 }
 
 dl>div>dt {
