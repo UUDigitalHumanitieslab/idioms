@@ -37,4 +37,4 @@ db-to-sqlite mysql://root:idiomsdb@127.0.0.1:3307/idiomsdb data/idioms.db --all
 
 ### Run Datasette
 
-datasette data/idioms.db --template-dir=templates/ --metadata metadata.json --static static:static/ -o
+datasette data/idioms.db --template-dir=templates/ --metadata metadata.json --static static:static/
