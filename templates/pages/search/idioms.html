@@ -1,0 +1,37 @@
+{% extends "page_base.html" %}
+
+{% block title %}Search results: idioms{% endblock %}
+
+{% block content %}
+
+<h1>Search results: idioms</h1>
+
+<div class="table">
+    <div class="table-row">
+        <div class="table-head"></div>
+        <div class="table-head">Idiom</div>
+        <div class="table-head">Meaning</div>
+    </div>
+
+{% for row in sql("
+    SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num, strategy_name, strategy_description
+    FROM strategy s
+    WHERE
+     EXISTS (SELECT 1 FROM strategy_data sd WHERE sd.strategy = s.strategy_id AND sd.parameter_definition_id = 'Voice1' AND sd.value_definition_id IN (:Voice))
+     AND EXISTS (SELECT 1 FROM strategy_data sd WHERE sd.strategy = s.strategy_id AND sd.parameter_definition_id = 'Tense1' AND sd.value_definition_id IN (:Tense))
+    ORDER BY strategy_answerset_id ASC, strategy_name ASC;
+    ", {
+        "Voice": args.Voice,
+        "Tense": args.Tense,
+    }
+    ) %}
+        <div class="table-row">
+            <div class="table-cell">{{ row.row_num }}</div>
+            <div class="table-cell">{{ row.strategy_name }}</div>
+            <div class="table-cell">{{ row.strategy_description }}</div>
+        </div>
+{% endfor %}
+
+</div>
+
+{% endblock %}
