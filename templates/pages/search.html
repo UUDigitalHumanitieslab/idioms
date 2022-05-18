@@ -12,159 +12,164 @@
 <h1>Search</h1>
 <p>Under construction</p>
 
-<h2>Dialect</h2>
+<form action="search" method="get">
+    <h2>Dialect</h2>
 
-<h2>Idiom</h2>
+    <h2>Idiom</h2>
 
-<h3>Verbal properties</h3>
+    <h3>Verbal properties</h3>
 
-<div class="propertiesGroup">
+    <div class="propertiesGroup">
 
-    <div id="Voice">
-        <h4>Voice</h4>
-        <select name="Voice" multiple="multiple" size="3">
-            <option value="Active">Active</option>
-            <option value="Passive">Passive</option>
-            <option value="NULL">[No value]</option>
-        </select>
+        <div id="Voice">
+            <h4>Voice</h4>
+            <select name="Voice" multiple="multiple" size="3">
+                <option value="Active">Active</option>
+                <option value="Passive">Passive</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
+
+        <div id="Tense">
+            <h4>Tense</h4>
+            <select name="Tense" multiple="multiple" size="4">
+                <option value="Present">Present</option>
+                <option value="Past">Past</option>
+                <option value="Future">Future</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
+
+        <div>
+            <h4>Aspect</h4>
+            <select name="Aspect" multiple="multiple" size="4">
+                <option value="Simple">Simple</option>
+                <option value="Perfect">Perfect</option>
+                <option value="Progressive">Progressive</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
+
+        <div>
+            <h4>Modality</h4>
+            <select name="Modality" multiple="multiple" size="4">
+                <option value="Deontic">Deontic</option>
+                <option value="Epistemic">Epistemic</option>
+                <option value="Dynamic">Dynamic</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
     </div>
 
-    <div id="Tense">
-        <h4>Tense</h4>
-        <select name="Tense" multiple="multiple" size="4">
-            <option value="Present">Present</option>
-            <option value="Past">Past</option>
-            <option value="Future">Future</option>
-            <option value="NULL">[No value]</option>
-        </select>
-    </div>
+    <h3>Structure</h3>
 
     <div>
-        <h4>Aspect</h4>
-        <select name="Aspect" multiple="multiple" size="4">
-            <option value="Simple">Simple</option>
-            <option value="Perfect">Perfect</option>
-            <option value="Progressive">Progressive</option>
-            <option value="NULL">[No value]</option>
-        </select>
+        <h4>General structure</h4>
+        <input type="text" size="50" name="GenStructure">
     </div>
 
-    <div>
-        <h4>Modality</h4>
-        <select name="Modality" multiple="multiple" size="4">
-            <option value="Deontic">Deontic</option>
-            <option value="Epistemic">Epistemic</option>
-            <option value="Dynamic">Dynamic</option>
-            <option value="NULL">[No value]</option>
-        </select>
-    </div>
-</div>
+    <div class="propertiesGroup">
 
-<h3>Structure</h3>
+        <div>
+            <h4>Open position</h4>
+            <select name="OpenPosition" multiple="multiple" size="7">
+                <option value="DO">DO</option>
+                <option value="IO">IO</option>
+                <option value="PP">PP</option>
+                <option value="IOPP">IO + PP</option>
+                <option value="DOIO">DO + IO</option>
+                <option value="DOPP">DO + PP</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
 
-<div>
-    <h4>General structure</h4>
-    <input type="text" size="50" name="GenStructure" value="">
-</div>
+        <div>
+            <h4>Animacy of the open position</h4>
+            <select name="OpenAnimacy" multiple="multiple" size="5">
+                <option value="Animate">Animate</option>
+                <option value="Inanimate">Inanimate</option>
+                <option value="AnimateInanimate">Animate + Inanimate</option>
+                <option value="InanimateAnimate">Inanimate + Animate</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
 
-<div class="propertiesGroup">
+        <div>
+            <h4>Is the verb either "zijn" or "hebben"?</h4>
+            <select name="SpecialVerb" multiple="multiple" size="4">
+                <option value="Zijn">Zijn</option>
+                <option value="Hebben">Hebben</option>
+                <option value="ZijnHebben">Zijn or hebben</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
 
-    <div>
-        <h4>Open position</h4>
-        <select name="s_OpenPosition1[]" multiple="multiple" size="7">
-            <option value="DO">DO</option>
-            <option value="IO">IO</option>
-            <option value="PP">PP</option>
-            <option value="IOPP">IO + PP</option>
-            <option value="DOIO">DO + IO</option>
-            <option value="DOPP">DO + PP</option>
-            <option value="NULL">[No value]</option>
-        </select>
-    </div>
+        <div>
+            <h4>Direct object type</h4>
+            <select name="DODeterminer" multiple="multiple" size="14">
+                <option value="Definite">Definite</option>
+                <option value="DefinitePlural">Definite plural</option>
+                <option value="DefiniteCoordinated">Definite coordinated</option>
+                <option value="Indefinite">Indefinite</option>
+                <option value="IndefiniteCoordinated">Indefinite coordinated</option>
+                <option value="Bare">Bare</option>
+                <option value="BarePlural">Bare plural</option>
+                <option value="BareCoordinated">Bare coordinated</option>
+                <option value="BarePluralCoordinated">Bare plural coordinated </option>
+                <option value="Quantified">Quantified</option>
+                <option value="QuantifiedCoordinated">Quantified coordinated</option>
+                <option value="Poss">Possessive</option>
+                <option value="Reflexive">Reflexive</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
 
-    <div>
-        <h4>Animacy of the open position</h4>
-        <select name="OpenAnimacy" multiple="multiple" size="5">
-            <option value="Animate">Animate</option>
-            <option value="Inanimate">Inanimate</option>
-            <option value="AnimateInanimate">Animate + Inanimate</option>
-            <option value="InanimateAnimate">Inanimate + Animate</option>
-            <option value="NULL">[No value]</option>
-        </select>
-    </div>
+        <div>
+            <h4>Is the DO modified (by an adjective)?</h4>
+            <select name="Modifier" multiple="multiple" size="3">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
 
-    <div>
-        <h4>Is the verb either "zijn" or "hebben"?</h4>
-        <select name="SpecialVerb" multiple="multiple" size="4">
-            <option value="Zijn">Zijn</option>
-            <option value="Hebben">Hebben</option>
-            <option value="ZijnHebben">Zijn or hebben</option>
-            <option value="NULL">[No value]</option>
-        </select>
-    </div>
-
-    <div>
-        <h4>Direct object type</h4>
-        <select name="DODeterminer" multiple="multiple" size="14">
-            <option value="Definite">Definite</option>
-            <option value="DefinitePlural">Definite plural</option>
-            <option value="DefiniteCoordinated">Definite coordinated</option>
-            <option value="Indefinite">Indefinite</option>
-            <option value="IndefiniteCoordinated">Indefinite coordinated</option>
-            <option value="Bare">Bare</option>
-            <option value="BarePlural">Bare plural</option>
-            <option value="BareCoordinated">Bare coordinated</option>
-            <option value="BarePluralCoordinated">Bare plural coordinated </option>
-            <option value="Quantified">Quantified</option>
-            <option value="QuantifiedCoordinated">Quantified coordinated</option>
-            <option value="Poss">Possessive</option>
-            <option value="Reflexive">Reflexive</option>
-            <option value="NULL">[No value]</option>
-        </select>
     </div>
 
-    <div>
-        <h4>Is the DO modified (by an adjective)?</h4>
-        <select name="Modifier" multiple="multiple" size="3">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-            <option value="NULL">[No value]</option>
-        </select>
+    <h3>Posession</h3>
+
+    <div class="propertiesGroup">
+
+        <div>
+            <h4>How is possession expressed?</h4>
+            <select name="PossType" multiple="multiple" size="4">
+                <option value="Posspro">Possessive pronoun	</option>
+                <option value="PP">Prepositional phrase</option>
+                <option value="External">External possession</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
+
+        <div>
+            <h4>Alienability of possession</h4>
+            <select name="Alienability" multiple="multiple" size="5">
+                <option value="Alienable">Alienable</option>
+                <option value="Inalienable">Inalienable</option>
+                <option value="AlienableInalienable">Alienable + Inalienable</option>
+                <option value="InalienableAlienable">Inalienable + Alienable</option>
+                <option value="NULL">[No value]</option>
+            </select>
+        </div>
+
+        <div>
+            <h4>Notes</h4>
+            <input type="text" size="50" name="IdiomNotes">
+        </div>
     </div>
 
-</div>
+    <h2>Sentence</h2>
 
-<h3>Posession</h3>
-
-<div class="propertiesGroup">
-
-    <div>
-        <h4>How is possession expressed?</h4>
-        <select name="PossType" multiple="multiple" size="4">
-            <option value="Posspro">Possessive pronoun	</option>
-            <option value="PP">Prepositional phrase</option>
-            <option value="External">External possession</option>
-            <option value="NULL">[No value]</option>
-        </select>
-    </div>
-
-    <div>
-        <h4>Alienability of possession</h4>
-        <select name="Alienability" multiple="multiple" size="5">
-            <option value="Alienable">Alienable</option>
-            <option value="Inalienable">Inalienable</option>
-            <option value="AlienableInalienable">Alienable + Inalienable</option>
-            <option value="InalienableAlienable">Inalienable + Alienable</option>
-            <option value="NULL">[No value]</option>
-        </select>
-    </div>
-
-    <div>
-        <h4>Notes</h4>
-        <input type="text" size="50" name="IdiomNotes" value="">
-    </div>
-</div>
-
-<h2>Sentence</h2>
+    <button type="submit">Search</button>
+    <button type="reset">Reset form</button>
+</form>
 
 {% endblock %}
