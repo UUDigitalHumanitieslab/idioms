@@ -101,3 +101,11 @@ div.propertiesGroup > div {
     margin: 1em;
     vertical-align: top;
 }
+
+select, label {
+    display: block;
+}
+
+form label {
+    width: 100%;
+}

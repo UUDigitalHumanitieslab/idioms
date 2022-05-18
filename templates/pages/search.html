@@ -22,8 +22,8 @@
     <div class="propertiesGroup">
 
         <div id="Voice">
-            <h4>Voice</h4>
-            <select name="Voice" multiple="multiple" size="3">
+            <label for="voice">Voice</label>
+            <select id="voice" name="Voice" multiple="multiple" size="3">
                 <option value="Active">Active</option>
                 <option value="Passive">Passive</option>
                 <option value="NULL">[No value]</option>
@@ -31,8 +31,8 @@
         </div>
 
         <div id="Tense">
-            <h4>Tense</h4>
-            <select name="Tense" multiple="multiple" size="4">
+            <label for="tense">Tense</label>
+            <select id="tense" name="Tense" multiple="multiple" size="4">
                 <option value="Present">Present</option>
                 <option value="Past">Past</option>
                 <option value="Future">Future</option>
@@ -41,8 +41,8 @@
         </div>
 
         <div>
-            <h4>Aspect</h4>
-            <select name="Aspect" multiple="multiple" size="4">
+            <label for="aspect">Aspect</label>
+            <select id="aspect" name="Aspect" multiple="multiple" size="4">
                 <option value="Simple">Simple</option>
                 <option value="Perfect">Perfect</option>
                 <option value="Progressive">Progressive</option>
@@ -51,8 +51,8 @@
         </div>
 
         <div>
-            <h4>Modality</h4>
-            <select name="Modality" multiple="multiple" size="4">
+            <label for="modality">Modality</label>
+            <select id="modality" name="Modality" multiple="multiple" size="4">
                 <option value="Deontic">Deontic</option>
                 <option value="Epistemic">Epistemic</option>
                 <option value="Dynamic">Dynamic</option>
@@ -65,14 +65,15 @@
 
     <div>
         <h4>General structure</h4>
-        <input type="text" size="50" name="GenStructure">
+        <label for="genstructure"></label>
+        <input id="genstructure" name="GenStructure" type="text" size="50">
     </div>
 
     <div class="propertiesGroup">
 
         <div>
-            <h4>Open position</h4>
-            <select name="OpenPosition" multiple="multiple" size="7">
+            <label for="openposition">Open position</label>
+            <select id="openposition" name="OpenPosition" multiple="multiple" size="7">
                 <option value="DO">DO</option>
                 <option value="IO">IO</option>
                 <option value="PP">PP</option>
@@ -84,8 +85,8 @@
         </div>
 
         <div>
-            <h4>Animacy of the open position</h4>
-            <select name="OpenAnimacy" multiple="multiple" size="5">
+            <label for="openanimacy">Animacy of the open position</label>
+            <select id="openanimacy" name="OpenAnimacy" multiple="multiple" size="5">
                 <option value="Animate">Animate</option>
                 <option value="Inanimate">Inanimate</option>
                 <option value="AnimateInanimate">Animate + Inanimate</option>
@@ -95,8 +96,8 @@
         </div>
 
         <div>
-            <h4>Is the verb either "zijn" or "hebben"?</h4>
-            <select name="SpecialVerb" multiple="multiple" size="4">
+            <label for="specialverb">Is the verb either "zijn" or "hebben"?</label>
+            <select id="specialverb" name="SpecialVerb" multiple="multiple" size="4">
                 <option value="Zijn">Zijn</option>
                 <option value="Hebben">Hebben</option>
                 <option value="ZijnHebben">Zijn or hebben</option>
@@ -105,8 +106,8 @@
         </div>
 
         <div>
-            <h4>Direct object type</h4>
-            <select name="DODeterminer" multiple="multiple" size="14">
+            <label for="dodeterminer">Direct object type</label>
+            <select id="dodeterminer" name="DODeterminer" multiple="multiple" size="14">
                 <option value="Definite">Definite</option>
                 <option value="DefinitePlural">Definite plural</option>
                 <option value="DefiniteCoordinated">Definite coordinated</option>
@@ -125,8 +126,8 @@
         </div>
 
         <div>
-            <h4>Is the DO modified (by an adjective)?</h4>
-            <select name="Modifier" multiple="multiple" size="3">
+            <label for="modifier">Is the DO modified (by an adjective)?</label>
+            <select id="modifier" name="Modifier" multiple="multiple" size="3">
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="NULL">[No value]</option>
@@ -140,8 +141,8 @@
     <div class="propertiesGroup">
 
         <div>
-            <h4>How is possession expressed?</h4>
-            <select name="PossType" multiple="multiple" size="4">
+            <label for="posstype">How is possession expressed?</label>
+            <select id="posstype" name="PossType" multiple="multiple" size="4">
                 <option value="Posspro">Possessive pronoun	</option>
                 <option value="PP">Prepositional phrase</option>
                 <option value="External">External possession</option>
@@ -150,8 +151,8 @@
         </div>
 
         <div>
-            <h4>Alienability of possession</h4>
-            <select name="Alienability" multiple="multiple" size="5">
+            <label for="alienability">Alienability of possession</label>
+            <select id="alienability" name="Alienability" multiple="multiple" size="5">
                 <option value="Alienable">Alienable</option>
                 <option value="Inalienable">Inalienable</option>
                 <option value="AlienableInalienable">Alienable + Inalienable</option>
@@ -161,8 +162,8 @@
         </div>
 
         <div>
-            <h4>Notes</h4>
-            <input type="text" size="50" name="IdiomNotes">
+            <label for="idiomnotes">Notes</label>
+            <input id="idiomnotes" name="IdiomNotes" type="text" size="50">
         </div>
     </div>
 
