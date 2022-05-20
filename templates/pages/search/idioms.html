@@ -6,32 +6,30 @@
 
 <h1>Search results: idioms</h1>
 
-<div class="table">
-    <div class="table-row">
-        <div class="table-head"></div>
-        <div class="table-head">Idiom</div>
-        <div class="table-head">Meaning</div>
+<pre>{{ args }}</pre>
+
+{% if args %}
+
+    {% set query = build_search_idioms_sql(args) %}
+
+    <pre>{{ query }}</pre>
+
+    <div class="table">
+        <div class="table-row">
+            <div class="table-head"></div>
+            <div class="table-head">Idiom</div>
+            <div class="table-head">Meaning</div>
     </div>
 
-{% for row in sql("
-    SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num, strategy_name, strategy_description
-    FROM strategy s
-    WHERE
-     (:Voice = '' OR EXISTS (SELECT 1 FROM strategy_data sd WHERE sd.strategy = s.strategy_id AND sd.parameter_definition_id = 'Voice1' AND sd.value_definition_id IN (:Voice)))
-     AND (:Tense = '' OR EXISTS (SELECT 1 FROM strategy_data sd WHERE sd.strategy = s.strategy_id AND sd.parameter_definition_id = 'Tense1' AND sd.value_definition_id IN (:Tense)))
-    ORDER BY strategy_answerset_id ASC, strategy_name ASC;
-    ", {
-        "Voice": args.Voice or '',
-        "Tense": args.Tense or '',
-    }
-    ) %}
+    {% for row in sql(query) %}
         <div class="table-row">
             <div class="table-cell">{{ row.row_num }}</div>
             <div class="table-cell">{{ row.strategy_name }}</div>
             <div class="table-cell">{{ row.strategy_description }}</div>
         </div>
-{% endfor %}
+    {% endfor %}
 
-</div>
+    </div>
+{% endif %}
 
 {% endblock %}
