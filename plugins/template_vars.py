@@ -4,7 +4,7 @@ def build_search_idioms_sql(args):
     wheres = []
     for param in args.keys():
         if param == 'Voice':
-            param_values = [f"'{v}'" for v in args.getlist(param) if v != 'NULL']
+            param_values = [f"'{v}'" for v in args.getlist(param)]
             param_values_str = ','.join(param_values)
             wheres.append(
                 f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
@@ -12,7 +12,7 @@ def build_search_idioms_sql(args):
                  AND sda.parameter_value IN ({param_values_str})
                  )""")
         if param == 'Tense':
-            param_values = [f"'{v}'" for v in args.getlist(param) if v != 'NULL']
+            param_values = [f"'{v}'" for v in args.getlist(param)]
             param_values_str = ','.join(param_values)
             wheres.append(f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
              AND sda.parameter_definition_id = 'Tense1'
@@ -32,7 +32,7 @@ def build_search_idioms_sql(args):
         ),
     strategy_data_all AS (
         -- Note: value_shorttext, value_text, and value_definition_id values are mutually exclusive in the database
-        SELECT spc.strategy_id, spc.parameter_definition_id, IFNULL(COALESCE(sd.value_shorttext, sd.value_text, sd.value_definition_id), 0) AS parameter_value
+        SELECT spc.strategy_id, spc.parameter_definition_id, IFNULL(COALESCE(sd.value_shorttext, sd.value_text, sd.value_definition_id), '0') AS parameter_value
         FROM strategy_parameter_combinations spc
         LEFT JOIN strategy_data sd
             ON sd.parameter_definition_id = spc.parameter_definition_id
