@@ -6,7 +6,16 @@ def build_search_idioms_sql(args):
     parameters = {
         'Voice': 'Voice1',
         'Tense': 'Tense1',
+        'Aspect': 'Aspect1',
+        'Modality': 'Modality1',
         'GenStructure': 'GenStructure1',
+        'OpenPosition': 'OpenPosition1',
+        'OpenAnimacy': 'OpenAnimacy1',
+        'SpecialVerb': 'SpecialVerb1',
+        'DODeterminer': 'DODeterminer1',
+        'Modifier': 'Modifier1',
+        'PossType': 'PossType1',
+        'Alienability': 'Alienability1',
         'IdiomNotes': 'IdiomNotes1',
     }
     wheres = []
