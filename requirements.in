@@ -1,3 +1,2 @@
 datasette
 datasette-template-sql
-db-to-sqlite[mysql]
