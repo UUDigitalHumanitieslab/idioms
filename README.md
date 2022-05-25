@@ -1,6 +1,6 @@
 # Database of Dutch Dialect Idioms
 
-This repository contains a customized Datasette app that serves the data from the [idioms database](https://idioms.hum.uu.nl/) via a read-only SQLite database, preserving the original data structures. The steps for converting the data from the original MySQL database are listed in the "conversion" directory.
+This repository contains a customized [Datasette](https://datasette.io/) app that serves the data from the [idioms database](https://idioms.hum.uu.nl/) via a read-only SQLite database, preserving the original data structures. The steps for converting the data from the original MySQL database are listed in the `conversion` directory.
 
 ## Datasette
 
@@ -17,6 +17,7 @@ Optional:
 ### Install dependencies
 
 Activate your virtual env if applicable, e.g:
+
     virtualenv .env --prompt="(idioms) "
     source .env/bin/activate
 
