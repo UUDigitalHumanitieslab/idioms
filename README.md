@@ -1,40 +1,29 @@
 # Database of Dutch Dialect Idioms
 
-This repository documents the conversion of the [idioms database](https://idioms.hum.uu.nl/) from a PHP/MySQL app to a read-only SQLite-based app.
-
-## Docker
-
-`docker-compose up`
-
-Remove security definer to allow importing:
-
-`sed -i '/^\/\*\!50013/d' data/idioms.sql`
-
-Import the idioms database to the MySQL database running in Docker:
-
-`docker exec -i idiomsdb sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -D idiomsdb' < data/idioms.sql`
+This repository contains a customized Datasette app that serves the data from the [idioms database](https://idioms.hum.uu.nl/) via a read-only SQLite database, preserving the original data structures. The steps for converting the data from the original MySQL database are listed in the "conversion" directory.
 
 ## Datasette
 
-Installation, assuming a Debian-based OS.
-
+Installing and running Datasette.
 ### Prerequisites
 
-- Python v3.8+
-- pip, pip-tools
-- virtualenv
-- libmysqlclient-dev
+- Python (v3.8+)
+- SQLite
+- pip
 
-### Virtual environment
+Optional:
+- venv or virtualenv
 
+### Install dependencies
+
+Activate your virtual env if applicable, e.g:
     virtualenv .env --prompt="(idioms) "
     source .env/bin/activate
+
+Install Datasette dependencies:
+
     pip install -r requirements.txt
-
-### Convert to SQLite
-
-db-to-sqlite mysql://root:idiomsdb@127.0.0.1:3307/idiomsdb data/idioms.db --all
 
 ### Run Datasette
 
-datasette data/idioms.db --metadata metadata.json --template-dir=templates/ --static static:static/ --plugins-dir=plugins/
+    datasette data/idioms.db --metadata metadata.json --template-dir=templates/ --static static:static/ --plugins-dir=plugins/
