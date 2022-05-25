@@ -6,13 +6,19 @@
 
 <h1>Search results: idioms</h1>
 
-<pre>{{ args }}</pre>
-
 {% if args %}
 
-    {% set query = build_search_idioms_sql(args) %}
+    {% set count_query, main_query = build_search_idioms_sql(args) %}
 
-    <pre>{{ query }}</pre>
+    <div style="border:1px solid;padding:.5em;margin:.5em;">
+        <pre>{{ args }}</pre>
+        <hr>
+        <pre>{{ main_query }}</pre>
+    </div>
+
+    <p>
+        {{ sql(count_query)[0].cnt }} records found.
+    </p>
 
     <div class="table">
         <div class="table-row">
@@ -21,7 +27,7 @@
             <div class="table-head">Meaning</div>
     </div>
 
-    {% for row in sql(query) %}
+    {% for row in sql(main_query) %}
         <div class="table-row">
             <div class="table-cell">{{ row.row_num }}</div>
             <div class="table-cell">{{ row.strategy_name }}</div>

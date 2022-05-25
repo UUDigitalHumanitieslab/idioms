@@ -33,7 +33,7 @@ def build_search_idioms_sql(args):
 
     wheres_str = '\n AND '.join(wheres)
 
-    query = f"""WITH strategy_parameter_ids AS (
+    with_clauses = f"""WITH strategy_parameter_ids AS (
         SELECT DISTINCT sd.parameter_definition_id
         FROM strategy_data sd
         WHERE sd.parameter_definition_id != 'test10'
@@ -52,13 +52,15 @@ def build_search_idioms_sql(args):
             ON sd.parameter_definition_id = spc.parameter_definition_id
              AND sd.strategy = spc.strategy_id
         )
-    SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
+        """
+    count_query = f"SELECT count(*) as cnt FROM strategy s WHERE {wheres_str}"
+    main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
         strategy_name, strategy_description
     FROM strategy s
     WHERE {wheres_str}
     ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
 
-    return query
+    return with_clauses + count_query, with_clauses + main_query
 
 @hookimpl
 def extra_template_vars(request):
