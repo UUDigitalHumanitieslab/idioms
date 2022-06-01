@@ -30,7 +30,7 @@
     {% for row in sql(main_query) %}
         <div class="table-row">
             <div class="table-cell">{{ row.row_num }}</div>
-            <div class="table-cell">{{ row.strategy_name }}</div>
+            <div class="table-cell"><a href="/idioms/{{ row.strategy_id }}">{{ row.strategy_name }}</a></div>
             <div class="table-cell">{{ row.strategy_description }}</div>
         </div>
     {% endfor %}

@@ -3,7 +3,7 @@ from datasette import hookimpl
 def build_search_idioms_sql(args):
     # Mapping between form submission values and identifiers recorded in the
     # database. Keys may be shortened to cut down on URL character length.
-    parameters = {
+    list_parameters = {
         'Voice': 'Voice1',
         'Tense': 'Tense1',
         'Aspect': 'Aspect1',
@@ -20,7 +20,7 @@ def build_search_idioms_sql(args):
     }
     wheres = []
     for param in args.keys():
-        param_sql_id = parameters[param]
+        param_sql_id = list_parameters[param]
         # Empty text inputs are always submitted, so have to be filtered out
         param_values = [f"'{v}'" for v in args.getlist(param) if v != '']
         if len(param_values) > 0:
@@ -55,7 +55,7 @@ def build_search_idioms_sql(args):
         """
     count_query = f"SELECT count(*) as cnt FROM strategy s WHERE {wheres_str}"
     main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
-        strategy_name, strategy_description
+        strategy_id, strategy_name, strategy_description
     FROM strategy s
     WHERE {wheres_str}
     ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
