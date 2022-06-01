@@ -77,9 +77,20 @@ def build_search_idioms_sql(args):
 
     return with_clauses + count_query, with_clauses + main_query
 
+def get_interlinear(interlinear_sentence):
+    """ Gets the word representations of original and gloss from a sentence,
+    and zips the word combinations together.
+    Returns a list of (original, gloss) tuples."""
+    words_original = interlinear_sentence['original'].split(' ')
+    words_gloss = interlinear_sentence['gloss'].split(' ')
+    interlinear = list(zip(words_original, words_gloss))
+
+    return interlinear
+
 @hookimpl
 def extra_template_vars(request):
     return {
         "args": request.args,
         "build_search_idioms_sql": build_search_idioms_sql,
+        "get_interlinear": get_interlinear,
     }

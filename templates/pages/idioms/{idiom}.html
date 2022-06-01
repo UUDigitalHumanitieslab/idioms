@@ -36,8 +36,13 @@
                                         {"strategy_id": idiom}) %}
 
         {% if idiom_interlinear_row %}
-        <h3>Translation</h3>
-        {% include "_interlinear.html" %}
+
+            {% set interlinear_words = get_interlinear(idiom_interlinear_row[0]) %}
+
+            <h3>Translation</h3>
+
+            {% include "_interlinear.html" %}
+
         {% endif %}
 
     {% set idiom_properties_row = sql(" SELECT pg.group_label, pq.question_label, COALESCE(sd.value_shorttext, vd.value_label) AS value
