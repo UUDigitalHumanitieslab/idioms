@@ -3,6 +3,7 @@
 
 # Project data
 data/
+*.db
 
 # ASDF
 .tool-versions
