@@ -27,4 +27,8 @@ Install Datasette dependencies:
 
 ### Run Datasette
 
-    datasette data/idioms.db --metadata metadata.json --template-dir=templates/ --static static:static/ --plugins-dir=plugins/
+    source .env/bin/activate
+    # Using configuration directory mode:
+    datasette serve .
+    # Or specifying the relevant settings:
+    datasette serve idioms.db --metadata metadata.json --template-dir=templates/ --static static:static/ --plugins-dir=plugins/
