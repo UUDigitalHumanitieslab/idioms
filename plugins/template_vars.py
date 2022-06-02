@@ -37,14 +37,25 @@ def build_search_idioms_sql(args):
             param_sql_id = text_parameters[param]
             # Empty text inputs are always submitted, so have to be filtered out
             text_param = args.get(param) if args.get(param) != '' else None
-            # TODO: handle: 1. Multiple values separately; 2. Quoted string,
-            # 3. AND, OR; 4. NULL / No Value.
             if text_param:
-                wheres.append(
-                    f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
-                        AND sda.parameter_definition_id = '{param_sql_id}'
-                        AND sda.parameter_value LIKE '%{text_param}%'
-                        )""")
+                text_param = text_param.strip()
+                if text_param.startswith('"') and text_param.endswith('"'):
+                    term = text_param.strip('"')
+                    # A quoted string should be found in a value (not necessarily match the entire value):
+                    wheres.append(
+                        f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
+                            AND sda.parameter_definition_id = '{param_sql_id}'
+                            AND sda.parameter_value LIKE '%{term}%'
+                            )""")
+                # Do not handle quotes inside a text parameter: either quoted, or match multiple strings
+                if not '"' in text_param:
+                    text_terms = text_param.split(' ')
+                    for term in text_terms:
+                        wheres.append(
+                        f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
+                            AND sda.parameter_definition_id = '{param_sql_id}'
+                            AND sda.parameter_value LIKE '%{term}%'
+                            )""")
 
     wheres_str = '\n AND '.join(wheres)
 
