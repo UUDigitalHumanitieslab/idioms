@@ -25,7 +25,8 @@
             </div>
         </dl>
 
-    <h2>Manipulations</h2>
+    <h2><a href="/dialects/{{ dialect }}/sentences">Manipulations</a></h2>
+
     <h2>Idioms</h2>
     <p>
         {{ sql("SELECT count(*) as cnt FROM strategy WHERE strategy_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.

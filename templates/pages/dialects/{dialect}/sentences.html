@@ -1,0 +1,42 @@
+{% extends "page_base.html" %}
+
+{% set answerset_row = sql("SELECT answerset_id, answerset_name, answerset_description FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect}) %}
+
+{% block title %}Sentences: {{ dialect }}{% endblock %}
+
+{% block content %}
+
+{% if answerset_row %}
+    {% set dialect_id = answerset_row[0].answerset_id %}
+
+    <h1>{{ answerset_row[0].answerset_name }}</h1>
+
+    <h2>Sentences</h2>
+    <p>
+        {{ sql("SELECT count(*) as cnt FROM sentence WHERE sentence_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
+    </p>
+    <div class="table">
+        <div class="table-row">
+            <div class="table-head"></div>
+            <div class="table-head"></div>
+            <div class="table-head">Sentence</div>
+            <div class="table-head">Idiom</div>
+        </div>
+        {% for s in sql(""" SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
+                            sentence_id, original, translation, gloss, grammaticality, sentence_answerset_id, sentence_strategy_id
+                            FROM sentence
+                            WHERE sentence_answerset_id = :dialect_id
+                            """, {"dialect_id": dialect_id}) %}
+        <div class="table-row">
+            <div class="table-cell">{{ s.row_num }}</div>
+            <div class="table-cell"><a href="/sentences/{{ s.sentence_id }}">Details</a></div>
+            <div class="table-cell">{{ s.original }}</div>
+            <div class="table-cell"><a href="/idioms/{{ s.sentence_strategy_id }}">Idiom</a></div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    {{ raise_404("Dialect not found") }}
+{% endif %}
+
+{% endblock %}
