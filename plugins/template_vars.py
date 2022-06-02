@@ -57,6 +57,10 @@ def build_search_idioms_sql(args):
                             AND sda.parameter_value LIKE '%{term}%'
                             )""")
 
+    if not wheres:
+        # Make a valid SQL query in case no WHERE criterion has been added
+        wheres.append('1')
+
     wheres_str = '\n AND '.join(wheres)
 
     with_clauses = f"""WITH strategy_parameter_ids AS (
