@@ -29,21 +29,16 @@
       </dl>
 
     <h2>Properties</h2>
-    {% set interlinear_row = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
+    {% set interlinear_rows = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
                                         FROM sentence s
                                         WHERE translation IS NOT NULL
                                          AND sentence_strategy_id = :strategy_id;",
                                         {"strategy_id": idiom}) %}
 
-        {% if interlinear_row %}
-
-            {% set interlinear_words = get_interlinear(interlinear_row[0]) %}
-
-            <h3>Translation</h3>
-
+        <h3>Gloss and translation</h3>
+        {% for row in interlinear_rows %}
             {% include "_interlinear.html" %}
-
-        {% endif %}
+        {% endfor %}
 
     {% set idiom_properties_row = sql(" SELECT pg.group_label, pq.question_label, COALESCE(sd.value_shorttext, vd.value_label) AS value
                                         FROM strategy_data sd
@@ -71,6 +66,22 @@
             </div>
         {% endfor %}
     </dl>
+
+    {% set sentence_rows = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
+                            FROM sentence s
+                            WHERE
+                             gloss IS NULL
+                             AND translation IS NULL
+                             AND sentence_strategy_id = :strategy_id
+                            ;",
+                            {"strategy_id": idiom}) %}
+
+    {% if sentence_rows %}
+        <h3>Sentences</h3>
+        {% for row in sentence_rows %}
+            {% include "_interlinear.html" %}
+        {% endfor %}
+    {% endif %}
 
 {% else %}
     {{ raise_404("Idiom not found") }}

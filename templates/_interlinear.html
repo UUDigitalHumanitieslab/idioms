@@ -1,12 +1,11 @@
-{% if interlinear_row[0].gloss %}
-    {% set interlinear_words = get_interlinear(interlinear_row[0]) %}
+{% if row.gloss %}
+    {% set interlinear_words = get_interlinear(row) %}
 {% endif %}
 
-<div style="float:left;margin-right:1em;">
-    <div>({{ interlinear_row[0].grammaticality }})</div>
-</div>
-
 <div class="interlinear">
+    <div style="float:left;margin-right:1em;">
+        <div>({{ row.grammaticality }})</div>
+    </div>
     {% if interlinear_words %}
         {% for word in interlinear_words %}
         <div>{{ word[0] }}
@@ -14,10 +13,10 @@
         </div>
         {% endfor %}
     {% else %}
-        <p>{{ interlinear_row[0].original }}.</p>
+        <p>{{ row.original }}.</p>
     {% endif %}
 
-    {% if interlinear_row[0].translation %}
-        <p class="translation">{{ interlinear_row[0].translation }}</p>
+    {% if row.translation %}
+        <p class="translation">{{ row.translation }}</p>
     {% endif %}
 </div>
