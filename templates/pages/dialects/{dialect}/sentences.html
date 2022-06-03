@@ -18,20 +18,18 @@
     <div class="table">
         <div class="table-row">
             <div class="table-head"></div>
-            <div class="table-head"></div>
             <div class="table-head">Sentence</div>
             <div class="table-head">Idiom</div>
         </div>
-        {% for s in sql(""" SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
+        {% for row in sql(""" SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
                             sentence_id, original, translation, gloss, grammaticality, sentence_answerset_id, sentence_strategy_id
                             FROM sentence
                             WHERE sentence_answerset_id = :dialect_id
                             """, {"dialect_id": dialect_id}) %}
         <div class="table-row">
-            <div class="table-cell">{{ s.row_num }}</div>
-            <div class="table-cell"><a href="/sentences/{{ s.sentence_id }}">Details</a></div>
-            <div class="table-cell">{{ s.original }}</div>
-            <div class="table-cell"><a href="/idioms/{{ s.sentence_strategy_id }}">Idiom</a></div>
+            <div class="table-cell"><a href="/sentences/{{ row.sentence_id }}">{{ row.row_num }}</a></div>
+            <div class="table-cell">{% include "_interlinear.html" %}</div>
+            <div class="table-cell"><a href="/idioms/{{ row.sentence_strategy_id }}">Idiom</a></div>
         </div>
         {% endfor %}
     </div>
