@@ -29,15 +29,15 @@
       </dl>
 
     <h2>Properties</h2>
-    {% set idiom_interlinear_row = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
+    {% set interlinear_row = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
                                         FROM sentence s
                                         WHERE translation IS NOT NULL
                                          AND sentence_strategy_id = :strategy_id;",
                                         {"strategy_id": idiom}) %}
 
-        {% if idiom_interlinear_row %}
+        {% if interlinear_row %}
 
-            {% set interlinear_words = get_interlinear(idiom_interlinear_row[0]) %}
+            {% set interlinear_words = get_interlinear(interlinear_row[0]) %}
 
             <h3>Translation</h3>
 
