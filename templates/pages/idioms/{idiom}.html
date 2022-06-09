@@ -67,7 +67,7 @@
         {% endfor %}
     </dl>
 
-    {% set sentence_rows = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
+    {% set sentence_rows = sql("SELECT sentence_id, original, gloss, translation, grammaticality, sentence_strategy_id
                             FROM sentence s
                             WHERE
                              gloss IS NULL
