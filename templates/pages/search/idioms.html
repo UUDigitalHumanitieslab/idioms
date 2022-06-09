@@ -10,11 +10,13 @@
 
     {% set count_query, main_query = build_search_idioms_sql(args) %}
 
-    <div style="border:1px solid;padding:.5em;margin:.5em;">
-        <pre>{{ args }}</pre>
-        <hr>
-        <pre>{{ main_query }}</pre>
-    </div>
+    {% if args.get('_trace') == '1' %}
+        <div style="border:1px solid;padding:.5em;margin:.5em;">
+            <pre>{{ args }}</pre>
+            <hr>
+            <pre>{{ main_query }}</pre>
+        </div>
+    {% endif %}
 
     <p>
         {{ sql(count_query)[0].cnt }} records found.
