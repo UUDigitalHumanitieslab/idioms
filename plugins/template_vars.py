@@ -31,7 +31,7 @@ def build_search_idioms_sql(args):
                 wheres.append(
                     f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
                         AND sda.parameter_definition_id = '{param_sql_id}'
-                        AND sda.parameter_value IN ({param_values_str})
+                        AND sda.parameter_value COLLATE NOCASE IN ({param_values_str})
                         )""")
         if param in text_parameters.keys():
             param_sql_id = text_parameters[param]
