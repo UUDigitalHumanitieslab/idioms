@@ -1,0 +1,22 @@
+{% extends "page_base.html" %}
+
+{% set row = sql("SELECT sentence_id, original, gloss, translation, grammaticality
+    FROM sentence s
+    WHERE sentence_id = :sentence_id
+    ;",
+    {"sentence_id": sentence}) %}
+
+{% block title %}Sentence{% endblock %}
+
+{% block content %}
+
+{% if row %}
+    {% set row = row[0] %}
+
+    <h2>Sentence</h2>
+    {% include "_interlinear.html" %}
+{% else %}
+    {{ raise_404("Sentence not found") }}
+{% endif %}
+
+{% endblock %}
