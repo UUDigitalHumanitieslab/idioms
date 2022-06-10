@@ -110,6 +110,12 @@ form label {
     width: 100%;
 }
 
-div.interlinear > div {
-    display:inline-block;
+ruby {
+    display: inline-block;
+}
+
+rt {
+    display: block;
+    line-height: 24px;
+    font-size: 100%;
 }

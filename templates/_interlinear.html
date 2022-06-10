@@ -8,9 +8,9 @@
     </div>
     {% if interlinear_words %}
         {% for word in interlinear_words %}
-        <div>{{ word[0] }}
-            <div>{{ word[1] }}</div>
-        </div>
+        <ruby>{{ word[0] }}
+            <rt>{{ word[1] }}</rt>
+        </ruby>
         {% endfor %}
     {% else %}
         <p><a href="/sentences/{{ row.sentence_id }}">{{ row.original }}</a>.</p>
