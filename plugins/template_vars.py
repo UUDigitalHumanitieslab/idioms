@@ -1,8 +1,9 @@
 from datasette import hookimpl
 
 def build_search_idioms_sql(args):
-    # Mapping between form submission values and identifiers recorded in the
-    # database. Keys may be shortened to cut down on URL character length.
+    # Mapping between form submission parameters (name attribute),
+    # and parameter identifiers recorded in the database.
+    # Keys may be shortened to cut down on URL character length.
     idiom_list_parameters = {
         'Voice': 'Voice1',
         'Tense': 'Tense1',
@@ -19,6 +20,11 @@ def build_search_idioms_sql(args):
     sentence_list_parameters = {
         'Property1': 'Property1',
         'DeterminerManipulations': 'DeterminerManipulations1',
+        'ModalityManipulations': 'ModalityManipulations1',
+        'PossessiveManipulations': 'PossessiveManipulations1',
+        'ExternalPossessionManipulation': 'ExternalPossessionManipulation',
+        'FutureWordenManipulations': 'FutureWordenManipulations1',
+        'TenseVoiceAspectManipulations': 'TenseVoiceAspectManipulations1',
     }
     idiom_text_parameters = {
         'GenStructure': 'GenStructure1',
