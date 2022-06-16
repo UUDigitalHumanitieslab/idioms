@@ -48,6 +48,7 @@ a:hover {
 
 .table-row {
     display: table-row;
+    line-height: 2em;
 }
 
 .table-cell,
