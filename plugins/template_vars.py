@@ -3,7 +3,7 @@ from datasette import hookimpl
 def build_search_idioms_sql(args):
     # Mapping between form submission values and identifiers recorded in the
     # database. Keys may be shortened to cut down on URL character length.
-    list_parameters = {
+    idiom_list_parameters = {
         'Voice': 'Voice1',
         'Tense': 'Tense1',
         'Aspect': 'Aspect1',
@@ -16,25 +16,39 @@ def build_search_idioms_sql(args):
         'PossType': 'PossType1',
         'Alienability': 'Alienability1',
     }
-    text_parameters = {
+    sentence_list_parameters = {
+        'Property1': 'Property1',
+        'DeterminerManipulations': 'DeterminerManipulations1',
+    }
+    idiom_text_parameters = {
         'GenStructure': 'GenStructure1',
         'IdiomNotes': 'IdiomNotes1',
     }
     wheres = []
     for param in args.keys():
-        if param in list_parameters.keys():
-            param_sql_id = list_parameters[param]
+        if param in idiom_list_parameters.keys():
+            param_sql_id = idiom_list_parameters[param]
             # If url parameter is present there should be a value, but keep the check to be sure
             param_values = [f"'{v}'" for v in args.getlist(param) if v != '']
             if len(param_values) > 0:
                 param_values_str = ','.join(param_values)
                 wheres.append(
-                    f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
+                    f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
                         AND sda.parameter_definition_id = '{param_sql_id}'
                         AND sda.parameter_value COLLATE NOCASE IN ({param_values_str})
                         )""")
-        if param in text_parameters.keys():
-            param_sql_id = text_parameters[param]
+        if param in sentence_list_parameters.keys():
+            param_sql_id = sentence_list_parameters[param]
+            param_values = [f"'{v}'" for v in args.getlist(param) if v != '']
+            if len(param_values) > 0:
+                param_values_str = ','.join(param_values)
+                wheres.append(
+                    f"""EXISTS (SELECT 1 FROM sentence_data_all sda WHERE sda.sentence_id = s.sentence_id
+                        AND sda.parameter_definition_id = '{param_sql_id}'
+                        AND sda.parameter_value COLLATE NOCASE IN ({param_values_str})
+                        )""")
+        if param in idiom_text_parameters.keys():
+            param_sql_id = idiom_text_parameters[param]
             # Empty text inputs are always submitted, so have to be filtered out
             text_param = args.get(param) if args.get(param) != '' else None
             if text_param:
@@ -43,7 +57,7 @@ def build_search_idioms_sql(args):
                     term = text_param.strip('"')
                     # A quoted string should be found in a value (not necessarily match the entire value):
                     wheres.append(
-                        f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
+                        f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
                             AND sda.parameter_definition_id = '{param_sql_id}'
                             AND sda.parameter_value LIKE '%{term}%'
                             )""")
@@ -52,7 +66,7 @@ def build_search_idioms_sql(args):
                     text_terms = text_param.split(' ')
                     for term in text_terms:
                         wheres.append(
-                        f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = s.strategy_id
+                        f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
                             AND sda.parameter_definition_id = '{param_sql_id}'
                             AND sda.parameter_value LIKE '%{term}%'
                             )""")
@@ -81,16 +95,40 @@ def build_search_idioms_sql(args):
         LEFT JOIN strategy_data sd
             ON sd.parameter_definition_id = spc.parameter_definition_id
              AND sd.strategy = spc.strategy_id
+        ),
+    sentence_parameter_ids AS (
+        SELECT DISTINCT sd.parameter_definition_id
+        FROM sentence_data sd
+        ),
+    sentence_parameter_combinations AS (
+        SELECT sentence_id, parameter_definition_id
+        FROM sentence s
+        CROSS JOIN sentence_parameter_ids sp
+        ),
+    sentence_data_all AS (
+        -- Note: value_text and value_definition_id values are mutually exclusive in the database
+        SELECT spc.sentence_id, spc.parameter_definition_id,
+            IFNULL(COALESCE(sd.value_text, sd.value_definition_id), '0') AS parameter_value
+        FROM sentence_parameter_combinations spc
+        LEFT JOIN sentence_data sd
+            ON sd.parameter_definition_id = spc.parameter_definition_id
+             AND sd.sentence = spc.sentence_id
         )
         """
-    count_query = f"SELECT count(*) as cnt FROM strategy s WHERE {wheres_str}"
+    count_query = f"""SELECT count(DISTINCT strategy_id) as cnt
+        FROM strategy i
+        JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+        WHERE {wheres_str};"""
     main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
         strategy_id, strategy_name, strategy_description
-    FROM strategy s
+    FROM strategy i
+    JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
     WHERE {wheres_str}
+    GROUP BY strategy_id, strategy_name, strategy_description
     ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
 
     return with_clauses + count_query, with_clauses + main_query
+
 
 def get_interlinear(interlinear_sentence):
     """ Gets the word representations of original and gloss from a sentence,
@@ -101,6 +139,7 @@ def get_interlinear(interlinear_sentence):
     interlinear = list(zip(words_original, words_gloss))
 
     return interlinear
+
 
 @hookimpl
 def extra_template_vars(request):

@@ -169,8 +169,39 @@
 
     <h2>Sentence</h2>
 
-    <button type="submit">Search</button>
-    <button type="reset">Reset form</button>
+    <div>
+        <label for="property1">Manipulated idiom property</label>
+        <select id="property1" name="Property1" multiple="multiple" size="6">
+            <option value="DefiniteDeterminer">Definite determiner DO</option>
+            <option value="IndefiniteDeterminer">Indefinite determiner DO</option>
+            <option value="DeonticModality">Deontic modality</option>
+            <option value="EpistemicModality">Epistemic modality</option>
+            <option value="DynamicModality">Dynamic modality</option>
+            <option value="SimplePresent">Simple present</option>
+            <option value="SimplePast">Simple past</option>
+            <option value="Future">Future</option>
+            <option value="Perfect">Perfect</option>
+            <option value="Progressive">Progressive</option>
+            <option value="Passive">Passive with 'be'</option>
+            <option value="EventivePassive">Passive with 'become'</option>
+            <option value="Possessive">Possessive pronoun 'zijn X'</option>
+            <option value="PPPossessive">PP possessive 'de X van Jan'</option>
+            <option value="SaxonPossessive">Saxon possessive 'Jans X'</option>
+            <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
+            <option value="ExternalPossessionS">External possession with S possessor</option>
+            <option value="ExternalPossessionIO">External possession with IO possessor</option>
+            <option value="FutureWorden">Future with 'worden' (Loois)</option>
+            <option value="0">[No value]</option>
+        </select>
+    </div>
+
+    <hr>
+
+    </select>
+    <div>
+        <button type="submit">Search</button>
+        <button type="reset">Reset form</button>
+    </div>
 </form>
 
 {% endblock %}
