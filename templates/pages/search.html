@@ -175,226 +175,230 @@
     <h3>General</h3>
 
     <h3>Manipulations</h3>
-    <div>
-        <label for="property1">Manipulated idiom property</label>
-        <select id="property1" name="Property1" multiple="multiple" size="6">
-            <option value="DefiniteDeterminer">Definite determiner DO</option>
-            <option value="IndefiniteDeterminer">Indefinite determiner DO</option>
-            <option value="DeonticModality">Deontic modality</option>
-            <option value="EpistemicModality">Epistemic modality</option>
-            <option value="DynamicModality">Dynamic modality</option>
-            <option value="SimplePresent">Simple present</option>
-            <option value="SimplePast">Simple past</option>
-            <option value="Future">Future</option>
-            <option value="Perfect">Perfect</option>
-            <option value="Progressive">Progressive</option>
-            <option value="Passive">Passive with 'be'</option>
-            <option value="EventivePassive">Passive with 'become'</option>
-            <option value="Possessive">Possessive pronoun 'zijn X'</option>
-            <option value="PPPossessive">PP possessive 'de X van Jan'</option>
-            <option value="SaxonPossessive">Saxon possessive 'Jans X'</option>
-            <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
-            <option value="ExternalPossessionS">External possession with S possessor</option>
-            <option value="ExternalPossessionIO">External possession with IO possessor</option>
-            <option value="FutureWorden">Future with 'worden' (Loois)</option>
-            <option value="0">[No value]</option>
-        </select>
-    </div>
 
-    <div>
-        <label for="DeterminerManipulations">Determiner manipulation</label>
-        <select id="DeterminerManipulations" name="DeterminerManipulations" multiple="multiple" size="6">
-            <option value="Passive">Passive with 'be'</option>
-            <option value="EventivePassive">Passive with 'become'</option>
-            <option value="Active">Active</option>
-            <option value="DefiniteDeterminer">Definite determiner</option>
-            <option value="IndefiniteDeterminer">Indefinite determiner</option>
-            <option value="Demonstrative">Demonstrative</option>
-            <option value="Quantifier">Quantifier </option>
-            <option value="AlternativeQuantifier">Alternative quantifier</option>
-            <option value="Possessive">Possessive pronoun</option>
-            <option value="BareNoun">Bare noun</option>
-            <option value="BarePlural">Bare plural</option>
-            <option value="IdiomaticModification">Idiomatic modification</option>
-            <option value="LiteralModification">Literal modification</option>
-            <option value="AlternativeModification">Alternative modification</option>
-            <option value="ExternalModification">External modification</option>
-            <option value="DeterminerDrop">Determiner drop</option>
-            <option value="DeterminerDropDefiniteDetermin">Determiner drop + definite determiner</option>
-            <option value="DeterminerDropIndefiniteDeterm">Determiner drop + indefinite determiner</option>
-            <option value="DeterminerDropDemonstrative">Determiner drop + demonstrative</option>
-            <option value="DeterminerDropPossessive">Determiner drop + possessive</option>
-            <option value="TopicalizationDP">Topicalization of DP</option>
-            <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-            <option value="TopicalizationDPAP">Topicalization of DP with AP</option>
-            <option value="TopicalizationPP">Topicalization of PP</option>
-            <option value="TopicalizationVP">Topicalization of VP</option>
-            <option value="TopicalizationAdvP">Topicalization of AdvP</option>
-            <option value="0">[No value]</option>
-        </select>
-    </div>
+    <div class="propertiesGroup">
 
-    <div>
-        <label for="ModalityManipulations">Modality manipulation</label>
-        <select id="ModalityManipulations" name="ModalityManipulations" multiple="multiple" size="6">
-            <option value="DeonticModality">Deontic modality</option>
-            <option value="AlternativeDeontic">Alternative deontic modality</option>
-            <option value="DynamicCan">Dynamic modality with can</option>
-            <option value="DynamicWant">Dynamic modality with want</option>
-            <option value="AlternativeDynamic">Alternative dynamic modality</option>
-            <option value="EpistemicModality">Epistemic modality</option>
-            <option value="AlternativeEpistemic">Alternative epistemic modality</option>
-            <option value="EpistemicModalityPerfect">Epistemic modality + perfect</option>
-            <option value="NoModal">No modal</option>
-            <option value="NoModalSimplePresent">No modal + simple present</option>
-            <option value="NoModalSimplePast">No modal + simple past</option>
-            <option value="NoModalFuture">No modal + future</option>
-            <option value="NoModalImperative">No modal + imperative</option>
-            <option value="NoModalEventivePassive">No modal + eventive passive with 'become'</option>
-            <option value="NoModalActive">No modal + active</option>
-            <option value="AlternativeSubject">Alternative subject</option>
-            <option value="AlternativeObject">Alternative object</option>
-            <option value="Passive">Passive with 'be'</option>
-            <option value="EventivePassive">Passive with 'become'</option>
-            <option value="PerfectDoubling">Perfect doubling</option>
-            <option value="Active">Active</option>
-            <option value="TopicalizationDP">Topicalization of DP</option>
-            <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-            <option value="TopicalizationDPDeonticModalit">Topicalization of DP + deontic modality</option>
-            <option value="TopicalizationDPAlternativeNeg">Topicalization of DP + alternative negation</option>
-            <option value="TopicalizationPP">Topicalization of PP</option>
-            <option value="TopicalizationAP">Topicalization of AP</option>
-            <option value="TopicalizationAdvP">Topicalization of AdvP</option>
-            <option value="TopicalizationVP">Topicalization of VP</option>
-            <option value="TopicalizationR">Topicalization of the R-pronoun</option>
-            <option value="0">[No value]</option>
-        </select>
-    </div>
+        <div>
+            <label for="property1">Manipulated idiom property</label>
+            <select id="property1" name="Property1" multiple="multiple" size="6">
+                <option value="DefiniteDeterminer">Definite determiner DO</option>
+                <option value="IndefiniteDeterminer">Indefinite determiner DO</option>
+                <option value="DeonticModality">Deontic modality</option>
+                <option value="EpistemicModality">Epistemic modality</option>
+                <option value="DynamicModality">Dynamic modality</option>
+                <option value="SimplePresent">Simple present</option>
+                <option value="SimplePast">Simple past</option>
+                <option value="Future">Future</option>
+                <option value="Perfect">Perfect</option>
+                <option value="Progressive">Progressive</option>
+                <option value="Passive">Passive with 'be'</option>
+                <option value="EventivePassive">Passive with 'become'</option>
+                <option value="Possessive">Possessive pronoun 'zijn X'</option>
+                <option value="PPPossessive">PP possessive 'de X van Jan'</option>
+                <option value="SaxonPossessive">Saxon possessive 'Jans X'</option>
+                <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
+                <option value="ExternalPossessionS">External possession with S possessor</option>
+                <option value="ExternalPossessionIO">External possession with IO possessor</option>
+                <option value="FutureWorden">Future with 'worden' (Loois)</option>
+                <option value="0">[No value]</option>
+            </select>
+        </div>
 
-    <div>
-        <label for="PossessiveManipulations">Possessive construction manipulation</label>
-        <select id="PossessiveManipulations" name="PossessiveManipulations" multiple="multiple" size="6">
-            <option value="Possessive">Possessive pronoun</option>
-            <option value="PPPossessive">PP possessive</option>
-            <option value="SaxonPossessive">Saxon possessive</option>
-            <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
-            <option value="PossessiveDPPP">Possessive DP + PP</option>
-            <option value="ExternalPossessionS">External possession with S possessor</option>
-            <option value="ExternalPossessionSPossessiveD">External possession with S possessor + possessive DP</option>
-            <option value="ExternalPossessionIO">External possession with IO possessor</option>
-            <option value="ExternalPossessionIODeterminer">External possession with IO possessor + determiner drop</option>
-            <option value="TopicalizationDP">Topicalization of DP</option>
-            <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-            <option value="TopicalizationPP">Topicalization of PP</option>
-            <option value="0">[No value]</option>
-        </select>
-    </div>
+        <div>
+            <label for="DeterminerManipulations">Determiner manipulation</label>
+            <select id="DeterminerManipulations" name="DeterminerManipulations" multiple="multiple" size="6">
+                <option value="Passive">Passive with 'be'</option>
+                <option value="EventivePassive">Passive with 'become'</option>
+                <option value="Active">Active</option>
+                <option value="DefiniteDeterminer">Definite determiner</option>
+                <option value="IndefiniteDeterminer">Indefinite determiner</option>
+                <option value="Demonstrative">Demonstrative</option>
+                <option value="Quantifier">Quantifier </option>
+                <option value="AlternativeQuantifier">Alternative quantifier</option>
+                <option value="Possessive">Possessive pronoun</option>
+                <option value="BareNoun">Bare noun</option>
+                <option value="BarePlural">Bare plural</option>
+                <option value="IdiomaticModification">Idiomatic modification</option>
+                <option value="LiteralModification">Literal modification</option>
+                <option value="AlternativeModification">Alternative modification</option>
+                <option value="ExternalModification">External modification</option>
+                <option value="DeterminerDrop">Determiner drop</option>
+                <option value="DeterminerDropDefiniteDetermin">Determiner drop + definite determiner</option>
+                <option value="DeterminerDropIndefiniteDeterm">Determiner drop + indefinite determiner</option>
+                <option value="DeterminerDropDemonstrative">Determiner drop + demonstrative</option>
+                <option value="DeterminerDropPossessive">Determiner drop + possessive</option>
+                <option value="TopicalizationDP">Topicalization of DP</option>
+                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                <option value="TopicalizationDPAP">Topicalization of DP with AP</option>
+                <option value="TopicalizationPP">Topicalization of PP</option>
+                <option value="TopicalizationVP">Topicalization of VP</option>
+                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
+                <option value="0">[No value]</option>
+            </select>
+        </div>
 
-    <div>
-        <label for="ExternalPossessionManipulation">External possession construction manipulation</label>
-        <select id="ExternalPossessionManipulation" name="ExternalPossessionManipulation" multiple="multiple" size="6">
-            <option value="NoIO">No IO</option>
-            <option value="NoIODeterminerDrop">No IO + determiner drop</option>
-            <option value="NoIODeterminerDropPP">No IO + determiner drop with PP</option>
-            <option value="NoIONoPossessivePP">No IO + no possessive PP</option>
-            <option value="NoIOPossessiveDP">No IO + possessive DP</option>
-            <option value="NoIOPossessiveDPDeterminerDrop">No IO + possessive DP + determiner drop with PP</option>
-            <option value="NoIOPossessiveDPNoPossessivePP">No IO + possessive DP + no possessive PP</option>
-            <option value="NoIOPossessiveDPPP">No IO + possessive DP + PP</option>
-            <option value="NoIOPossessivePP">No IO + possessive PP</option>
-            <option value="ExternalPossessionIO">External possession with IO possessor</option>
-            <option value="ExternalPossessionIONoPossessi">External possession with IO possessor + no possessive PP</option>
-            <option value="BareNoun">Bare noun</option>
-            <option value="PossessiveDP">Possessive DP</option>
-            <option value="PossessiveDPDeterminerDropPP">Possessive DP + determiner drop with PP</option>
-            <option value="PossessiveDPNoPossessivePP">Possessive DP + no possessive PP</option>
-            <option value="PossessiveDPPP">Possessive DP + PP</option>
-            <option value="PossessivePP">Possessive PP</option>
-            <option value="PossessivePPDeterminerDropPP2">Possessive PP + determiner drop with PP2</option>
-            <option value="PossessivePPPP2">Possessive PP + PP2</option>
-            <option value="PossessivePP2">Possessive PP2</option>
-            <option value="NoPossessivePP">No possessive PP</option>
-            <option value="DeterminerDropDP">Determiner drop with DP</option>
-            <option value="DeterminerDropDPPP">Determiner drop with DP + PP</option>
-            <option value="DeterminerDropPP">Determiner drop with PP</option>
-            <option value="DeterminerDropPP2">Determiner drop with PP2</option>
-            <option value="DeterminerDropPPPP2">Determiner drop with PP + PP2</option>
-            <option value="DeterminerDropPPPossessivePP2">Determiner drop with PP + possessive PP2</option>
-            <option value="Reflexive">Reflexive</option>
-            <option value="ReflexivePossessiveDP">Reflexive + possessive DP</option>
-            <option value="ReflexivePossessivePP">Reflexive + possessive PP</option>
-            <option value="NoReflexive">No reflexive</option>
-            <option value="NoReflexivePossessiveDP">No reflexive + possessive DP</option>
-            <option value="NoReflexivePossessiveDPPP">No reflexive + possessive DP + PP</option>
-            <option value="NoReflexivePossessivePP">No reflexive + possessive PP</option>
-            <option value="TopicalizationDP">Topicalization of DP</option>
-            <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-            <option value="TopicalizationDPAP">Topicalization of DP with AP</option>
-            <option value="TopicalizationDPAdvP">Topicalization of DP with AdvP</option>
-            <option value="TopicalizationDPInf">Topicalization of DP with infinitival clause</option>
-            <option value="TopicalizationIO">Topicalization of the IO DP</option>
-            <option value="TopicalizationPP">Topicalization of PP</option>
-            <option value="TopicalizationPP2">Topicalization of PP2</option>
-            <option value="TopicalizationPPPP2">Topicalization of PP with PP2</option>
-            <option value="TopicalizationPPAP">Topicalization of PP with AP</option>
-            <option value="TopicalizationAdvP">Topicalization of AdvP</option>
-            <option value="TopicalizationAdvPPP">Topicalization of AdvP with PP</option>
-            <option value="TopicalizationInf">Topicalization of the infinitival clause</option>
-            <option value="TopicalizationRAdvP">Topicalization of the R-pronoun with AdvP</option>
-            <option value="0">[No value]</option>
-        </select>
-    </div>
+        <div>
+            <label for="ModalityManipulations">Modality manipulation</label>
+            <select id="ModalityManipulations" name="ModalityManipulations" multiple="multiple" size="6">
+                <option value="DeonticModality">Deontic modality</option>
+                <option value="AlternativeDeontic">Alternative deontic modality</option>
+                <option value="DynamicCan">Dynamic modality with can</option>
+                <option value="DynamicWant">Dynamic modality with want</option>
+                <option value="AlternativeDynamic">Alternative dynamic modality</option>
+                <option value="EpistemicModality">Epistemic modality</option>
+                <option value="AlternativeEpistemic">Alternative epistemic modality</option>
+                <option value="EpistemicModalityPerfect">Epistemic modality + perfect</option>
+                <option value="NoModal">No modal</option>
+                <option value="NoModalSimplePresent">No modal + simple present</option>
+                <option value="NoModalSimplePast">No modal + simple past</option>
+                <option value="NoModalFuture">No modal + future</option>
+                <option value="NoModalImperative">No modal + imperative</option>
+                <option value="NoModalEventivePassive">No modal + eventive passive with 'become'</option>
+                <option value="NoModalActive">No modal + active</option>
+                <option value="AlternativeSubject">Alternative subject</option>
+                <option value="AlternativeObject">Alternative object</option>
+                <option value="Passive">Passive with 'be'</option>
+                <option value="EventivePassive">Passive with 'become'</option>
+                <option value="PerfectDoubling">Perfect doubling</option>
+                <option value="Active">Active</option>
+                <option value="TopicalizationDP">Topicalization of DP</option>
+                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                <option value="TopicalizationDPDeonticModalit">Topicalization of DP + deontic modality</option>
+                <option value="TopicalizationDPAlternativeNeg">Topicalization of DP + alternative negation</option>
+                <option value="TopicalizationPP">Topicalization of PP</option>
+                <option value="TopicalizationAP">Topicalization of AP</option>
+                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
+                <option value="TopicalizationVP">Topicalization of VP</option>
+                <option value="TopicalizationR">Topicalization of the R-pronoun</option>
+                <option value="0">[No value]</option>
+            </select>
+        </div>
 
-    <div>
-        <label for="FutureWordenManipulations">Future with 'worden' construction manipulation</label>
-        <select id="FutureWordenManipulations" name="FutureWordenManipulations" multiple="multiple" size="6">
-            <option value="NoWorden">No 'worden'</option>
-            <option value="NoWordenSimplePresent">No 'worden' + simple present</option>
-            <option value="WordenSimplePresent">'Worden' + infinitive</option>
-            <option value="WordenParticiple">Future with 'worden' + participle</option>
-            <option value="FutureZijn">Future wtih 'zijn'</option>
-            <option value="AlternativeFuture">Alternative future</option>
-            <option value="SimplePresent">Simple present</option>
-            <option value="DeonticModality">Deontic modality</option>
-            <option value="EpistemicModality">Epistemic modality</option>
-            <option value="DynamicCan">Dynamic modality with can</option>
-            <option value="DynamicWant">Dynamic modality with want</option>
-            <option value="Passive">Passive with 'be'</option>
-            <option value="TopicalizationDP">Topicalization of DP</option>
-            <option value="0">[No value]</option>
-        </select>
-    </div>
+        <div>
+            <label for="PossessiveManipulations">Possessive construction manipulation</label>
+            <select id="PossessiveManipulations" name="PossessiveManipulations" multiple="multiple" size="6">
+                <option value="Possessive">Possessive pronoun</option>
+                <option value="PPPossessive">PP possessive</option>
+                <option value="SaxonPossessive">Saxon possessive</option>
+                <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
+                <option value="PossessiveDPPP">Possessive DP + PP</option>
+                <option value="ExternalPossessionS">External possession with S possessor</option>
+                <option value="ExternalPossessionSPossessiveD">External possession with S possessor + possessive DP</option>
+                <option value="ExternalPossessionIO">External possession with IO possessor</option>
+                <option value="ExternalPossessionIODeterminer">External possession with IO possessor + determiner drop</option>
+                <option value="TopicalizationDP">Topicalization of DP</option>
+                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                <option value="TopicalizationPP">Topicalization of PP</option>
+                <option value="0">[No value]</option>
+            </select>
+        </div>
 
-    <div>
-        <label for="TenseVoiceAspectManipulations">Tense/voice/aspect manipulation</label>
-        <select id="TenseVoiceAspectManipulations" name="TenseVoiceAspectManipulations" multiple="multiple" size="6">
-            <option value="SimplePresent">Simple present</option>
-            <option value="SimplePast">Simple past</option>
-            <option value="Future">Future</option>
-            <option value="AlternativeFuture">Alternative future</option>
-            <option value="SimplePresentAlternativeObject">Simple present + alternative object</option>
-            <option value="Perfect">Perfect</option>
-            <option value="PastPerfect">Past perfect</option>
-            <option value="PerfectDoubling">Perfect doubling</option>
-            <option value="AlternativeProgressive">Alternative progressive</option>
-            <option value="AlternativeSubject">Alternative subject</option>
-            <option value="AlternativeObject">Alternative object</option>
-            <option value="AlternativeVerb">Alternative verb</option>
-            <option value="Passive">Passive with 'be'</option>
-            <option value="EventivePassive">Passive with 'become'</option>
-            <option value="Active">Active</option>
-            <option value="IPP">Infinitivus pro participio (IPP)</option>
-            <option value="TopicalizationDP">Topicalization of DP</option>
-            <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-            <option value="TopicalizationDPAlternativeNeg">Topicalization of DP + alternative negation</option>
-            <option value="TopicalizationPP">Topicalization of PP</option>
-            <option value="TopicalizationAP">Topicalization of AP</option>
-            <option value="TopicalizationAdvP">Topicalization of AdvP</option>
-            <option value="TopicalizationAdvPPP">Topicalization of AdvP with PP</option>
-            <option value="TopicalizationVP">Topicalization of VP</option>
-            <option value="TopicalizationInf">Topicalization of the infinitival clause</option>
-            <option value="0">[No value]</option>
-        </select>
+        <div>
+            <label for="ExternalPossessionManipulation">External possession construction manipulation</label>
+            <select id="ExternalPossessionManipulation" name="ExternalPossessionManipulation" multiple="multiple" size="6">
+                <option value="NoIO">No IO</option>
+                <option value="NoIODeterminerDrop">No IO + determiner drop</option>
+                <option value="NoIODeterminerDropPP">No IO + determiner drop with PP</option>
+                <option value="NoIONoPossessivePP">No IO + no possessive PP</option>
+                <option value="NoIOPossessiveDP">No IO + possessive DP</option>
+                <option value="NoIOPossessiveDPDeterminerDrop">No IO + possessive DP + determiner drop with PP</option>
+                <option value="NoIOPossessiveDPNoPossessivePP">No IO + possessive DP + no possessive PP</option>
+                <option value="NoIOPossessiveDPPP">No IO + possessive DP + PP</option>
+                <option value="NoIOPossessivePP">No IO + possessive PP</option>
+                <option value="ExternalPossessionIO">External possession with IO possessor</option>
+                <option value="ExternalPossessionIONoPossessi">External possession with IO possessor + no possessive PP</option>
+                <option value="BareNoun">Bare noun</option>
+                <option value="PossessiveDP">Possessive DP</option>
+                <option value="PossessiveDPDeterminerDropPP">Possessive DP + determiner drop with PP</option>
+                <option value="PossessiveDPNoPossessivePP">Possessive DP + no possessive PP</option>
+                <option value="PossessiveDPPP">Possessive DP + PP</option>
+                <option value="PossessivePP">Possessive PP</option>
+                <option value="PossessivePPDeterminerDropPP2">Possessive PP + determiner drop with PP2</option>
+                <option value="PossessivePPPP2">Possessive PP + PP2</option>
+                <option value="PossessivePP2">Possessive PP2</option>
+                <option value="NoPossessivePP">No possessive PP</option>
+                <option value="DeterminerDropDP">Determiner drop with DP</option>
+                <option value="DeterminerDropDPPP">Determiner drop with DP + PP</option>
+                <option value="DeterminerDropPP">Determiner drop with PP</option>
+                <option value="DeterminerDropPP2">Determiner drop with PP2</option>
+                <option value="DeterminerDropPPPP2">Determiner drop with PP + PP2</option>
+                <option value="DeterminerDropPPPossessivePP2">Determiner drop with PP + possessive PP2</option>
+                <option value="Reflexive">Reflexive</option>
+                <option value="ReflexivePossessiveDP">Reflexive + possessive DP</option>
+                <option value="ReflexivePossessivePP">Reflexive + possessive PP</option>
+                <option value="NoReflexive">No reflexive</option>
+                <option value="NoReflexivePossessiveDP">No reflexive + possessive DP</option>
+                <option value="NoReflexivePossessiveDPPP">No reflexive + possessive DP + PP</option>
+                <option value="NoReflexivePossessivePP">No reflexive + possessive PP</option>
+                <option value="TopicalizationDP">Topicalization of DP</option>
+                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                <option value="TopicalizationDPAP">Topicalization of DP with AP</option>
+                <option value="TopicalizationDPAdvP">Topicalization of DP with AdvP</option>
+                <option value="TopicalizationDPInf">Topicalization of DP with infinitival clause</option>
+                <option value="TopicalizationIO">Topicalization of the IO DP</option>
+                <option value="TopicalizationPP">Topicalization of PP</option>
+                <option value="TopicalizationPP2">Topicalization of PP2</option>
+                <option value="TopicalizationPPPP2">Topicalization of PP with PP2</option>
+                <option value="TopicalizationPPAP">Topicalization of PP with AP</option>
+                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
+                <option value="TopicalizationAdvPPP">Topicalization of AdvP with PP</option>
+                <option value="TopicalizationInf">Topicalization of the infinitival clause</option>
+                <option value="TopicalizationRAdvP">Topicalization of the R-pronoun with AdvP</option>
+                <option value="0">[No value]</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="FutureWordenManipulations">Future with 'worden' construction manipulation</label>
+            <select id="FutureWordenManipulations" name="FutureWordenManipulations" multiple="multiple" size="6">
+                <option value="NoWorden">No 'worden'</option>
+                <option value="NoWordenSimplePresent">No 'worden' + simple present</option>
+                <option value="WordenSimplePresent">'Worden' + infinitive</option>
+                <option value="WordenParticiple">Future with 'worden' + participle</option>
+                <option value="FutureZijn">Future wtih 'zijn'</option>
+                <option value="AlternativeFuture">Alternative future</option>
+                <option value="SimplePresent">Simple present</option>
+                <option value="DeonticModality">Deontic modality</option>
+                <option value="EpistemicModality">Epistemic modality</option>
+                <option value="DynamicCan">Dynamic modality with can</option>
+                <option value="DynamicWant">Dynamic modality with want</option>
+                <option value="Passive">Passive with 'be'</option>
+                <option value="TopicalizationDP">Topicalization of DP</option>
+                <option value="0">[No value]</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="TenseVoiceAspectManipulations">Tense/voice/aspect manipulation</label>
+            <select id="TenseVoiceAspectManipulations" name="TenseVoiceAspectManipulations" multiple="multiple" size="6">
+                <option value="SimplePresent">Simple present</option>
+                <option value="SimplePast">Simple past</option>
+                <option value="Future">Future</option>
+                <option value="AlternativeFuture">Alternative future</option>
+                <option value="SimplePresentAlternativeObject">Simple present + alternative object</option>
+                <option value="Perfect">Perfect</option>
+                <option value="PastPerfect">Past perfect</option>
+                <option value="PerfectDoubling">Perfect doubling</option>
+                <option value="AlternativeProgressive">Alternative progressive</option>
+                <option value="AlternativeSubject">Alternative subject</option>
+                <option value="AlternativeObject">Alternative object</option>
+                <option value="AlternativeVerb">Alternative verb</option>
+                <option value="Passive">Passive with 'be'</option>
+                <option value="EventivePassive">Passive with 'become'</option>
+                <option value="Active">Active</option>
+                <option value="IPP">Infinitivus pro participio (IPP)</option>
+                <option value="TopicalizationDP">Topicalization of DP</option>
+                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                <option value="TopicalizationDPAlternativeNeg">Topicalization of DP + alternative negation</option>
+                <option value="TopicalizationPP">Topicalization of PP</option>
+                <option value="TopicalizationAP">Topicalization of AP</option>
+                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
+                <option value="TopicalizationAdvPPP">Topicalization of AdvP with PP</option>
+                <option value="TopicalizationVP">Topicalization of VP</option>
+                <option value="TopicalizationInf">Topicalization of the infinitival clause</option>
+                <option value="0">[No value]</option>
+            </select>
+        </div>
     </div>
 
     <hr>
