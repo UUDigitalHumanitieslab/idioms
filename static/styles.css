@@ -57,7 +57,7 @@ a:hover {
 }
 
 .table-cell.properties {
-    width: 13ch;
+    text-align: center;
 }
 
 .table-head {
