@@ -121,6 +121,7 @@ def build_search_idioms_sql(args):
              AND sd.sentence = spc.sentence_id
         )
         """
+    # Table "strategy" refers to idioms, therefore table alias "i"
     count_query = f"""SELECT count(DISTINCT strategy_id) as cnt
         FROM strategy i
         JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
