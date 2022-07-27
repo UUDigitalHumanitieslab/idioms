@@ -124,12 +124,12 @@ def build_search_idioms_sql(args):
     # Table "strategy" refers to idioms, therefore table alias "i"
     count_query = f"""SELECT count(DISTINCT strategy_id) as cnt
         FROM strategy i
-        JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+        LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
         WHERE {wheres_str};"""
     main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
         strategy_id, strategy_name, strategy_description
     FROM strategy i
-    JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+    LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
     WHERE {wheres_str}
     GROUP BY strategy_id, strategy_name, strategy_description
     ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
