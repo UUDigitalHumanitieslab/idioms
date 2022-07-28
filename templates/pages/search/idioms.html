@@ -8,18 +8,20 @@
 
 {% if args %}
 
-    {% set count_query, main_query = build_search_idioms_sql(args) %}
+    {% set count_query, main_query, wheres_values = build_search_idioms_sql(args) %}
 
     {% if args.get('_trace') == '1' %}
         <div style="border:1px solid;padding:.5em;margin:.5em;">
             <pre>{{ args }}</pre>
             <hr>
             <pre>{{ main_query }}</pre>
+            <hr>
+            <pre>{{ wheres_values }}</pre>
         </div>
     {% endif %}
 
     <p>
-        {{ sql(count_query)[0].cnt }} records found.
+        {{ sql(count_query, wheres_values)[0].cnt }} records found.
     </p>
 
     <div class="table">
@@ -29,7 +31,7 @@
             <div class="table-head">Meaning</div>
     </div>
 
-    {% for row in sql(main_query) %}
+    {% for row in sql(main_query, wheres_values) %}
         <div class="table-row">
             <div class="table-cell">{{ row.row_num }}</div>
             <div class="table-cell"><a href="/idioms/{{ row.strategy_id }}">{{ row.strategy_name }}</a></div>

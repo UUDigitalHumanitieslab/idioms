@@ -30,29 +30,34 @@ def build_search_idioms_sql(args):
         'GenStructure': 'GenStructure1',
         'IdiomNotes': 'IdiomNotes1',
     }
-    wheres = []
+    wheres = [] # A list of where-clause strings
+    wheres_values = [] # A list of values to provide as argument for ?-style SQL parameters
+    # ?-style parameters make it harder to debug long queries;
+    # consider generating numbered parameters for use as :topic-style named parameters.
     for param in args.keys():
         if param in idiom_list_parameters.keys():
             param_sql_id = idiom_list_parameters[param]
             # If url parameter is present there should be a value, but keep the check to be sure
-            param_values = [f"'{v}'" for v in args.getlist(param) if v != '']
+            param_values = [v for v in args.getlist(param) if v != '']
             if len(param_values) > 0:
-                param_values_str = ','.join(param_values)
+                param_placeholders = ','.join(['?' for v in param_values])
                 wheres.append(
                     f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
                         AND sda.parameter_definition_id = '{param_sql_id}'
-                        AND sda.parameter_value COLLATE NOCASE IN ({param_values_str})
+                        AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
                         )""")
+                wheres_values.extend(param_values)
         if param in sentence_list_parameters.keys():
             param_sql_id = sentence_list_parameters[param]
-            param_values = [f"'{v}'" for v in args.getlist(param) if v != '']
+            param_values = [v for v in args.getlist(param) if v != '']
             if len(param_values) > 0:
-                param_values_str = ','.join(param_values)
+                param_placeholders = ','.join(['?' for v in param_values])
                 wheres.append(
                     f"""EXISTS (SELECT 1 FROM sentence_data_all sda WHERE sda.sentence_id = s.sentence_id
                         AND sda.parameter_definition_id = '{param_sql_id}'
-                        AND sda.parameter_value COLLATE NOCASE IN ({param_values_str})
+                        AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
                         )""")
+                wheres_values.extend(param_values)
         if param in idiom_text_parameters.keys():
             param_sql_id = idiom_text_parameters[param]
             # Empty text inputs are always submitted, so have to be filtered out
@@ -65,8 +70,9 @@ def build_search_idioms_sql(args):
                     wheres.append(
                         f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
                             AND sda.parameter_definition_id = '{param_sql_id}'
-                            AND sda.parameter_value LIKE '%{term}%'
+                            AND sda.parameter_value LIKE '%' || ? || '%'
                             )""")
+                    wheres_values.append(term)
                 # Do not handle quotes inside a text parameter: either quoted, or match multiple strings
                 if not '"' in text_param:
                     text_terms = text_param.split(' ')
@@ -74,8 +80,9 @@ def build_search_idioms_sql(args):
                         wheres.append(
                         f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
                             AND sda.parameter_definition_id = '{param_sql_id}'
-                            AND sda.parameter_value LIKE '%{term}%'
+                            AND sda.parameter_value LIKE '%' || ? || '%'
                             )""")
+                        wheres_values.append(term)
 
     if not wheres:
         # Make a valid SQL query in case no WHERE criterion has been added
@@ -134,7 +141,7 @@ def build_search_idioms_sql(args):
     GROUP BY strategy_id, strategy_name, strategy_description
     ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
 
-    return with_clauses + count_query, with_clauses + main_query
+    return with_clauses + count_query, with_clauses + main_query, wheres_values
 
 
 def get_interlinear(interlinear_sentence):
