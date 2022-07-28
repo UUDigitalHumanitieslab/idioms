@@ -1,35 +1,40 @@
 from datasette import hookimpl
 
+
+# Mapping between form submission parameters (name attribute),
+# and parameter identifiers recorded in the database.
+# Keys may be shortened to cut down on URL character length.
+idiom_list_parameters = {
+    'Voice': 'Voice1',
+    'Tense': 'Tense1',
+    'Aspect': 'Aspect1',
+    'Modality': 'Modality1',
+    'OpenPosition': 'OpenPosition1',
+    'OpenAnimacy': 'OpenAnimacy1',
+    'SpecialVerb': 'SpecialVerb1',
+    'DODeterminer': 'DODeterminer1',
+    'Modifier': 'Modifier1',
+    'PossType': 'PossType1',
+    'Alienability': 'Alienability1',
+}
+
+sentence_list_parameters = {
+    'Property1': 'Property1',
+    'DeterminerManipulations': 'DeterminerManipulations1',
+    'ModalityManipulations': 'ModalityManipulations1',
+    'PossessiveManipulations': 'PossessiveManipulations1',
+    'ExternalPossessionManipulation': 'ExternalPossessionManipulation',
+    'FutureWordenManipulations': 'FutureWordenManipulations1',
+    'TenseVoiceAspectManipulations': 'TenseVoiceAspectManipulations1',
+}
+
+idiom_text_parameters = {
+    'GenStructure': 'GenStructure1',
+    'IdiomNotes': 'IdiomNotes1',
+}
+
+
 def build_search_idioms_sql(args):
-    # Mapping between form submission parameters (name attribute),
-    # and parameter identifiers recorded in the database.
-    # Keys may be shortened to cut down on URL character length.
-    idiom_list_parameters = {
-        'Voice': 'Voice1',
-        'Tense': 'Tense1',
-        'Aspect': 'Aspect1',
-        'Modality': 'Modality1',
-        'OpenPosition': 'OpenPosition1',
-        'OpenAnimacy': 'OpenAnimacy1',
-        'SpecialVerb': 'SpecialVerb1',
-        'DODeterminer': 'DODeterminer1',
-        'Modifier': 'Modifier1',
-        'PossType': 'PossType1',
-        'Alienability': 'Alienability1',
-    }
-    sentence_list_parameters = {
-        'Property1': 'Property1',
-        'DeterminerManipulations': 'DeterminerManipulations1',
-        'ModalityManipulations': 'ModalityManipulations1',
-        'PossessiveManipulations': 'PossessiveManipulations1',
-        'ExternalPossessionManipulation': 'ExternalPossessionManipulation',
-        'FutureWordenManipulations': 'FutureWordenManipulations1',
-        'TenseVoiceAspectManipulations': 'TenseVoiceAspectManipulations1',
-    }
-    idiom_text_parameters = {
-        'GenStructure': 'GenStructure1',
-        'IdiomNotes': 'IdiomNotes1',
-    }
     wheres = [] # A list of where-clause strings
     wheres_values = [] # A list of values to provide as argument for ?-style SQL parameters
     # ?-style parameters make it harder to debug long queries;
