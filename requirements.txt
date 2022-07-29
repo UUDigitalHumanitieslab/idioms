@@ -63,6 +63,8 @@ pint==0.19.2
     # via datasette
 pluggy==1.0.0
     # via datasette
+pyparsing==3.0.9
+    # via -r requirements.in
 python-baseconv==1.2.2
     # via datasette
 python-multipart==0.0.5
