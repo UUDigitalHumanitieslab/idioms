@@ -43,7 +43,10 @@ def parse_search_string(user_search_text):
     return phrases
 
 
-def build_search_idioms_sql(args):
+def build_search_sql(args, result_type):
+    """ args is the request.args MultiParams object.
+    result_type: idiom, sentence, or dialect.
+    """
     wheres = [] # A list of where-clause strings
     wheres_values = [] # A list of values to provide as argument for ?-style SQL parameters
     # ?-style parameters make it harder to debug long queries;
@@ -130,18 +133,19 @@ def build_search_idioms_sql(args):
              AND sd.sentence = spc.sentence_id
         )
         """
-    # Table "strategy" refers to idioms, therefore table alias "i"
-    count_query = f"""SELECT count(DISTINCT strategy_id) as cnt
+    if result_type == 'idiom':
+        # Table "strategy" refers to idioms, therefore table alias "i"
+        count_query = f"""SELECT count(DISTINCT strategy_id) as cnt
+            FROM strategy i
+            LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+            WHERE {wheres_str};"""
+        main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
+            strategy_id, strategy_name, strategy_description
         FROM strategy i
         LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
-        WHERE {wheres_str};"""
-    main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
-        strategy_id, strategy_name, strategy_description
-    FROM strategy i
-    LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
-    WHERE {wheres_str}
-    GROUP BY strategy_id, strategy_name, strategy_description
-    ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
+        WHERE {wheres_str}
+        GROUP BY strategy_id, strategy_name, strategy_description
+        ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
 
     return with_clauses + count_query, with_clauses + main_query, wheres_values
 
@@ -161,6 +165,6 @@ def get_interlinear(interlinear_sentence):
 def extra_template_vars(request):
     return {
         "args": request.args,
-        "build_search_idioms_sql": build_search_idioms_sql,
+        "build_search_sql": build_search_sql,
         "get_interlinear": get_interlinear,
     }

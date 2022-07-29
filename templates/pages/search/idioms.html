@@ -8,7 +8,7 @@
 
 {% if args %}
 
-    {% set count_query, main_query, wheres_values = build_search_idioms_sql(args) %}
+    {% set count_query, main_query, wheres_values = build_search_sql(args, 'idiom') %}
 
     {% if args.get('_trace') == '1' %}
         <div style="border:1px solid;padding:.5em;margin:.5em;">
