@@ -133,6 +133,7 @@ def build_search_sql(args, result_type):
              AND sd.sentence = spc.sentence_id
         )
         """
+
     if result_type == 'idiom':
         # Table "strategy" refers to idioms, therefore table alias "i"
         count_query = f"""SELECT count(DISTINCT strategy_id) as cnt
@@ -146,6 +147,19 @@ def build_search_sql(args, result_type):
         WHERE {wheres_str}
         GROUP BY strategy_id, strategy_name, strategy_description
         ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
+
+    if result_type == 'sentence':
+        count_query = f"""SELECT count(DISTINCT sentence_id) as cnt
+            FROM sentence s
+            JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
+            WHERE {wheres_str};"""
+        main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
+            sentence_id, original, gloss, translation, grammaticality,
+            strategy_id, strategy_name, sentence_answerset_id
+        FROM sentence s
+        JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
+        WHERE {wheres_str}
+        ORDER BY sentence_id ASC;"""
 
     return with_clauses + count_query, with_clauses + main_query, wheres_values
 
