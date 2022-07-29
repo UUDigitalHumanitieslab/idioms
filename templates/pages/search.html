@@ -10,23 +10,55 @@
 
 {% block content %}
 <h1>Search</h1>
-<p>Under construction</p>
+
+<p>Under construction. Some inputs which cannot be searched yet are shown as disabled fields.</p>
 
 <form method="get">
-    <h2>Dialect</h2>
 
-    <h2>Idiom</h2>
+    <details>
+
+    <summary>
+        <h2>Dialect</h2>
+    </summary>
+
+    <p>Restrict the search by dialect properties. To select multiple elements in a list, hold down the control key as you click.</p>
+
+    <div>
+        <label for="answerset_id"></label>
+        <select id="answerset_id" name="Dialect" multiple="multiple" size="8" disabled>
+            <option value="Aalsters">Aalsters</option>
+            <option value="Brees">Brees</option>
+            <option value="Brugs">Brugs</option>
+            <option value="Dendermonds">Dendermonds</option>
+            <option value="Deventers">Deventers</option>
+            <option value="Drents">Drents</option>
+            <option value="Groesbeeks">Groesbeeks</option>
+            <option value="Gronings">Hogelandsters</option>
+            <option value="Leeds">Leeds</option>
+            <option value="Leuvens">Leuvens</option>
+            <option value="Loois">Loois</option>
+            <option value="Utrechts">Utrechts</option>
+            <option value="Wambeeks">Wambeeks</option>
+        </select>
+    </div>
+    <hr>
+    </details>
+
+    <details>
+        <summary>
+            <h2>Idiom</h2>
+        </summary>
 
     <p>Restrict the search by idiom properties.</p>
 
     <div>
         <label for="idiom">Idiom</label>
-        <input id="idiom" name="Idiom" type="text" size="50">
+        <input id="idiom" name="Idiom" type="text" size="20" disabled>
     </div>
 
     <div>
         <label for="meaning">Meaning</label>
-        <input id="meaning" name="Meaning" type="text" size="50">
+        <input id="meaning" name="Meaning" type="text" size="20" disabled>
     </div>
 
     <h3>Verbal properties</h3>
@@ -78,7 +110,7 @@
     <div>
         <h4>General structure</h4>
         <label for="genstructure"></label>
-        <input id="genstructure" name="GenStructure" type="text" size="50">
+        <input id="genstructure" name="GenStructure" type="text" size="20">
     </div>
 
     <div class="propertiesGroup">
@@ -119,7 +151,7 @@
 
         <div>
             <label for="dodeterminer">Direct object type</label>
-            <select id="dodeterminer" name="DODeterminer" multiple="multiple" size="14">
+            <select id="dodeterminer" name="DODeterminer" multiple="multiple" size="7">
                 <option value="Definite">Definite</option>
                 <option value="DefinitePlural">Definite plural</option>
                 <option value="DefiniteCoordinated">Definite coordinated</option>
@@ -178,13 +210,42 @@
             <input id="idiomnotes" name="IdiomNotes" type="text" size="50">
         </div>
     </div>
+    <hr>
+    </details>
 
-    <h2>Sentence</h2>
+    <details>
+        <summary>
+            <h2>Sentence</h2>
+        </summary>
 
     <p>Search by words (or substrings) of the sentence text.</p>
-    <p>...</p>
+
+    <div>
+        <label for="sentence_id">Sentence Id</label>
+        <input id="sentence_id" name="SentenceID" type="text" size="50" disabled>
+    </div>
+
+    <div>
+        <label for="original">Original text</label>
+        <input id="original" name="Original" type="text" size="50" disabled>
+    </div>
+
+    <div>
+        <label for="gloss">Gloss</label>
+        <input id="gloss" name="Gloss" type="text" size="50" disabled>
+    </div>
+
+    <div>
+        <label for="translation">Translation</label>
+        <input id="translation" name="Translation" type="text" size="50" disabled>
+    </div>
 
     <h3>General</h3>
+
+    <div>
+        <label for="judgments">Speaker judgments</label>
+        <input id="judgments" name="Judgments" type="text" size="50" disabled>
+    </div>
 
     <h3>Manipulations</h3>
 
@@ -412,11 +473,10 @@
             </select>
         </div>
     </div>
-
     <hr>
+    </details>
 
-    </select>
-    <div>
+    <div class="form-submission">
         <button type="submit" formaction="search/idioms">Search idioms</button>
         <button type="submit" formaction="search/sentences">Search sentences</button>
         <button type="reset">Reset form</button>

@@ -96,6 +96,14 @@ p.translation {
     font-style: italic;
 }
 
+details summary {
+    cursor: pointer;
+  }
+
+details summary > h2 {
+    display: inline;
+}
+
 div.propertiesGroup > div {
     display: inline-block;
     min-width: 12em;
@@ -109,6 +117,15 @@ select, label {
 
 form label {
     width: 100%;
+}
+
+div.form-submission {
+    margin: 1em;
+}
+
+button {
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 ruby {
