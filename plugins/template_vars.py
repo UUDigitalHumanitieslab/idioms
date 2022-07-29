@@ -1,4 +1,5 @@
 from datasette import hookimpl
+from pyparsing import *
 
 
 # Mapping between form submission parameters (name attribute),
@@ -34,6 +35,14 @@ idiom_text_parameters = {
 }
 
 
+def parse_search_string(user_search_text):
+    quoted_string.setParseAction(removeQuotes)
+    word = Word(srange("[a-zA-Z0-9_]"), srange("[a-zA-Z0-9_]"))
+    phrases_pattern = ZeroOrMore(quoted_string) + ZeroOrMore(word)
+    phrases = phrases_pattern.parse_string(user_search_text).asList()
+    return phrases
+
+
 def build_search_idioms_sql(args):
     wheres = [] # A list of where-clause strings
     wheres_values = [] # A list of values to provide as argument for ?-style SQL parameters
@@ -66,28 +75,16 @@ def build_search_idioms_sql(args):
         if param in idiom_text_parameters.keys():
             param_sql_id = idiom_text_parameters[param]
             # Empty text inputs are always submitted, so have to be filtered out
-            text_param = args.get(param) if args.get(param) != '' else None
+            text_param = args.get(param).strip() if args.get(param) != '' else None
             if text_param:
-                text_param = text_param.strip()
-                if text_param.startswith('"') and text_param.endswith('"'):
-                    term = text_param.strip('"')
-                    # A quoted string should be found in a value (not necessarily match the entire value):
+                phrases = parse_search_string(text_param)
+                for phrase in phrases:
                     wheres.append(
-                        f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
-                            AND sda.parameter_definition_id = '{param_sql_id}'
-                            AND sda.parameter_value LIKE '%' || ? || '%'
-                            )""")
-                    wheres_values.append(term)
-                # Do not handle quotes inside a text parameter: either quoted, or match multiple strings
-                if not '"' in text_param:
-                    text_terms = text_param.split(' ')
-                    for term in text_terms:
-                        wheres.append(
-                        f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
-                            AND sda.parameter_definition_id = '{param_sql_id}'
-                            AND sda.parameter_value LIKE '%' || ? || '%'
-                            )""")
-                        wheres_values.append(term)
+                    f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
+                        AND sda.parameter_definition_id = '{param_sql_id}'
+                        AND sda.parameter_value LIKE '%' || ? || '%'
+                        )""")
+                    wheres_values.append(phrase)
 
     if not wheres:
         # Make a valid SQL query in case no WHERE criterion has been added
