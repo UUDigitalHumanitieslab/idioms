@@ -1,0 +1,45 @@
+{% extends "page_base.html" %}
+
+{% block title %}Search results: dialects{% endblock %}
+
+{% block content %}
+
+<h1>Search results: dialects</h1>
+
+{% if args %}
+
+    {% set count_query, main_query, wheres_values = build_search_sql(args, 'dialect') %}
+
+    {% if args.get('_trace') == '1' %}
+        <div style="border:1px solid;padding:.5em;margin:.5em;">
+            <pre>{{ args }}</pre>
+            <hr>
+            <pre>{{ main_query }}</pre>
+            <hr>
+            <pre>{{ wheres_values }}</pre>
+        </div>
+    {% endif %}
+
+    <p>
+        {{ sql(count_query, wheres_values)[0].cnt }} records found.
+    </p>
+
+    <div class="table">
+        <div class="table-row">
+            <div class="table-head"></div>
+            <div class="table-head">Name</div>
+            <div class="table-head">Principal location</div>
+    </div>
+
+    {% for row in sql(main_query, wheres_values) %}
+        <div class="table-row">
+            <div class="table-cell">{{ row.row_num }}</div>
+            <div class="table-cell"><a href="/dialects/{{ row.strategy_answerset_id }}">{{ row.answerset_name }}</a></div>
+            <div class="table-cell">{{ row.answerset_description }}</div>
+        </div>
+    {% endfor %}
+
+    </div>
+{% endif %}
+
+{% endblock %}

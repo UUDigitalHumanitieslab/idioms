@@ -142,6 +142,20 @@ def build_search_sql(args, result_type):
         )
         """
 
+    if result_type == 'dialect':
+        count_query = f"""SELECT count(DISTINCT strategy_answerset_id) as cnt
+            FROM strategy i
+            LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+            JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
+            WHERE {wheres_str};"""
+        main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num, strategy_answerset_id, answerset_name, answerset_description
+        FROM strategy i
+        LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+        JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
+        WHERE {wheres_str}
+        GROUP BY answerset_name
+        ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
+
     if result_type == 'idiom':
         # Table "strategy" refers to idioms, therefore table alias "i"
         count_query = f"""SELECT count(DISTINCT strategy_id) as cnt
