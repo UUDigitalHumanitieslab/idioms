@@ -52,6 +52,14 @@ def build_search_sql(args, result_type):
     # ?-style parameters make it harder to debug long queries;
     # consider generating numbered parameters for use as :topic-style named parameters.
     for param in args.keys():
+        if param == 'Dialect':
+            param_values = [v for v in args.getlist(param) if v != '']
+            if len(param_values) > 0:
+                param_placeholders = ','.join(['?' for v in param_values])
+                wheres.append(
+                    # Filtering on strategy_answerset_id should suffice for both idioms and sentences
+                    f"""strategy_answerset_id IN ({param_placeholders})""")
+                wheres_values.extend(param_values)
         if param in idiom_list_parameters.keys():
             param_sql_id = idiom_list_parameters[param]
             # If url parameter is present there should be a value, but keep the check to be sure
@@ -141,7 +149,7 @@ def build_search_sql(args, result_type):
             LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
             WHERE {wheres_str};"""
         main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
-            strategy_id, strategy_name, strategy_description
+            strategy_id, strategy_name, strategy_description, strategy_answerset_id
         FROM strategy i
         LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
         WHERE {wheres_str}
@@ -155,7 +163,7 @@ def build_search_sql(args, result_type):
             WHERE {wheres_str};"""
         main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
             sentence_id, original, gloss, translation, grammaticality,
-            strategy_id, strategy_name, sentence_answerset_id
+            strategy_id, strategy_name, strategy_answerset_id, sentence_answerset_id
         FROM sentence s
         JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
         WHERE {wheres_str}
