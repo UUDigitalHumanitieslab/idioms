@@ -96,6 +96,15 @@ def build_search_sql(args, result_type):
                         AND sda.parameter_value LIKE '%' || ? || '%'
                         )""")
                     wheres_values.append(phrase)
+        if param == 'Idiom':
+            text_param = args.get(param).strip() if args.get(param) != '' else None
+            if text_param:
+                phrases = parse_search_string(text_param)
+                for phrase in phrases:
+                    wheres.append(
+                        f"strategy_name LIKE '%' || ? || '%'"
+                        )
+                    wheres_values.append(phrase)
 
     if not wheres:
         # Make a valid SQL query in case no WHERE criterion has been added
