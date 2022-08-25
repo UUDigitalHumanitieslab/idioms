@@ -46,6 +46,88 @@ search_text_fields = {
     'Translation': 'translation',
 }
 
+# SQL query constants
+with_clauses = """WITH strategy_parameter_ids AS (
+    SELECT DISTINCT sd.parameter_definition_id
+    FROM strategy_data sd
+    WHERE sd.parameter_definition_id != 'test10'
+    ),
+strategy_parameter_combinations AS (
+    SELECT strategy_id, parameter_definition_id
+    FROM strategy s
+    CROSS JOIN strategy_parameter_ids sp
+    ),
+strategy_data_all AS (
+    -- Note: value_shorttext, value_text, and value_definition_id values are mutually exclusive in the database
+    SELECT spc.strategy_id, spc.parameter_definition_id,
+        IFNULL(COALESCE(sd.value_shorttext, sd.value_text, sd.value_definition_id), '0') AS parameter_value
+    FROM strategy_parameter_combinations spc
+    LEFT JOIN strategy_data sd
+        ON sd.parameter_definition_id = spc.parameter_definition_id
+            AND sd.strategy = spc.strategy_id
+    ),
+sentence_parameter_ids AS (
+    SELECT DISTINCT sd.parameter_definition_id
+    FROM sentence_data sd
+    ),
+sentence_parameter_combinations AS (
+    SELECT s.sentence_id, sp.parameter_definition_id, s.original, s.translation, s.gloss
+    FROM sentence s
+    CROSS JOIN sentence_parameter_ids sp
+    ),
+sentence_data_all AS (
+    -- Note: value_text and value_definition_id values are mutually exclusive in the database
+    SELECT spc.sentence_id, spc.parameter_definition_id,
+        IFNULL(COALESCE(sd.value_text, sd.value_definition_id), '0') AS parameter_value,
+        spc.original
+    FROM sentence_parameter_combinations spc
+    LEFT JOIN sentence_data sd
+        ON sd.parameter_definition_id = spc.parameter_definition_id
+            AND sd.sentence = spc.sentence_id
+    )
+"""
+
+dialect_count_query = """SELECT count(DISTINCT strategy_answerset_id) as cnt
+FROM strategy i
+LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
+WHERE {};"""
+
+dialect_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num, strategy_answerset_id, answerset_name, answerset_description
+FROM strategy i
+LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
+WHERE {}
+GROUP BY answerset_name
+ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
+
+# Table "strategy" refers to idioms, therefore table alias "i"
+idiom_count_query = """SELECT count(DISTINCT strategy_id) as cnt
+FROM strategy i
+LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+WHERE {};"""
+
+idiom_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
+    strategy_id, strategy_name, strategy_description, strategy_answerset_id
+FROM strategy i
+LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
+WHERE {}
+GROUP BY strategy_id, strategy_name, strategy_description
+ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
+
+sentence_count_query = """SELECT count(DISTINCT sentence_id) as cnt
+FROM sentence s
+JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
+WHERE {};"""
+
+sentence_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
+    sentence_id, original, gloss, translation, grammaticality,
+    strategy_id, strategy_name, strategy_answerset_id, sentence_answerset_id
+FROM sentence s
+JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
+WHERE {}
+ORDER BY sentence_id ASC;"""
+
 
 def parse_search_string(user_search_text):
     quoted_string.setParseAction(removeQuotes)
@@ -136,95 +218,27 @@ def build_search_sql(args, result_type):
                 wheres.append(f"sentence_id = ?")
                 wheres_values.append(int_param)
 
-
     if not wheres:
         # Make a valid SQL query in case no WHERE criterion has been added
         wheres.append('1')
 
     wheres_str = '\n AND '.join(wheres)
 
-    with_clauses = f"""WITH strategy_parameter_ids AS (
-        SELECT DISTINCT sd.parameter_definition_id
-        FROM strategy_data sd
-        WHERE sd.parameter_definition_id != 'test10'
-        ),
-    strategy_parameter_combinations AS (
-        SELECT strategy_id, parameter_definition_id
-        FROM strategy s
-        CROSS JOIN strategy_parameter_ids sp
-        ),
-    strategy_data_all AS (
-        -- Note: value_shorttext, value_text, and value_definition_id values are mutually exclusive in the database
-        SELECT spc.strategy_id, spc.parameter_definition_id,
-            IFNULL(COALESCE(sd.value_shorttext, sd.value_text, sd.value_definition_id), '0') AS parameter_value
-        FROM strategy_parameter_combinations spc
-        LEFT JOIN strategy_data sd
-            ON sd.parameter_definition_id = spc.parameter_definition_id
-             AND sd.strategy = spc.strategy_id
-        ),
-    sentence_parameter_ids AS (
-        SELECT DISTINCT sd.parameter_definition_id
-        FROM sentence_data sd
-        ),
-    sentence_parameter_combinations AS (
-        SELECT s.sentence_id, sp.parameter_definition_id, s.original, s.translation, s.gloss
-        FROM sentence s
-        CROSS JOIN sentence_parameter_ids sp
-        ),
-    sentence_data_all AS (
-        -- Note: value_text and value_definition_id values are mutually exclusive in the database
-        SELECT spc.sentence_id, spc.parameter_definition_id,
-            IFNULL(COALESCE(sd.value_text, sd.value_definition_id), '0') AS parameter_value,
-            spc.original
-        FROM sentence_parameter_combinations spc
-        LEFT JOIN sentence_data sd
-            ON sd.parameter_definition_id = spc.parameter_definition_id
-             AND sd.sentence = spc.sentence_id
-        )
-        """
-
     if result_type == 'dialect':
-        count_query = f"""SELECT count(DISTINCT strategy_answerset_id) as cnt
-            FROM strategy i
-            LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
-            JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
-            WHERE {wheres_str};"""
-        main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num, strategy_answerset_id, answerset_name, answerset_description
-        FROM strategy i
-        LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
-        JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
-        WHERE {wheres_str}
-        GROUP BY answerset_name
-        ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
+        count_query = dialect_count_query.format(wheres_str)
+        main_query = dialect_main_query.format(wheres_str)
 
     if result_type == 'idiom':
-        # Table "strategy" refers to idioms, therefore table alias "i"
-        count_query = f"""SELECT count(DISTINCT strategy_id) as cnt
-            FROM strategy i
-            LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
-            WHERE {wheres_str};"""
-        main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
-            strategy_id, strategy_name, strategy_description, strategy_answerset_id
-        FROM strategy i
-        LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
-        WHERE {wheres_str}
-        GROUP BY strategy_id, strategy_name, strategy_description
-        ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
+        count_query = idiom_count_query.format(wheres_str)
+        main_query = idiom_main_query.format(wheres_str)
 
     if result_type == 'sentence':
-        count_query = f"""SELECT count(DISTINCT sentence_id) as cnt
-            FROM sentence s
-            JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
-            WHERE {wheres_str};"""
-        main_query = f"""SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
-            sentence_id, original, gloss, translation, grammaticality,
-            strategy_id, strategy_name, strategy_answerset_id, sentence_answerset_id
-        FROM sentence s
-        JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
-        WHERE {wheres_str}
-        ORDER BY sentence_id ASC;"""
+        count_query = sentence_count_query.format(wheres_str)
+        main_query = sentence_main_query.format(wheres_str)
 
-    return with_clauses + count_query, with_clauses + main_query, wheres_values
+    return with_clauses + count_query, \
+           with_clauses + main_query, \
+           wheres_values
 
 
 def get_interlinear(interlinear_sentence):
