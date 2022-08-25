@@ -33,6 +33,11 @@ idiom_text_parameters = {
     'GenStructure': 'GenStructure1',
     'IdiomNotes': 'IdiomNotes1',
 }
+
+sentence_text_parameters = {
+    'Judgments': 's:judgments1',
+}
+
 search_text_fields = {
     'Idiom': 'strategy_name',
     'Meaning': 'strategy_description',
@@ -99,6 +104,18 @@ def build_search_sql(args, result_type):
                 for phrase in phrases:
                     wheres.append(
                     f"""EXISTS (SELECT 1 FROM strategy_data_all sda WHERE sda.strategy_id = i.strategy_id
+                        AND sda.parameter_definition_id = '{param_sql_id}'
+                        AND sda.parameter_value LIKE '%' || ? || '%'
+                        )""")
+                    wheres_values.append(phrase)
+        if param in sentence_text_parameters.keys():
+            param_sql_id = sentence_text_parameters[param]
+            text_param = args.get(param).strip() if args.get(param) != '' else None
+            if text_param:
+                phrases = parse_search_string(text_param)
+                for phrase in phrases:
+                    wheres.append(
+                    f"""EXISTS (SELECT 1 FROM sentence_data_all sda WHERE sda.sentence_id = s.sentence_id
                         AND sda.parameter_definition_id = '{param_sql_id}'
                         AND sda.parameter_value LIKE '%' || ? || '%'
                         )""")
