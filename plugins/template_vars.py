@@ -33,6 +33,10 @@ idiom_text_parameters = {
     'GenStructure': 'GenStructure1',
     'IdiomNotes': 'IdiomNotes1',
 }
+search_text_fields = {
+    'Idiom': 'strategy_name',
+    'Meaning': 'strategy_description',
+}
 
 
 def parse_search_string(user_search_text):
@@ -96,15 +100,17 @@ def build_search_sql(args, result_type):
                         AND sda.parameter_value LIKE '%' || ? || '%'
                         )""")
                     wheres_values.append(phrase)
-        if param == 'Idiom':
+        if param in search_text_fields.keys():
+            param_text_field = search_text_fields[param]
             text_param = args.get(param).strip() if args.get(param) != '' else None
             if text_param:
                 phrases = parse_search_string(text_param)
                 for phrase in phrases:
                     wheres.append(
-                        f"strategy_name LIKE '%' || ? || '%'"
+                        f"{param_text_field} LIKE '%' || ? || '%'"
                         )
                     wheres_values.append(phrase)
+
 
     if not wheres:
         # Make a valid SQL query in case no WHERE criterion has been added
