@@ -36,6 +36,9 @@ idiom_text_parameters = {
 search_text_fields = {
     'Idiom': 'strategy_name',
     'Meaning': 'strategy_description',
+    'Original': 'original',
+    'Gloss': 'gloss',
+    'Translation': 'translation',
 }
 
 
@@ -142,14 +145,15 @@ def build_search_sql(args, result_type):
         FROM sentence_data sd
         ),
     sentence_parameter_combinations AS (
-        SELECT sentence_id, parameter_definition_id
+        SELECT s.sentence_id, sp.parameter_definition_id, s.original, s.translation, s.gloss
         FROM sentence s
         CROSS JOIN sentence_parameter_ids sp
         ),
     sentence_data_all AS (
         -- Note: value_text and value_definition_id values are mutually exclusive in the database
         SELECT spc.sentence_id, spc.parameter_definition_id,
-            IFNULL(COALESCE(sd.value_text, sd.value_definition_id), '0') AS parameter_value
+            IFNULL(COALESCE(sd.value_text, sd.value_definition_id), '0') AS parameter_value,
+            spc.original
         FROM sentence_parameter_combinations spc
         LEFT JOIN sentence_data sd
             ON sd.parameter_definition_id = spc.parameter_definition_id
