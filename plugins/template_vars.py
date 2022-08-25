@@ -115,8 +115,9 @@ def build_search_sql(args, result_type):
                     wheres_values.append(phrase)
         if param == 'SentenceID':
             int_param = args.get(param) if args.get(param) != '' and args.get(param).isdigit else None
-            wheres.append(f"sentence_id = ?")
-            wheres_values.append(int_param)
+            if int_param:
+                wheres.append(f"sentence_id = ?")
+                wheres_values.append(int_param)
 
 
     if not wheres:
