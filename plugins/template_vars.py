@@ -93,7 +93,8 @@ LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
 JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
 WHERE {};"""
 
-dialect_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num, strategy_answerset_id, answerset_name, answerset_description
+dialect_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
+ strategy_answerset_id, answerset_name, answerset_description
 FROM strategy i
 LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
 JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
@@ -108,7 +109,7 @@ LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
 WHERE {};"""
 
 idiom_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
-    strategy_id, strategy_name, strategy_description, strategy_answerset_id
+ strategy_id, strategy_name, strategy_description, strategy_answerset_id
 FROM strategy i
 LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
 WHERE {}
@@ -121,8 +122,8 @@ JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
 WHERE {};"""
 
 sentence_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
-    sentence_id, original, gloss, translation, grammaticality,
-    strategy_id, strategy_name, strategy_answerset_id, sentence_answerset_id
+ sentence_id, original, gloss, translation, grammaticality,
+ strategy_id, strategy_name, strategy_answerset_id, sentence_answerset_id
 FROM sentence s
 JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
 WHERE {}
