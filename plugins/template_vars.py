@@ -2,10 +2,14 @@ from datasette import hookimpl
 from pyparsing import *
 
 
-# Mapping between form submission parameters (name attribute),
+def dict_and_keyset(dictionary):
+    return dictionary, set(dictionary.keys())
+
+# Mappings between form submission parameters (name attribute),
 # and parameter identifiers recorded in the database.
 # Keys may be shortened to cut down on URL character length.
-idiom_list_parameters = {
+
+idiom_list_parameters, idiom_list_parameter_keys = dict_and_keyset({
     'Voice': 'Voice1',
     'Tense': 'Tense1',
     'Aspect': 'Aspect1',
@@ -17,9 +21,9 @@ idiom_list_parameters = {
     'Modifier': 'Modifier1',
     'PossType': 'PossType1',
     'Alienability': 'Alienability1',
-}
+})
 
-sentence_list_parameters = {
+sentence_list_parameters, sentence_list_parameter_keys = dict_and_keyset({
     'Property1': 'Property1',
     'DeterminerManipulations': 'DeterminerManipulations1',
     'ModalityManipulations': 'ModalityManipulations1',
@@ -27,24 +31,28 @@ sentence_list_parameters = {
     'ExternalPossessionManipulation': 'ExternalPossessionManipulation',
     'FutureWordenManipulations': 'FutureWordenManipulations1',
     'TenseVoiceAspectManipulations': 'TenseVoiceAspectManipulations1',
-}
+})
 
-idiom_text_parameters = {
+idiom_text_parameters, idiom_text_parameter_keys = dict_and_keyset({
     'GenStructure': 'GenStructure1',
     'IdiomNotes': 'IdiomNotes1',
-}
+})
 
-sentence_text_parameters = {
+sentence_text_parameters, sentence_text_parameter_keys = dict_and_keyset({
     'Judgments': 's:judgments1',
-}
+})
 
-search_text_fields = {
+search_text_fields, search_text_field_keys = dict_and_keyset({
     'Idiom': 'strategy_name',
     'Meaning': 'strategy_description',
     'Original': 'original',
     'Gloss': 'gloss',
     'Translation': 'translation',
-}
+})
+
+multivalue_params = set('Dialect') | idiom_list_parameter_keys | sentence_list_parameter_keys
+
+text_params = idiom_text_parameter_keys | sentence_text_parameter_keys | search_text_field_keys
 
 # SQL query constants
 with_clauses = """WITH strategy_parameter_ids AS (
@@ -146,7 +154,6 @@ def build_where_clauses(param, arg):
     where = []
     where_values = []
 
-    multivalue_params = ['Dialect'] + list(idiom_list_parameters.keys()) + list(sentence_list_parameters.keys())
     if param in multivalue_params:
         param_values = [v for v in arg if v != '']
         if len(param_values) > 0:
@@ -154,14 +161,14 @@ def build_where_clauses(param, arg):
             where_values = param_values
             if param == 'Dialect':
                 where.append(f"strategy_answerset_id IN ({param_placeholders})")
-            if param in idiom_list_parameters.keys():
+            if param in idiom_list_parameter_keys:
                 param_sql_id = idiom_list_parameters[param]
                 where.append(f"""EXISTS ( SELECT 1 FROM strategy_data_all sda
                             WHERE sda.strategy_id = i.strategy_id
                              AND sda.parameter_definition_id = '{param_sql_id}'
                              AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
                             )""")
-            if param in sentence_list_parameters.keys():
+            if param in sentence_list_parameter_keys:
                 param_sql_id = sentence_list_parameters[param]
                 where.append(f"""EXISTS ( SELECT 1 FROM sentence_data_all sda
                             WHERE sda.sentence_id = s.sentence_id
@@ -169,7 +176,6 @@ def build_where_clauses(param, arg):
                              AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
                             )""")
 
-    text_params = list(idiom_text_parameters.keys()) + list(sentence_text_parameters.keys()) + list(search_text_fields.keys())
     if param in text_params:
         # For text inputs there is just one value
         arg = arg[0]
@@ -177,21 +183,21 @@ def build_where_clauses(param, arg):
         text_param = arg.strip() if arg != '' else None
         if text_param:
             where_values = parse_search_string(text_param)
-            if param in idiom_text_parameters.keys():
+            if param in idiom_text_parameter_keys:
                 param_sql_id = idiom_text_parameters[param]
                 where_clause = f"""EXISTS ( SELECT 1 FROM strategy_data_all sda
                         WHERE sda.strategy_id = i.strategy_id
                          AND sda.parameter_definition_id = '{param_sql_id}'
                          AND sda.parameter_value LIKE '%' || ? || '%'
                         )"""
-            if param in sentence_text_parameters.keys():
+            if param in sentence_text_parameter_keys:
                 param_sql_id = sentence_text_parameters[param]
                 where_clause = f"""EXISTS ( SELECT 1 FROM sentence_data_all sda
                         WHERE sda.sentence_id = s.sentence_id
                          AND sda.parameter_definition_id = '{param_sql_id}'
                          AND sda.parameter_value LIKE '%' || ? || '%'
                         )"""
-            if param in search_text_fields.keys():
+            if param in search_text_field_keys:
                 param_sql_field = search_text_fields[param]
                 where_clause = f"{param_sql_field} LIKE '%' || ? || '%'"
             for v in where_values:
