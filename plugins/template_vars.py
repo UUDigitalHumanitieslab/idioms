@@ -146,44 +146,41 @@ def parse_search_string(user_search_text):
     return phrases
 
 
+def build_exists_clause(kind, alias, id, criterion):
+    """ Arguments:
+    - kind: 'strategy', 'sentence'
+    - alias: 'i', 's'
+    - id: string
+    - criterion: string
+    Returns a formatted EXISTS clause as a string.
+    """
+    return f"""EXISTS (
+    SELECT 1 FROM {kind}_data_all sda
+    WHERE sda.{kind}_id = {alias}.{kind}_id
+     AND sda.parameter_definition_id = '{id}'
+     AND sda.parameter_value {criterion}
+    )"""
+
+
 def build_multivalue_where(param, param_values):
-    param_placeholders = ','.join(['?' for v in param_values])
+    param_placeholders = ','.join(['?'] * len(param_values))
+    criterion = f"COLLATE NOCASE IN ({param_placeholders})"
     if param == 'Dialect':
         return f"strategy_answerset_id IN ({param_placeholders})"
     if param in idiom_list_parameter_keys:
-        param_sql_id = idiom_list_parameters[param]
-        return f"""EXISTS ( SELECT 1 FROM strategy_data_all sda
-                    WHERE sda.strategy_id = i.strategy_id
-                        AND sda.parameter_definition_id = '{param_sql_id}'
-                        AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
-                    )"""
+        return build_exists_clause('strategy', 'i', idiom_list_parameters[param], criterion)
     if param in sentence_list_parameter_keys:
-        param_sql_id = sentence_list_parameters[param]
-        return f"""EXISTS ( SELECT 1 FROM sentence_data_all sda
-                    WHERE sda.sentence_id = s.sentence_id
-                        AND sda.parameter_definition_id = '{param_sql_id}'
-                        AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
-                    )"""
+        return build_exists_clause('sentence', 's', sentence_list_parameters[param], criterion)
 
 
 def build_textvalue_where(param):
+    criterion = "LIKE '%' || ? || '%'"
     if param in idiom_text_parameter_keys:
-        param_sql_id = idiom_text_parameters[param]
-        return f"""EXISTS ( SELECT 1 FROM strategy_data_all sda
-                WHERE sda.strategy_id = i.strategy_id
-                    AND sda.parameter_definition_id = '{param_sql_id}'
-                    AND sda.parameter_value LIKE '%' || ? || '%'
-                )"""
+        return build_exists_clause('strategy', 'i', idiom_text_parameters[param], criterion)
     if param in sentence_text_parameter_keys:
-        param_sql_id = sentence_text_parameters[param]
-        return f"""EXISTS ( SELECT 1 FROM sentence_data_all sda
-                WHERE sda.sentence_id = s.sentence_id
-                    AND sda.parameter_definition_id = '{param_sql_id}'
-                    AND sda.parameter_value LIKE '%' || ? || '%'
-                )"""
+        return build_exists_clause('sentence', 's', sentence_text_parameters[param], criterion)
     if param in search_text_field_keys:
-        param_sql_field = search_text_fields[param]
-        return f"{param_sql_field} LIKE '%' || ? || '%'"
+        return f"{search_text_fields[param]} {criterion}"
 
 
 def build_where_clauses(param, arg):
