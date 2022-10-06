@@ -190,7 +190,7 @@ def build_where_clauses(param, arg):
     parameter placeholders."""
 
     if param in multivalue_params:
-        values = [v for v in arg if v != '']
+        values = list(filter(None, arg))
         if len(values) > 0:
             where = build_multivalue_where(param, values)
             return [where], values
