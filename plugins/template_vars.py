@@ -146,71 +146,74 @@ def parse_search_string(user_search_text):
     return phrases
 
 
+def build_multivalue_where(param, param_values):
+    param_placeholders = ','.join(['?' for v in param_values])
+    if param == 'Dialect':
+        return f"strategy_answerset_id IN ({param_placeholders})"
+    if param in idiom_list_parameter_keys:
+        param_sql_id = idiom_list_parameters[param]
+        return f"""EXISTS ( SELECT 1 FROM strategy_data_all sda
+                    WHERE sda.strategy_id = i.strategy_id
+                        AND sda.parameter_definition_id = '{param_sql_id}'
+                        AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
+                    )"""
+    if param in sentence_list_parameter_keys:
+        param_sql_id = sentence_list_parameters[param]
+        return f"""EXISTS ( SELECT 1 FROM sentence_data_all sda
+                    WHERE sda.sentence_id = s.sentence_id
+                        AND sda.parameter_definition_id = '{param_sql_id}'
+                        AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
+                    )"""
+
+
+def build_textvalue_where(param):
+    if param in idiom_text_parameter_keys:
+        param_sql_id = idiom_text_parameters[param]
+        return f"""EXISTS ( SELECT 1 FROM strategy_data_all sda
+                WHERE sda.strategy_id = i.strategy_id
+                    AND sda.parameter_definition_id = '{param_sql_id}'
+                    AND sda.parameter_value LIKE '%' || ? || '%'
+                )"""
+    if param in sentence_text_parameter_keys:
+        param_sql_id = sentence_text_parameters[param]
+        return f"""EXISTS ( SELECT 1 FROM sentence_data_all sda
+                WHERE sda.sentence_id = s.sentence_id
+                    AND sda.parameter_definition_id = '{param_sql_id}'
+                    AND sda.parameter_value LIKE '%' || ? || '%'
+                )"""
+    if param in search_text_field_keys:
+        param_sql_field = search_text_fields[param]
+        return f"{param_sql_field} LIKE '%' || ? || '%'"
+
+
 def build_where_clauses(param, arg):
     """ Converts a single search parameter into one or more WHERE-clause strings.
-    Takes the parameter name and its argument as arguments.
+    Takes the parameter name and its text value as arguments.
     Returns a list of WHERE-clause strings and a list of values corresponding to ?-style
     parameter placeholders."""
-    where = []
-    where_values = []
 
     if param in multivalue_params:
-        param_values = [v for v in arg if v != '']
-        if len(param_values) > 0:
-            param_placeholders = ','.join(['?' for v in param_values])
-            where_values = param_values
-            if param == 'Dialect':
-                where.append(f"strategy_answerset_id IN ({param_placeholders})")
-            if param in idiom_list_parameter_keys:
-                param_sql_id = idiom_list_parameters[param]
-                where.append(f"""EXISTS ( SELECT 1 FROM strategy_data_all sda
-                            WHERE sda.strategy_id = i.strategy_id
-                             AND sda.parameter_definition_id = '{param_sql_id}'
-                             AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
-                            )""")
-            if param in sentence_list_parameter_keys:
-                param_sql_id = sentence_list_parameters[param]
-                where.append(f"""EXISTS ( SELECT 1 FROM sentence_data_all sda
-                            WHERE sda.sentence_id = s.sentence_id
-                             AND sda.parameter_definition_id = '{param_sql_id}'
-                             AND sda.parameter_value COLLATE NOCASE IN ({param_placeholders})
-                            )""")
+        values = [v for v in arg if v != '']
+        if len(values) > 0:
+            where = build_multivalue_where(param, values)
+            return [where], values
 
     if param in text_params:
-        # For text inputs there is just one value
-        arg = arg[0]
-        # Empty text input fields are always submitted and have to be filtered out
-        text_param = arg.strip() if arg != '' else None
-        if text_param:
-            where_values = parse_search_string(text_param)
-            if param in idiom_text_parameter_keys:
-                param_sql_id = idiom_text_parameters[param]
-                where_clause = f"""EXISTS ( SELECT 1 FROM strategy_data_all sda
-                        WHERE sda.strategy_id = i.strategy_id
-                         AND sda.parameter_definition_id = '{param_sql_id}'
-                         AND sda.parameter_value LIKE '%' || ? || '%'
-                        )"""
-            if param in sentence_text_parameter_keys:
-                param_sql_id = sentence_text_parameters[param]
-                where_clause = f"""EXISTS ( SELECT 1 FROM sentence_data_all sda
-                        WHERE sda.sentence_id = s.sentence_id
-                         AND sda.parameter_definition_id = '{param_sql_id}'
-                         AND sda.parameter_value LIKE '%' || ? || '%'
-                        )"""
-            if param in search_text_field_keys:
-                param_sql_field = search_text_fields[param]
-                where_clause = f"{param_sql_field} LIKE '%' || ? || '%'"
-            for v in where_values:
-                where.append(where_clause)
+        arg = arg[0] # For text inputs there is just one value
+        text_param_value = arg.strip() # Empty text input fields are always submitted
+        if text_param_value:
+            values = parse_search_string(text_param_value)
+            if len(values) > 0:
+                where = [build_textvalue_where(param)] * len(values)
+                return where, values
 
     if param == 'SentenceID':
         arg = arg[0]
         int_param = arg if arg != '' and arg.isdigit else None
         if int_param:
-            where.append("sentence_id = ?")
-            where_values.append(int_param)
+            return ["sentence_id = ?"], [int_param]
 
-    return where, where_values
+    return [], [] # Fallback
 
 
 def build_search_sql(args, result_type):
