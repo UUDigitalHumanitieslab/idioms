@@ -137,6 +137,21 @@ JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
 WHERE {}
 ORDER BY sentence_id ASC;"""
 
+queries = {
+    'dialect': {
+        'count_query': dialect_count_query,
+        'main_query': dialect_main_query
+    },
+    'idiom': {
+        'count_query': idiom_count_query,
+        'main_query': idiom_main_query
+    },
+    'sentence': {
+        'count_query': sentence_count_query,
+        'main_query': sentence_main_query
+    }
+}
+
 
 def parse_search_string(user_search_text):
     quoted_string.setParseAction(removeQuotes)
@@ -232,17 +247,8 @@ def build_search_sql(args, result_type):
 
     wheres_str = '\n AND '.join(wheres)
 
-    if result_type == 'dialect':
-        count_query = dialect_count_query.format(wheres_str)
-        main_query = dialect_main_query.format(wheres_str)
-
-    if result_type == 'idiom':
-        count_query = idiom_count_query.format(wheres_str)
-        main_query = idiom_main_query.format(wheres_str)
-
-    if result_type == 'sentence':
-        count_query = sentence_count_query.format(wheres_str)
-        main_query = sentence_main_query.format(wheres_str)
+    count_query = queries[result_type]['count_query'].format(wheres_str)
+    main_query = queries[result_type]['main_query'].format(wheres_str)
 
     return with_clauses + count_query, \
            with_clauses + main_query, \
