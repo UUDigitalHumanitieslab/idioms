@@ -10,9 +10,9 @@
     {% set dialect_id = answerset_row[0].answerset_id %}
     {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect_id})[0][0] %}
 
-    <h1>{{ answerset_row[0].answerset_name }}</h1>
+    <h1 class="title is-1">{{ answerset_row[0].answerset_name }}</h1>
 
-        <h2>Custom Properties</h2>
+        <h2 class="title is-2">Custom Properties</h2>
 
         <dl>
             <div>
@@ -25,9 +25,9 @@
             </div>
         </dl>
 
-    <h2><a href="/dialects/{{ dialect }}/sentences">Manipulations</a></h2>
+    <h2 class="title is-2"><a href="/dialects/{{ dialect }}/sentences">Manipulations</a></h2>
 
-    <h2>Idioms</h2>
+    <h2 class="title is-2">Idioms</h2>
     <p>
         {{ sql("SELECT count(*) as cnt FROM strategy WHERE strategy_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
     </p>

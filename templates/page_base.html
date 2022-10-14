@@ -6,26 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ urls.static('app.css') }}?{{ app_css_hash }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
     {% block extra_head %}{% endblock %}
 </head>
 
 <body>
     <header>
-        <nav>
+        <nav class="container navbar">
             {% include "_nav_links.html" %}
         </nav>
     </header>
 
-    <main>
-        <div class="content">
-          {% block content %}{% endblock %}
+    <main class="section">
+        <div class="container content">
+            {% block content %}{% endblock %}
         </div>
     </main>
 
-    <footer>
-        <p>Footer text.</p>
+    <footer class="section">
+        <div class="container content">
+            {% include "_footer.html" %}
+        </div>
     </footer>
 
 </body>

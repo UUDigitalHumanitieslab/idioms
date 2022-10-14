@@ -9,9 +9,9 @@
 {% if answerset_row %}
     {% set dialect_id = answerset_row[0].answerset_id %}
 
-    <h1>{{ answerset_row[0].answerset_name }}</h1>
+    <h1 class="title is-1">{{ answerset_row[0].answerset_name }}</h1>
 
-    <h2>Sentences</h2>
+    <h2 class="title is-2">Sentences</h2>
     <p>
         {{ sql("SELECT count(*) as cnt FROM sentence WHERE sentence_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
     </p>
