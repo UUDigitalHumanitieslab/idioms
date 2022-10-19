@@ -12,475 +12,590 @@
 <h1 class="title is-1">Search</h1>
 
 <p>Under construction. Free text input fields do not yet support dealing with negation/OR/NULL.</p>
+<p>To select multiple elements in a list, hold down the control key as you click.</p>
 
 <form method="get">
 
-    <details>
-
-    <summary>
-        <h2 class="title is-2">Dialect</h2>
-    </summary>
-
-    <p>Restrict the search by dialect properties. To select multiple elements in a list, hold down the control key as you click.</p>
-
-    <div>
-        <label for="answerset_id"></label>
-        <select id="answerset_id" name="Dialect" multiple="multiple" size="8">
-            <option value="Aalsters">Aalsters</option>
-            <option value="Brees">Brees</option>
-            <option value="Brugs">Brugs</option>
-            <option value="Dendermonds">Dendermonds</option>
-            <option value="Deventers">Deventers</option>
-            <option value="Drents">Drents</option>
-            <option value="Groesbeeks">Groesbeeks</option>
-            <option value="Gronings">Hogelandsters</option>
-            <option value="Leeds">Leeds</option>
-            <option value="Leuvens">Leuvens</option>
-            <option value="Loois">Loois</option>
-            <option value="Utrechts">Utrechts</option>
-            <option value="Wambeeks">Wambeeks</option>
-        </select>
-    </div>
-    <hr>
-    </details>
-
-    <details>
+    <div class="box">
+        <details>
         <summary>
-            <h2 class="title is-2">Idiom</h2>
+            <h2 class="title is-2">Dialect</h2>
         </summary>
 
-    <p>Restrict the search by idiom properties.</p>
+        <p class="mt-4">Restrict the search by dialect properties.</p>
 
-    <div>
-        <label for="idiom">Idiom</label>
-        <input id="idiom" name="Idiom" type="text" size="20">
+        <div class="field">
+            <label class="label" for="answerset_id"></label>
+            <div class="control">
+                <div class="select is-multiple">
+                    <select id="answerset_id" name="Dialect" multiple="multiple" size="13">
+                        <option value="Aalsters">Aalsters</option>
+                        <option value="Brees">Brees</option>
+                        <option value="Brugs">Brugs</option>
+                        <option value="Dendermonds">Dendermonds</option>
+                        <option value="Deventers">Deventers</option>
+                        <option value="Drents">Drents</option>
+                        <option value="Groesbeeks">Groesbeeks</option>
+                        <option value="Gronings">Hogelandsters</option>
+                        <option value="Leeds">Leeds</option>
+                        <option value="Leuvens">Leuvens</option>
+                        <option value="Loois">Loois</option>
+                        <option value="Utrechts">Utrechts</option>
+                        <option value="Wambeeks">Wambeeks</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        </details>
     </div>
 
-    <div>
-        <label for="meaning">Meaning</label>
-        <input id="meaning" name="Meaning" type="text" size="20">
+    <div class="box">
+        <details open>
+            <summary>
+                <h2 class="title is-2">Idiom</h2>
+            </summary>
+
+        <p class="mt-4">Restrict the search by idiom properties.</p>
+
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="idiom">Idiom</label>
+                    <div class="control">
+                        <input class="input" id="idiom" name="Idiom" type="text" size="20">
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="meaning">Meaning</label>
+                    <div class="control">
+                        <input class="input" id="meaning" name="Meaning" type="text" size="20">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="title is-3">Verbal properties</h3>
+
+        <div class="columns">
+
+            <div class="column" id="Voice">
+                <label class="label" for="voice">Voice</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="voice" name="Voice" multiple="multiple" size="3">
+                            <option value="Active">Active</option>
+                            <option value="Passive">Passive</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column" id="Tense">
+                <label class="label" for="tense">Tense</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="tense" name="Tense" multiple="multiple" size="4">
+                            <option value="Present">Present</option>
+                            <option value="Past">Past</option>
+                            <option value="Future">Future</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label" for="aspect">Aspect</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="aspect" name="Aspect" multiple="multiple" size="4">
+                            <option value="Simple">Simple</option>
+                            <option value="Perfect">Perfect</option>
+                            <option value="Progressive">Progressive</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label" for="modality">Modality</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="modality" name="Modality" multiple="multiple" size="4">
+                            <option value="Deontic">Deontic</option>
+                            <option value="Epistemic">Epistemic</option>
+                            <option value="Dynamic">Dynamic</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="title is-3">Structure</h3>
+
+        <div class="columns">
+            <div class="column">
+                <label class="label" for="genstructure">General structure</label>
+                <div class="control">
+                    <input class="input" id="genstructure" name="GenStructure" type="text">
+                </div>
+            </div>
+            <div class="column">
+                <label class="label" for="modifier">Is the DO modified (by an adjective)?</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="modifier" name="Modifier" multiple="multiple" size="3">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+
+            <div class="column">
+                <label class="label" for="openposition">Open position</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="openposition" name="OpenPosition" multiple="multiple" size="7">
+                            <option value="DO">DO</option>
+                            <option value="IO">IO</option>
+                            <option value="PP">PP</option>
+                            <option value="IOPP">IO + PP</option>
+                            <option value="DOIO">DO + IO</option>
+                            <option value="DOPP">DO + PP</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label" for="openanimacy">Animacy of the open position</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="openanimacy" name="OpenAnimacy" multiple="multiple" size="5">
+                            <option value="Animate">Animate</option>
+                            <option value="Inanimate">Inanimate</option>
+                            <option value="AnimateInanimate">Animate + Inanimate</option>
+                            <option value="InanimateAnimate">Inanimate + Animate</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label" for="specialverb">Is the verb either "zijn" or "hebben"?</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="specialverb" name="SpecialVerb" multiple="multiple" size="4">
+                            <option value="Zijn">Zijn</option>
+                            <option value="Hebben">Hebben</option>
+                            <option value="ZijnHebben">Zijn or hebben</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label" for="dodeterminer">Direct object type</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="dodeterminer" name="DODeterminer" multiple="multiple" size="7">
+                            <option value="Definite">Definite</option>
+                            <option value="DefinitePlural">Definite plural</option>
+                            <option value="DefiniteCoordinated">Definite coordinated</option>
+                            <option value="Indefinite">Indefinite</option>
+                            <option value="IndefiniteCoordinated">Indefinite coordinated</option>
+                            <option value="Bare">Bare</option>
+                            <option value="BarePlural">Bare plural</option>
+                            <option value="BareCoordinated">Bare coordinated</option>
+                            <option value="BarePluralCoordinated">Bare plural coordinated </option>
+                            <option value="Quantified">Quantified</option>
+                            <option value="QuantifiedCoordinated">Quantified coordinated</option>
+                            <option value="Poss">Possessive</option>
+                            <option value="Reflexive">Reflexive</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h3 class="title is-3">Posession</h3>
+
+        <div class="columns">
+
+            <div class="column">
+                <label class="label" for="posstype">How is possession expressed?</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="posstype" name="PossType" multiple="multiple" size="4">
+                            <option value="Posspro">Possessive pronoun	</option>
+                            <option value="PP">Prepositional phrase</option>
+                            <option value="External">External possession</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <label class="label" for="alienability">Alienability of possession</label>
+                <div class="control">
+                    <div class="select is-multiple">
+                        <select id="alienability" name="Alienability" multiple="multiple" size="5">
+                            <option value="Alienable">Alienable</option>
+                            <option value="Inalienable">Inalienable</option>
+                            <option value="AlienableInalienable">Alienable + Inalienable</option>
+                            <option value="InalienableAlienable">Inalienable + Alienable</option>
+                            <option value="0">[No value]</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="title is-3">Notes</h3>
+        <div class="columns">
+            <div class="column is-6">
+                <label class="label" for="idiomnotes">Idiom notes</label>
+                <div class="control">
+                    <input class="input" id="idiomnotes" name="IdiomNotes" type="text">
+                </div>
+            </div>
+        </div>
+
+        </details>
     </div>
 
-    <h3 class="title is-3">Verbal properties</h3>
+    <div class="box">
+        <details open>
+            <summary>
+                <h2 class="title is-2">Sentence</h2>
+            </summary>
 
-    <div class="propertiesGroup">
+        <p class="mt-4">Search by words (or substrings) of the sentence text.</p>
 
-        <div id="Voice">
-            <label for="voice">Voice</label>
-            <select id="voice" name="Voice" multiple="multiple" size="3">
-                <option value="Active">Active</option>
-                <option value="Passive">Passive</option>
-                <option value="0">[No value]</option>
-            </select>
+        <div class="columns">
+            <div class="column">
+                <div class="field" style="width:50%">
+                    <label class="label" for="sentence_id">Sentence Id</label>
+                    <div class="control">
+                        <input class="input" id="sentence_id" name="SentenceID" type="text" size="50">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="original">Original text</label>
+                    <div class="control">
+                        <input class="input" id="original" name="Original" type="text" size="50">
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="gloss">Gloss</label>
+                    <div class="control">
+                        <input class="input" id="gloss" name="Gloss" type="text" size="50">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="translation">Translation</label>
+                    <div class="control">
+                        <input class="input" id="translation" name="Translation" type="text" size="50">
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="Tense">
-            <label for="tense">Tense</label>
-            <select id="tense" name="Tense" multiple="multiple" size="4">
-                <option value="Present">Present</option>
-                <option value="Past">Past</option>
-                <option value="Future">Future</option>
-                <option value="0">[No value]</option>
-            </select>
+        <h3 class="title is-3">General</h3>
+
+        <div class="field" style="width:50%">
+            <label class="label" for="judgments">Speaker judgments</label>
+            <div clas="control">
+                <input class="input" id="judgments" name="Judgments" type="text">
+            </div>
         </div>
 
-        <div>
-            <label for="aspect">Aspect</label>
-            <select id="aspect" name="Aspect" multiple="multiple" size="4">
-                <option value="Simple">Simple</option>
-                <option value="Perfect">Perfect</option>
-                <option value="Progressive">Progressive</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
+        <h3 class="title is-3">Manipulations</h3>
 
-        <div>
-            <label for="modality">Modality</label>
-            <select id="modality" name="Modality" multiple="multiple" size="4">
-                <option value="Deontic">Deontic</option>
-                <option value="Epistemic">Epistemic</option>
-                <option value="Dynamic">Dynamic</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
+        <div class="columns">
+
+            <div class="column">
+
+                <div class="field">
+                    <label class="label" for="property1">Manipulated idiom property</label>
+                    <div class="control">
+                        <div class="select is-multiple">
+                            <select id="property1" name="Property1" multiple="multiple" size="6">
+                                <option value="DefiniteDeterminer">Definite determiner DO</option>
+                                <option value="IndefiniteDeterminer">Indefinite determiner DO</option>
+                                <option value="DeonticModality">Deontic modality</option>
+                                <option value="EpistemicModality">Epistemic modality</option>
+                                <option value="DynamicModality">Dynamic modality</option>
+                                <option value="SimplePresent">Simple present</option>
+                                <option value="SimplePast">Simple past</option>
+                                <option value="Future">Future</option>
+                                <option value="Perfect">Perfect</option>
+                                <option value="Progressive">Progressive</option>
+                                <option value="Passive">Passive with 'be'</option>
+                                <option value="EventivePassive">Passive with 'become'</option>
+                                <option value="Possessive">Possessive pronoun 'zijn X'</option>
+                                <option value="PPPossessive">PP possessive 'de X van Jan'</option>
+                                <option value="SaxonPossessive">Saxon possessive 'Jans X'</option>
+                                <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
+                                <option value="ExternalPossessionS">External possession with S possessor</option>
+                                <option value="ExternalPossessionIO">External possession with IO possessor</option>
+                                <option value="FutureWorden">Future with 'worden' (Loois)</option>
+                                <option value="0">[No value]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="DeterminerManipulations">Determiner manipulation</label>
+                    <div class="control">
+                        <div class="select is-multiple">
+                            <select id="DeterminerManipulations" name="DeterminerManipulations" multiple="multiple" size="6">
+                                <option value="Passive">Passive with 'be'</option>
+                                <option value="EventivePassive">Passive with 'become'</option>
+                                <option value="Active">Active</option>
+                                <option value="DefiniteDeterminer">Definite determiner</option>
+                                <option value="IndefiniteDeterminer">Indefinite determiner</option>
+                                <option value="Demonstrative">Demonstrative</option>
+                                <option value="Quantifier">Quantifier </option>
+                                <option value="AlternativeQuantifier">Alternative quantifier</option>
+                                <option value="Possessive">Possessive pronoun</option>
+                                <option value="BareNoun">Bare noun</option>
+                                <option value="BarePlural">Bare plural</option>
+                                <option value="IdiomaticModification">Idiomatic modification</option>
+                                <option value="LiteralModification">Literal modification</option>
+                                <option value="AlternativeModification">Alternative modification</option>
+                                <option value="ExternalModification">External modification</option>
+                                <option value="DeterminerDrop">Determiner drop</option>
+                                <option value="DeterminerDropDefiniteDetermin">Determiner drop + definite determiner</option>
+                                <option value="DeterminerDropIndefiniteDeterm">Determiner drop + indefinite determiner</option>
+                                <option value="DeterminerDropDemonstrative">Determiner drop + demonstrative</option>
+                                <option value="DeterminerDropPossessive">Determiner drop + possessive</option>
+                                <option value="TopicalizationDP">Topicalization of DP</option>
+                                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                                <option value="TopicalizationDPAP">Topicalization of DP with AP</option>
+                                <option value="TopicalizationPP">Topicalization of PP</option>
+                                <option value="TopicalizationVP">Topicalization of VP</option>
+                                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
+                                <option value="0">[No value]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="ModalityManipulations">Modality manipulation</label>
+                    <div class="control">
+                        <div class="select is-multiple">
+                            <select id="ModalityManipulations" name="ModalityManipulations" multiple="multiple" size="6">
+                                <option value="DeonticModality">Deontic modality</option>
+                                <option value="AlternativeDeontic">Alternative deontic modality</option>
+                                <option value="DynamicCan">Dynamic modality with can</option>
+                                <option value="DynamicWant">Dynamic modality with want</option>
+                                <option value="AlternativeDynamic">Alternative dynamic modality</option>
+                                <option value="EpistemicModality">Epistemic modality</option>
+                                <option value="AlternativeEpistemic">Alternative epistemic modality</option>
+                                <option value="EpistemicModalityPerfect">Epistemic modality + perfect</option>
+                                <option value="NoModal">No modal</option>
+                                <option value="NoModalSimplePresent">No modal + simple present</option>
+                                <option value="NoModalSimplePast">No modal + simple past</option>
+                                <option value="NoModalFuture">No modal + future</option>
+                                <option value="NoModalImperative">No modal + imperative</option>
+                                <option value="NoModalEventivePassive">No modal + eventive passive with 'become'</option>
+                                <option value="NoModalActive">No modal + active</option>
+                                <option value="AlternativeSubject">Alternative subject</option>
+                                <option value="AlternativeObject">Alternative object</option>
+                                <option value="Passive">Passive with 'be'</option>
+                                <option value="EventivePassive">Passive with 'become'</option>
+                                <option value="PerfectDoubling">Perfect doubling</option>
+                                <option value="Active">Active</option>
+                                <option value="TopicalizationDP">Topicalization of DP</option>
+                                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                                <option value="TopicalizationDPDeonticModalit">Topicalization of DP + deontic modality</option>
+                                <option value="TopicalizationDPAlternativeNeg">Topicalization of DP + alternative negation</option>
+                                <option value="TopicalizationPP">Topicalization of PP</option>
+                                <option value="TopicalizationAP">Topicalization of AP</option>
+                                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
+                                <option value="TopicalizationVP">Topicalization of VP</option>
+                                <option value="TopicalizationR">Topicalization of the R-pronoun</option>
+                                <option value="0">[No value]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="PossessiveManipulations">Possessive construction manipulation</label>
+                    <div class="control">
+                        <div class="select is-multiple">
+                            <select id="PossessiveManipulations" name="PossessiveManipulations" multiple="multiple" size="6">
+                                <option value="Possessive">Possessive pronoun</option>
+                                <option value="PPPossessive">PP possessive</option>
+                                <option value="SaxonPossessive">Saxon possessive</option>
+                                <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
+                                <option value="PossessiveDPPP">Possessive DP + PP</option>
+                                <option value="ExternalPossessionS">External possession with S possessor</option>
+                                <option value="ExternalPossessionSPossessiveD">External possession with S possessor + possessive DP</option>
+                                <option value="ExternalPossessionIO">External possession with IO possessor</option>
+                                <option value="ExternalPossessionIODeterminer">External possession with IO possessor + determiner drop</option>
+                                <option value="TopicalizationDP">Topicalization of DP</option>
+                                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                                <option value="TopicalizationPP">Topicalization of PP</option>
+                                <option value="0">[No value]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                    <label class="label" for="ExternalPossessionManipulation">External possession construction manipulation</label>
+                    <div class="control">
+                        <div class="select is-multiple">
+                            <select id="ExternalPossessionManipulation" name="ExternalPossessionManipulation" multiple="multiple" size="6">
+                                <option value="NoIO">No IO</option>
+                                <option value="NoIODeterminerDrop">No IO + determiner drop</option>
+                                <option value="NoIODeterminerDropPP">No IO + determiner drop with PP</option>
+                                <option value="NoIONoPossessivePP">No IO + no possessive PP</option>
+                                <option value="NoIOPossessiveDP">No IO + possessive DP</option>
+                                <option value="NoIOPossessiveDPDeterminerDrop">No IO + possessive DP + determiner drop with PP</option>
+                                <option value="NoIOPossessiveDPNoPossessivePP">No IO + possessive DP + no possessive PP</option>
+                                <option value="NoIOPossessiveDPPP">No IO + possessive DP + PP</option>
+                                <option value="NoIOPossessivePP">No IO + possessive PP</option>
+                                <option value="ExternalPossessionIO">External possession with IO possessor</option>
+                                <option value="ExternalPossessionIONoPossessi">External possession with IO possessor + no possessive PP</option>
+                                <option value="BareNoun">Bare noun</option>
+                                <option value="PossessiveDP">Possessive DP</option>
+                                <option value="PossessiveDPDeterminerDropPP">Possessive DP + determiner drop with PP</option>
+                                <option value="PossessiveDPNoPossessivePP">Possessive DP + no possessive PP</option>
+                                <option value="PossessiveDPPP">Possessive DP + PP</option>
+                                <option value="PossessivePP">Possessive PP</option>
+                                <option value="PossessivePPDeterminerDropPP2">Possessive PP + determiner drop with PP2</option>
+                                <option value="PossessivePPPP2">Possessive PP + PP2</option>
+                                <option value="PossessivePP2">Possessive PP2</option>
+                                <option value="NoPossessivePP">No possessive PP</option>
+                                <option value="DeterminerDropDP">Determiner drop with DP</option>
+                                <option value="DeterminerDropDPPP">Determiner drop with DP + PP</option>
+                                <option value="DeterminerDropPP">Determiner drop with PP</option>
+                                <option value="DeterminerDropPP2">Determiner drop with PP2</option>
+                                <option value="DeterminerDropPPPP2">Determiner drop with PP + PP2</option>
+                                <option value="DeterminerDropPPPossessivePP2">Determiner drop with PP + possessive PP2</option>
+                                <option value="Reflexive">Reflexive</option>
+                                <option value="ReflexivePossessiveDP">Reflexive + possessive DP</option>
+                                <option value="ReflexivePossessivePP">Reflexive + possessive PP</option>
+                                <option value="NoReflexive">No reflexive</option>
+                                <option value="NoReflexivePossessiveDP">No reflexive + possessive DP</option>
+                                <option value="NoReflexivePossessiveDPPP">No reflexive + possessive DP + PP</option>
+                                <option value="NoReflexivePossessivePP">No reflexive + possessive PP</option>
+                                <option value="TopicalizationDP">Topicalization of DP</option>
+                                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                                <option value="TopicalizationDPAP">Topicalization of DP with AP</option>
+                                <option value="TopicalizationDPAdvP">Topicalization of DP with AdvP</option>
+                                <option value="TopicalizationDPInf">Topicalization of DP with infinitival clause</option>
+                                <option value="TopicalizationIO">Topicalization of the IO DP</option>
+                                <option value="TopicalizationPP">Topicalization of PP</option>
+                                <option value="TopicalizationPP2">Topicalization of PP2</option>
+                                <option value="TopicalizationPPPP2">Topicalization of PP with PP2</option>
+                                <option value="TopicalizationPPAP">Topicalization of PP with AP</option>
+                                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
+                                <option value="TopicalizationAdvPPP">Topicalization of AdvP with PP</option>
+                                <option value="TopicalizationInf">Topicalization of the infinitival clause</option>
+                                <option value="TopicalizationRAdvP">Topicalization of the R-pronoun with AdvP</option>
+                                <option value="0">[No value]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="TenseVoiceAspectManipulations">Tense/voice/aspect manipulation</label>
+                    <div class="control">
+                        <div class="select is-multiple">
+                            <select id="TenseVoiceAspectManipulations" name="TenseVoiceAspectManipulations" multiple="multiple" size="6">
+                                <option value="SimplePresent">Simple present</option>
+                                <option value="SimplePast">Simple past</option>
+                                <option value="Future">Future</option>
+                                <option value="AlternativeFuture">Alternative future</option>
+                                <option value="SimplePresentAlternativeObject">Simple present + alternative object</option>
+                                <option value="Perfect">Perfect</option>
+                                <option value="PastPerfect">Past perfect</option>
+                                <option value="PerfectDoubling">Perfect doubling</option>
+                                <option value="AlternativeProgressive">Alternative progressive</option>
+                                <option value="AlternativeSubject">Alternative subject</option>
+                                <option value="AlternativeObject">Alternative object</option>
+                                <option value="AlternativeVerb">Alternative verb</option>
+                                <option value="Passive">Passive with 'be'</option>
+                                <option value="EventivePassive">Passive with 'become'</option>
+                                <option value="Active">Active</option>
+                                <option value="IPP">Infinitivus pro participio (IPP)</option>
+                                <option value="TopicalizationDP">Topicalization of DP</option>
+                                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
+                                <option value="TopicalizationDPAlternativeNeg">Topicalization of DP + alternative negation</option>
+                                <option value="TopicalizationPP">Topicalization of PP</option>
+                                <option value="TopicalizationAP">Topicalization of AP</option>
+                                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
+                                <option value="TopicalizationAdvPPP">Topicalization of AdvP with PP</option>
+                                <option value="TopicalizationVP">Topicalization of VP</option>
+                                <option value="TopicalizationInf">Topicalization of the infinitival clause</option>
+                                <option value="0">[No value]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label" for="FutureWordenManipulations">Future with 'worden' construction manipulation</label>
+                    <div class="control">
+                        <div class="select is-multiple">
+                            <select id="FutureWordenManipulations" name="FutureWordenManipulations" multiple="multiple" size="6">
+                                <option value="NoWorden">No 'worden'</option>
+                                <option value="NoWordenSimplePresent">No 'worden' + simple present</option>
+                                <option value="WordenSimplePresent">'Worden' + infinitive</option>
+                                <option value="WordenParticiple">Future with 'worden' + participle</option>
+                                <option value="FutureZijn">Future with 'zijn'</option>
+                                <option value="AlternativeFuture">Alternative future</option>
+                                <option value="SimplePresent">Simple present</option>
+                                <option value="DeonticModality">Deontic modality</option>
+                                <option value="EpistemicModality">Epistemic modality</option>
+                                <option value="DynamicCan">Dynamic modality with can</option>
+                                <option value="DynamicWant">Dynamic modality with want</option>
+                                <option value="Passive">Passive with 'be'</option>
+                                <option value="TopicalizationDP">Topicalization of DP</option>
+                                <option value="0">[No value]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </details>
     </div>
 
-    <h3 class="title is-3">Structure</h3>
-
-    <div>
-        <h4 class="title is-4">General structure</h4>
-        <label for="genstructure"></label>
-        <input id="genstructure" name="GenStructure" type="text" size="20">
-    </div>
-
-    <div class="propertiesGroup">
-
-        <div>
-            <label for="openposition">Open position</label>
-            <select id="openposition" name="OpenPosition" multiple="multiple" size="7">
-                <option value="DO">DO</option>
-                <option value="IO">IO</option>
-                <option value="PP">PP</option>
-                <option value="IOPP">IO + PP</option>
-                <option value="DOIO">DO + IO</option>
-                <option value="DOPP">DO + PP</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="openanimacy">Animacy of the open position</label>
-            <select id="openanimacy" name="OpenAnimacy" multiple="multiple" size="5">
-                <option value="Animate">Animate</option>
-                <option value="Inanimate">Inanimate</option>
-                <option value="AnimateInanimate">Animate + Inanimate</option>
-                <option value="InanimateAnimate">Inanimate + Animate</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="specialverb">Is the verb either "zijn" or "hebben"?</label>
-            <select id="specialverb" name="SpecialVerb" multiple="multiple" size="4">
-                <option value="Zijn">Zijn</option>
-                <option value="Hebben">Hebben</option>
-                <option value="ZijnHebben">Zijn or hebben</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="dodeterminer">Direct object type</label>
-            <select id="dodeterminer" name="DODeterminer" multiple="multiple" size="7">
-                <option value="Definite">Definite</option>
-                <option value="DefinitePlural">Definite plural</option>
-                <option value="DefiniteCoordinated">Definite coordinated</option>
-                <option value="Indefinite">Indefinite</option>
-                <option value="IndefiniteCoordinated">Indefinite coordinated</option>
-                <option value="Bare">Bare</option>
-                <option value="BarePlural">Bare plural</option>
-                <option value="BareCoordinated">Bare coordinated</option>
-                <option value="BarePluralCoordinated">Bare plural coordinated </option>
-                <option value="Quantified">Quantified</option>
-                <option value="QuantifiedCoordinated">Quantified coordinated</option>
-                <option value="Poss">Possessive</option>
-                <option value="Reflexive">Reflexive</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="modifier">Is the DO modified (by an adjective)?</label>
-            <select id="modifier" name="Modifier" multiple="multiple" size="3">
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-    </div>
-
-    <h3 class="title is-3">Posession</h3>
-
-    <div class="propertiesGroup">
-
-        <div>
-            <label for="posstype">How is possession expressed?</label>
-            <select id="posstype" name="PossType" multiple="multiple" size="4">
-                <option value="Posspro">Possessive pronoun	</option>
-                <option value="PP">Prepositional phrase</option>
-                <option value="External">External possession</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="alienability">Alienability of possession</label>
-            <select id="alienability" name="Alienability" multiple="multiple" size="5">
-                <option value="Alienable">Alienable</option>
-                <option value="Inalienable">Inalienable</option>
-                <option value="AlienableInalienable">Alienable + Inalienable</option>
-                <option value="InalienableAlienable">Inalienable + Alienable</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="idiomnotes">Notes</label>
-            <input id="idiomnotes" name="IdiomNotes" type="text" size="50">
-        </div>
-    </div>
-    <hr>
-    </details>
-
-    <details>
-        <summary>
-            <h2 class="title is-2">Sentence</h2>
-        </summary>
-
-    <p>Search by words (or substrings) of the sentence text.</p>
-
-    <div>
-        <label for="sentence_id">Sentence Id</label>
-        <input id="sentence_id" name="SentenceID" type="text" size="50">
-    </div>
-
-    <div>
-        <label for="original">Original text</label>
-        <input id="original" name="Original" type="text" size="50">
-    </div>
-
-    <div>
-        <label for="gloss">Gloss</label>
-        <input id="gloss" name="Gloss" type="text" size="50">
-    </div>
-
-    <div>
-        <label for="translation">Translation</label>
-        <input id="translation" name="Translation" type="text" size="50">
-    </div>
-
-    <h3 class="title is-3">General</h3>
-
-    <div>
-        <label for="judgments">Speaker judgments</label>
-        <input id="judgments" name="Judgments" type="text" size="50">
-    </div>
-
-    <h3 class="title is-3">Manipulations</h3>
-
-    <div class="propertiesGroup">
-
-        <div>
-            <label for="property1">Manipulated idiom property</label>
-            <select id="property1" name="Property1" multiple="multiple" size="6">
-                <option value="DefiniteDeterminer">Definite determiner DO</option>
-                <option value="IndefiniteDeterminer">Indefinite determiner DO</option>
-                <option value="DeonticModality">Deontic modality</option>
-                <option value="EpistemicModality">Epistemic modality</option>
-                <option value="DynamicModality">Dynamic modality</option>
-                <option value="SimplePresent">Simple present</option>
-                <option value="SimplePast">Simple past</option>
-                <option value="Future">Future</option>
-                <option value="Perfect">Perfect</option>
-                <option value="Progressive">Progressive</option>
-                <option value="Passive">Passive with 'be'</option>
-                <option value="EventivePassive">Passive with 'become'</option>
-                <option value="Possessive">Possessive pronoun 'zijn X'</option>
-                <option value="PPPossessive">PP possessive 'de X van Jan'</option>
-                <option value="SaxonPossessive">Saxon possessive 'Jans X'</option>
-                <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
-                <option value="ExternalPossessionS">External possession with S possessor</option>
-                <option value="ExternalPossessionIO">External possession with IO possessor</option>
-                <option value="FutureWorden">Future with 'worden' (Loois)</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="DeterminerManipulations">Determiner manipulation</label>
-            <select id="DeterminerManipulations" name="DeterminerManipulations" multiple="multiple" size="6">
-                <option value="Passive">Passive with 'be'</option>
-                <option value="EventivePassive">Passive with 'become'</option>
-                <option value="Active">Active</option>
-                <option value="DefiniteDeterminer">Definite determiner</option>
-                <option value="IndefiniteDeterminer">Indefinite determiner</option>
-                <option value="Demonstrative">Demonstrative</option>
-                <option value="Quantifier">Quantifier </option>
-                <option value="AlternativeQuantifier">Alternative quantifier</option>
-                <option value="Possessive">Possessive pronoun</option>
-                <option value="BareNoun">Bare noun</option>
-                <option value="BarePlural">Bare plural</option>
-                <option value="IdiomaticModification">Idiomatic modification</option>
-                <option value="LiteralModification">Literal modification</option>
-                <option value="AlternativeModification">Alternative modification</option>
-                <option value="ExternalModification">External modification</option>
-                <option value="DeterminerDrop">Determiner drop</option>
-                <option value="DeterminerDropDefiniteDetermin">Determiner drop + definite determiner</option>
-                <option value="DeterminerDropIndefiniteDeterm">Determiner drop + indefinite determiner</option>
-                <option value="DeterminerDropDemonstrative">Determiner drop + demonstrative</option>
-                <option value="DeterminerDropPossessive">Determiner drop + possessive</option>
-                <option value="TopicalizationDP">Topicalization of DP</option>
-                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-                <option value="TopicalizationDPAP">Topicalization of DP with AP</option>
-                <option value="TopicalizationPP">Topicalization of PP</option>
-                <option value="TopicalizationVP">Topicalization of VP</option>
-                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="ModalityManipulations">Modality manipulation</label>
-            <select id="ModalityManipulations" name="ModalityManipulations" multiple="multiple" size="6">
-                <option value="DeonticModality">Deontic modality</option>
-                <option value="AlternativeDeontic">Alternative deontic modality</option>
-                <option value="DynamicCan">Dynamic modality with can</option>
-                <option value="DynamicWant">Dynamic modality with want</option>
-                <option value="AlternativeDynamic">Alternative dynamic modality</option>
-                <option value="EpistemicModality">Epistemic modality</option>
-                <option value="AlternativeEpistemic">Alternative epistemic modality</option>
-                <option value="EpistemicModalityPerfect">Epistemic modality + perfect</option>
-                <option value="NoModal">No modal</option>
-                <option value="NoModalSimplePresent">No modal + simple present</option>
-                <option value="NoModalSimplePast">No modal + simple past</option>
-                <option value="NoModalFuture">No modal + future</option>
-                <option value="NoModalImperative">No modal + imperative</option>
-                <option value="NoModalEventivePassive">No modal + eventive passive with 'become'</option>
-                <option value="NoModalActive">No modal + active</option>
-                <option value="AlternativeSubject">Alternative subject</option>
-                <option value="AlternativeObject">Alternative object</option>
-                <option value="Passive">Passive with 'be'</option>
-                <option value="EventivePassive">Passive with 'become'</option>
-                <option value="PerfectDoubling">Perfect doubling</option>
-                <option value="Active">Active</option>
-                <option value="TopicalizationDP">Topicalization of DP</option>
-                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-                <option value="TopicalizationDPDeonticModalit">Topicalization of DP + deontic modality</option>
-                <option value="TopicalizationDPAlternativeNeg">Topicalization of DP + alternative negation</option>
-                <option value="TopicalizationPP">Topicalization of PP</option>
-                <option value="TopicalizationAP">Topicalization of AP</option>
-                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
-                <option value="TopicalizationVP">Topicalization of VP</option>
-                <option value="TopicalizationR">Topicalization of the R-pronoun</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="PossessiveManipulations">Possessive construction manipulation</label>
-            <select id="PossessiveManipulations" name="PossessiveManipulations" multiple="multiple" size="6">
-                <option value="Possessive">Possessive pronoun</option>
-                <option value="PPPossessive">PP possessive</option>
-                <option value="SaxonPossessive">Saxon possessive</option>
-                <option value="DPPossessive">DP + possessive pronoun 'Jan zijn X'</option>
-                <option value="PossessiveDPPP">Possessive DP + PP</option>
-                <option value="ExternalPossessionS">External possession with S possessor</option>
-                <option value="ExternalPossessionSPossessiveD">External possession with S possessor + possessive DP</option>
-                <option value="ExternalPossessionIO">External possession with IO possessor</option>
-                <option value="ExternalPossessionIODeterminer">External possession with IO possessor + determiner drop</option>
-                <option value="TopicalizationDP">Topicalization of DP</option>
-                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-                <option value="TopicalizationPP">Topicalization of PP</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="ExternalPossessionManipulation">External possession construction manipulation</label>
-            <select id="ExternalPossessionManipulation" name="ExternalPossessionManipulation" multiple="multiple" size="6">
-                <option value="NoIO">No IO</option>
-                <option value="NoIODeterminerDrop">No IO + determiner drop</option>
-                <option value="NoIODeterminerDropPP">No IO + determiner drop with PP</option>
-                <option value="NoIONoPossessivePP">No IO + no possessive PP</option>
-                <option value="NoIOPossessiveDP">No IO + possessive DP</option>
-                <option value="NoIOPossessiveDPDeterminerDrop">No IO + possessive DP + determiner drop with PP</option>
-                <option value="NoIOPossessiveDPNoPossessivePP">No IO + possessive DP + no possessive PP</option>
-                <option value="NoIOPossessiveDPPP">No IO + possessive DP + PP</option>
-                <option value="NoIOPossessivePP">No IO + possessive PP</option>
-                <option value="ExternalPossessionIO">External possession with IO possessor</option>
-                <option value="ExternalPossessionIONoPossessi">External possession with IO possessor + no possessive PP</option>
-                <option value="BareNoun">Bare noun</option>
-                <option value="PossessiveDP">Possessive DP</option>
-                <option value="PossessiveDPDeterminerDropPP">Possessive DP + determiner drop with PP</option>
-                <option value="PossessiveDPNoPossessivePP">Possessive DP + no possessive PP</option>
-                <option value="PossessiveDPPP">Possessive DP + PP</option>
-                <option value="PossessivePP">Possessive PP</option>
-                <option value="PossessivePPDeterminerDropPP2">Possessive PP + determiner drop with PP2</option>
-                <option value="PossessivePPPP2">Possessive PP + PP2</option>
-                <option value="PossessivePP2">Possessive PP2</option>
-                <option value="NoPossessivePP">No possessive PP</option>
-                <option value="DeterminerDropDP">Determiner drop with DP</option>
-                <option value="DeterminerDropDPPP">Determiner drop with DP + PP</option>
-                <option value="DeterminerDropPP">Determiner drop with PP</option>
-                <option value="DeterminerDropPP2">Determiner drop with PP2</option>
-                <option value="DeterminerDropPPPP2">Determiner drop with PP + PP2</option>
-                <option value="DeterminerDropPPPossessivePP2">Determiner drop with PP + possessive PP2</option>
-                <option value="Reflexive">Reflexive</option>
-                <option value="ReflexivePossessiveDP">Reflexive + possessive DP</option>
-                <option value="ReflexivePossessivePP">Reflexive + possessive PP</option>
-                <option value="NoReflexive">No reflexive</option>
-                <option value="NoReflexivePossessiveDP">No reflexive + possessive DP</option>
-                <option value="NoReflexivePossessiveDPPP">No reflexive + possessive DP + PP</option>
-                <option value="NoReflexivePossessivePP">No reflexive + possessive PP</option>
-                <option value="TopicalizationDP">Topicalization of DP</option>
-                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-                <option value="TopicalizationDPAP">Topicalization of DP with AP</option>
-                <option value="TopicalizationDPAdvP">Topicalization of DP with AdvP</option>
-                <option value="TopicalizationDPInf">Topicalization of DP with infinitival clause</option>
-                <option value="TopicalizationIO">Topicalization of the IO DP</option>
-                <option value="TopicalizationPP">Topicalization of PP</option>
-                <option value="TopicalizationPP2">Topicalization of PP2</option>
-                <option value="TopicalizationPPPP2">Topicalization of PP with PP2</option>
-                <option value="TopicalizationPPAP">Topicalization of PP with AP</option>
-                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
-                <option value="TopicalizationAdvPPP">Topicalization of AdvP with PP</option>
-                <option value="TopicalizationInf">Topicalization of the infinitival clause</option>
-                <option value="TopicalizationRAdvP">Topicalization of the R-pronoun with AdvP</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="FutureWordenManipulations">Future with 'worden' construction manipulation</label>
-            <select id="FutureWordenManipulations" name="FutureWordenManipulations" multiple="multiple" size="6">
-                <option value="NoWorden">No 'worden'</option>
-                <option value="NoWordenSimplePresent">No 'worden' + simple present</option>
-                <option value="WordenSimplePresent">'Worden' + infinitive</option>
-                <option value="WordenParticiple">Future with 'worden' + participle</option>
-                <option value="FutureZijn">Future with 'zijn'</option>
-                <option value="AlternativeFuture">Alternative future</option>
-                <option value="SimplePresent">Simple present</option>
-                <option value="DeonticModality">Deontic modality</option>
-                <option value="EpistemicModality">Epistemic modality</option>
-                <option value="DynamicCan">Dynamic modality with can</option>
-                <option value="DynamicWant">Dynamic modality with want</option>
-                <option value="Passive">Passive with 'be'</option>
-                <option value="TopicalizationDP">Topicalization of DP</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="TenseVoiceAspectManipulations">Tense/voice/aspect manipulation</label>
-            <select id="TenseVoiceAspectManipulations" name="TenseVoiceAspectManipulations" multiple="multiple" size="6">
-                <option value="SimplePresent">Simple present</option>
-                <option value="SimplePast">Simple past</option>
-                <option value="Future">Future</option>
-                <option value="AlternativeFuture">Alternative future</option>
-                <option value="SimplePresentAlternativeObject">Simple present + alternative object</option>
-                <option value="Perfect">Perfect</option>
-                <option value="PastPerfect">Past perfect</option>
-                <option value="PerfectDoubling">Perfect doubling</option>
-                <option value="AlternativeProgressive">Alternative progressive</option>
-                <option value="AlternativeSubject">Alternative subject</option>
-                <option value="AlternativeObject">Alternative object</option>
-                <option value="AlternativeVerb">Alternative verb</option>
-                <option value="Passive">Passive with 'be'</option>
-                <option value="EventivePassive">Passive with 'become'</option>
-                <option value="Active">Active</option>
-                <option value="IPP">Infinitivus pro participio (IPP)</option>
-                <option value="TopicalizationDP">Topicalization of DP</option>
-                <option value="TopicalizationDPPP">Topicalization of DP with PP</option>
-                <option value="TopicalizationDPAlternativeNeg">Topicalization of DP + alternative negation</option>
-                <option value="TopicalizationPP">Topicalization of PP</option>
-                <option value="TopicalizationAP">Topicalization of AP</option>
-                <option value="TopicalizationAdvP">Topicalization of AdvP</option>
-                <option value="TopicalizationAdvPPP">Topicalization of AdvP with PP</option>
-                <option value="TopicalizationVP">Topicalization of VP</option>
-                <option value="TopicalizationInf">Topicalization of the infinitival clause</option>
-                <option value="0">[No value]</option>
-            </select>
-        </div>
-    </div>
-    <hr>
-    </details>
-
-    <div class="form-submission">
-        <button type="submit" formaction="search/dialects">Search dialects</button>
-        <button type="submit" formaction="search/idioms">Search idioms</button>
-        <button type="submit" formaction="search/sentences">Search sentences</button>
-        <button type="reset">Reset form</button>
+    <div class="field is-grouped">
+        <p class="control"><button class="button is-info" type="submit" formaction="search/dialects">Search dialects</button></p>
+        <p class="control"><button class="button is-info" type="submit" formaction="search/idioms">Search idioms</button></p>
+        <p class="control"><button class="button is-info" type="submit" formaction="search/sentences">Search sentences</button></p>
+        <p class="control"><button class="button is-danger" type="reset">Reset form</button></p>
     </div>
 </form>
 
