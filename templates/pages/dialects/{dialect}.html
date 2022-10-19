@@ -27,10 +27,12 @@
             </div>
         </dl>
 
-    <h2 class="title is-2"><a href="/dialects/{{ dialect }}/sentences">Manipulations</a></h2>
+    <h2 class="title is-2"><a href="/dialects/{{ dialect }}?page=sentences">Manipulations</a></h2>
 
     {% if page == 'idioms' %}
         {% include "_idioms-table.html" %}
+    {% else %}
+        {% include "_sentences.html" %}
     {% endif %}
 
 {% else %}
