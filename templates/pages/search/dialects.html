@@ -24,22 +24,24 @@
         {{ sql(count_query, wheres_values)[0].cnt }} records found.
     </p>
 
-    <div class="table">
-        <div class="table-row">
-            <div class="table-head"></div>
-            <div class="table-head">Name</div>
-            <div class="table-head">Principal location</div>
-    </div>
-
-    {% for row in sql(main_query, wheres_values) %}
-        <div class="table-row">
-            <div class="table-cell">{{ row.row_num }}</div>
-            <div class="table-cell"><a href="/dialects/{{ row.strategy_answerset_id }}">{{ row.answerset_name }}</a></div>
-            <div class="table-cell">{{ row.answerset_description }}</div>
-        </div>
-    {% endfor %}
-
-    </div>
+    <table class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Principal location</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in sql(main_query, wheres_values) %}
+        <tr>
+            <th>{{ row.row_num }}</th>
+            <td><a href="/dialects/{{ row.strategy_answerset_id }}">{{ row.answerset_name }}</a></td>
+            <td>{{ row.answerset_description }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endif %}
 
 {% endblock %}
