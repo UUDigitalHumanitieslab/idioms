@@ -31,13 +31,17 @@
     <p>
         {{ sql("SELECT count(*) as cnt FROM strategy WHERE strategy_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
     </p>
-    <div class="table">
-        <div class="table-row">
-            <div class="table-head"></div>
-            <div class="table-head">Idiom</div>
-            <div class="table-head">Meaning</div>
-            <div class="table-head">Number of properties</div>
-        </div>
+
+    <table class="table is-striped is-hoverable is-fullwidth">
+        <thead>
+            <tr>
+                <th></div>
+                <th>Idiom</th>
+                <th>Meaning</th>
+                <th>Number of properties</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for idiom in sql("""SELECT ROW_NUMBER() OVER (ORDER BY strategy_name ASC) AS row_num,
                                 strategy_id, strategy_name, strategy_description, strategy_answerset_id,
                                 COUNT(sd.strategy_data_id) AS properties_cnt
@@ -47,14 +51,15 @@
                             GROUP BY strategy_id
                             ORDER BY strategy_name ASC;
                             """, {"dialect_id": dialect_id}) %}
-        <div class="table-row">
-            <div class="table-cell">{{ idiom.row_num }}</div>
-            <div class="table-cell"><a href="/idioms/{{ idiom.strategy_id }}">{{ idiom.strategy_name }}</a></div>
-            <div class="table-cell">{{ idiom.strategy_description }}</div>
-            <div class="table-cell properties">{{ idiom.properties_cnt }}</div>
-        </div>
+        <tr>
+            <td>{{ idiom.row_num }}</td>
+            <td><a href="/idioms/{{ idiom.strategy_id }}">{{ idiom.strategy_name }}</a></td>
+            <td>{{ idiom.strategy_description }}</td>
+            <td>{{ idiom.properties_cnt }}</td>
+        </tr>
         {% endfor %}
-    </div>
+        </tbody>
+    </table>
 {% else %}
     {{ raise_404("Dialect not found") }}
 {% endif %}
