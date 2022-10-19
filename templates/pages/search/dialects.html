@@ -11,12 +11,10 @@
     {% set count_query, main_query, wheres_values = build_search_sql(args, 'dialect') %}
 
     {% if args.get('_trace') == '1' %}
-        <div style="border:1px solid;padding:.5em;margin:.5em;">
+        <div class="box">
             <pre>{{ args }}</pre>
-            <hr>
+            <pre>WHERE values: {{ wheres_values }}</pre>
             <pre>{{ main_query }}</pre>
-            <hr>
-            <pre>{{ wheres_values }}</pre>
         </div>
     {% endif %}
 
