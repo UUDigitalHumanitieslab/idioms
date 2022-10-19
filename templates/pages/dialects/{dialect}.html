@@ -4,15 +4,18 @@
 
 {% set page = args.get('page', 'idioms') %}
 
-{% block title %}Dialect {% endblock %}
+{% if answerset_row %}
+    {% set dialect_id = answerset_row[0].answerset_id %}
+    {% set dialect_name = answerset_row[0].answerset_name %}
+    {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect_id})[0][0] %}
+{% endif %}
+
+{% block title %}{{ dialect_name }}{% endblock %}
 
 {% block content %}
 
 {% if answerset_row %}
-    {% set dialect_id = answerset_row[0].answerset_id %}
-    {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect_id})[0][0] %}
-
-    <h1 class="title is-1">{{ answerset_row[0].answerset_name }}</h1>
+    <h1 class="title is-1">{{ dialect_name }}</h1>
 
         <h2 class="title is-2">Custom Properties</h2>
 
