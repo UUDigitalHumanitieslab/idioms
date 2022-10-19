@@ -27,7 +27,12 @@
             </div>
         </dl>
 
-    <h2 class="title is-2"><a href="/dialects/{{ dialect }}?page=sentences">Manipulations</a></h2>
+    <div class="tabs is-large is-boxed">
+        <ul class="ml-0">
+            <li class="{{ 'is-active' if page == 'idioms' else '' }}"><a href="/dialects/{{ dialect }}?page=idioms">Idioms</a></li>
+            <li class="{{ 'is-active' if page == 'sentences' else '' }}"><a href="/dialects/{{ dialect }}?page=sentences">Sentences</a></li>
+        </ul>
+    </div>
 
     {% if page == 'idioms' %}
         {% include "_idioms-table.html" %}

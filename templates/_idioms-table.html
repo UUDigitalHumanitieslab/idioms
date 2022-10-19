@@ -1,4 +1,3 @@
-<h2 class="title is-2">Idioms</h2>
 <p>
     {{ sql("SELECT count(*) as cnt FROM strategy WHERE strategy_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
 </p>
