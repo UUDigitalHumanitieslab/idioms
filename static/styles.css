@@ -1,3 +1,18 @@
+.form-quarter {
+    width: calc(25% - 0.75rem);
+    min-width: 12rem;
+}
+
+.form-half {
+    width: calc(50% - 0.75rem);
+    min-width: 12rem;
+}
+
+.field.is-grouped.is-grouped-multiline > .control.form-half,
+.field.is-grouped.is-grouped-multiline > .control.form-quarter {
+    margin-bottom: 1.5rem;
+}
+
 .table {
     display: table;
     width: 100%;
