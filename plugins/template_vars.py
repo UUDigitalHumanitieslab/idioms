@@ -42,17 +42,22 @@ sentence_text_parameters, sentence_text_parameter_keys = dict_and_keyset({
     'Judgments': 's:judgments1',
 })
 
-search_text_fields, search_text_field_keys = dict_and_keyset({
+idiom_fts_columns, idiom_fts_columns_keys = dict_and_keyset({
     'Idiom': 'strategy_name',
     'Meaning': 'strategy_description',
+})
+
+sentence_fts_columns, sentence_fts_columns_keys = dict_and_keyset({
     'Original': 'original',
     'Gloss': 'gloss',
     'Translation': 'translation',
 })
 
-multivalue_params = set('Dialect') | idiom_list_parameter_keys | sentence_list_parameter_keys
 
-text_params = idiom_text_parameter_keys | sentence_text_parameter_keys | search_text_field_keys
+selectlist_keys = set('Dialect') | idiom_list_parameter_keys | sentence_list_parameter_keys
+textparam_keys = idiom_text_parameter_keys | sentence_text_parameter_keys
+text_fts_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
+
 
 # SQL query constants
 with_clauses = """WITH strategy_parameter_ids AS (
@@ -161,23 +166,30 @@ def parse_search_string(user_search_text):
     return phrases
 
 
-def build_exists_clause(kind, alias, id, criterion):
+def build_exists_clause(kind, alias, id, criterion, search_type='param'):
     """ Arguments:
     - kind: 'strategy', 'sentence'
     - alias: 'i', 's'
-    - id: string
+    - id: parameter_definition_id or fts column
     - criterion: string
     Returns a formatted EXISTS clause as a string.
     """
-    return f"""EXISTS (
-    SELECT 1 FROM {kind}_data_all sda
-    WHERE sda.{kind}_id = {alias}.{kind}_id
-     AND sda.parameter_definition_id = '{id}'
-     AND sda.parameter_value {criterion}
-    )"""
+    if search_type == 'fts':
+        return f"""EXISTS (
+            SELECT 1 FROM {kind}_fts
+            WHERE {kind}_fts.{kind}_id = {alias}.{kind}_id
+             AND {kind}_fts.{id} {criterion}
+        )"""
+    else:
+        return f"""EXISTS (
+        SELECT 1 FROM {kind}_data_all sda
+        WHERE sda.{kind}_id = {alias}.{kind}_id
+         AND sda.parameter_definition_id = '{id}'
+         AND sda.parameter_value {criterion}
+        )"""
 
 
-def build_multivalue_where(param, param_values):
+def build_selectlist_where(param, param_values):
     param_placeholders = ','.join(['?'] * len(param_values))
     criterion = f"COLLATE NOCASE IN ({param_placeholders})"
     if param == 'Dialect':
@@ -194,8 +206,14 @@ def build_textvalue_where(param):
         return build_exists_clause('strategy', 'i', idiom_text_parameters[param], criterion)
     if param in sentence_text_parameter_keys:
         return build_exists_clause('sentence', 's', sentence_text_parameters[param], criterion)
-    if param in search_text_field_keys:
-        return f"{search_text_fields[param]} {criterion}"
+
+
+def build_fts_where(param):
+    criterion = "MATCH ?"
+    if param in idiom_fts_columns_keys:
+        return build_exists_clause('strategy', 'i', idiom_fts_columns[param], criterion, search_type='fts')
+    if param in sentence_fts_columns_keys:
+        return build_exists_clause('sentence', 's', sentence_fts_columns[param], criterion, search_type='fts')
 
 
 def build_where_clauses(param, arg):
@@ -204,13 +222,13 @@ def build_where_clauses(param, arg):
     Returns a list of WHERE-clause strings and a list of values corresponding to ?-style
     parameter placeholders."""
 
-    if param in multivalue_params:
+    if param in selectlist_keys:
         values = list(filter(None, arg))
         if len(values) > 0:
-            where = build_multivalue_where(param, values)
+            where = build_selectlist_where(param, values)
             return [where], values
 
-    if param in text_params:
+    if param in textparam_keys:
         arg = arg[0] # For text inputs there is just one value
         text_param_value = arg.strip() # Empty text input fields are always submitted
         if text_param_value:
@@ -218,6 +236,14 @@ def build_where_clauses(param, arg):
             if len(values) > 0:
                 where = [build_textvalue_where(param)] * len(values)
                 return where, values
+
+    if param in text_fts_keys:
+        arg = arg[0]
+        search_string = arg.strip()
+        if search_string:
+            where = build_fts_where(param)
+            return [where], [search_string]
+
 
     if param == 'SentenceID':
         arg = arg[0]
