@@ -1,0 +1,32 @@
+<p>
+    {{ sql("SELECT count(*) as cnt FROM strategy WHERE strategy_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
+</p>
+
+<table class="table is-striped is-hoverable is-fullwidth">
+    <thead>
+        <tr>
+            <th></div>
+            <th>Idiom</th>
+            <th>Meaning</th>
+            <th>Number of properties</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for idiom in sql("""SELECT ROW_NUMBER() OVER (ORDER BY strategy_name ASC) AS row_num,
+                            strategy_id, strategy_name, strategy_description, strategy_answerset_id,
+                            COUNT(sd.strategy_data_id) AS properties_cnt
+                        FROM strategy s
+                        JOIN strategy_data sd ON sd.strategy = s.strategy_id
+                        WHERE strategy_answerset_id = :dialect_id
+                        GROUP BY strategy_id
+                        ORDER BY strategy_name ASC;
+                        """, {"dialect_id": dialect_id}) %}
+    <tr>
+        <td>{{ idiom.row_num }}</td>
+        <td><a href="/idioms/{{ idiom.strategy_id }}">{{ idiom.strategy_name }}</a></td>
+        <td>{{ idiom.strategy_description }}</td>
+        <td>{{ idiom.properties_cnt }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

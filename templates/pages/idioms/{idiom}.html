@@ -7,7 +7,7 @@
 {% block content %}
 
 {% if idiom_row %}
-    <h1>Idiom</h1>
+    <h1 class="title is-1">Idiom</h1>
 
     <dl>
         <div>
@@ -28,14 +28,14 @@
         </div>
       </dl>
 
-    <h2>Properties</h2>
+    <h2 class="title is-2">Properties</h2>
     {% set interlinear_rows = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
                                         FROM sentence s
                                         WHERE translation IS NOT NULL
                                          AND sentence_strategy_id = :strategy_id;",
                                         {"strategy_id": idiom}) %}
 
-        <h3>Gloss and translation</h3>
+        <h3 class="title is-3">Gloss and translation</h3>
         {% for row in interlinear_rows %}
             {% include "_interlinear.html" %}
         {% endfor %}
@@ -57,7 +57,7 @@
 
         {% for row in idiom_properties_row %}
             {% if ns.group_prev != row.group_label %}
-                <div><h3>{{ row.group_label }}</h3></div>
+                <div><h3 class="title is-3">{{ row.group_label }}</h3></div>
                 {% set ns.group_prev = row.group_label %}
             {% endif %}
             <div>
@@ -65,7 +65,7 @@
                 <dd>{{ row.value }}</dd>
             </div>
         {% endfor %}
-    </dl>
+        </dl>
 
     {% set sentence_rows = sql("SELECT sentence_id, original, gloss, translation, grammaticality, sentence_strategy_id
                             FROM sentence s
@@ -77,7 +77,7 @@
                             {"strategy_id": idiom}) %}
 
     {% if sentence_rows %}
-        <h3>Sentences</h3>
+        <h3 class="title is-3">Sentences</h3>
         {% for row in sentence_rows %}
             {% include "_interlinear.html" %}
         {% endfor %}

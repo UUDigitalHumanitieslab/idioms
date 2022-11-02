@@ -1,44 +1,16 @@
-body {
-    background-color: #ffecc0;
-    max-width: 120ch;
-    padding: 2ch;
-    margin: auto;
+.form-quarter {
+    width: calc(25% - 0.75rem);
+    min-width: 12rem;
 }
 
-header {
-    background-color: #ffecc0;
+.form-half {
+    width: calc(50% - 0.75rem);
+    min-width: 12rem;
 }
 
-header nav li {
-    display: inline;
-    padding: 0 2em 0 0;
-    list-style: none;
-}
-
-header nav a:link,
-header nav a:visited,
-header nav a:hover,
-header nav a:focus,
-header nav a:active {
-    display: inline-block;
-    width: 8em;
-    padding: .5em 0;
-    margin-bottom: .5em;
-    text-align: center;
-    color: #0b72d7;
-    background-color: #72b3f5;
-}
-
-/* a, a:link {
-    color: #000000;
-}
-
-a:hover {
-	background: #d6bde1;
-} */
-
-.content ul {
-    list-style: disc inside;
+.field.is-grouped.is-grouped-multiline > .control.form-half,
+.field.is-grouped.is-grouped-multiline > .control.form-quarter {
+    margin-bottom: 1.5rem;
 }
 
 .table {
@@ -104,30 +76,6 @@ details summary > h2 {
     display: inline;
 }
 
-div.propertiesGroup > div {
-    display: inline-block;
-    min-width: 12em;
-    margin: 1em;
-    vertical-align: top;
-}
-
-select, label {
-    display: block;
-}
-
-form label {
-    width: 100%;
-}
-
-div.form-submission {
-    margin: 1em;
-}
-
-button {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
 ruby {
     display: inline-block;
 }
@@ -136,9 +84,4 @@ rt {
     display: block;
     line-height: 24px;
     font-size: 100%;
-}
-
-footer {
-    background-color: #72b3f5;
-    margin-top: 2em;
 }

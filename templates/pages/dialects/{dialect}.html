@@ -2,17 +2,22 @@
 
 {% set answerset_row = sql("SELECT answerset_id, answerset_name, answerset_description FROM answerset WHERE answerset_id = :answerset_id", {"answerset_id": dialect}) %}
 
-{% block title %}Dialect {% endblock %}
+{% set page = args.get('page', 'idioms') %}
+
+{% if answerset_row %}
+    {% set dialect_id = answerset_row[0].answerset_id %}
+    {% set dialect_name = answerset_row[0].answerset_name %}
+    {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect_id})[0][0] %}
+{% endif %}
+
+{% block title %}{{ dialect_name }}{% endblock %}
 
 {% block content %}
 
 {% if answerset_row %}
-    {% set dialect_id = answerset_row[0].answerset_id %}
-    {% set dialect_source = sql("SELECT value_text FROM answerset_data WHERE answerset = :answerset_id AND parameter_definition_id = 'Source1'", {"answerset_id": dialect_id})[0][0] %}
+    <h1 class="title is-1">{{ dialect_name }}</h1>
 
-    <h1>{{ answerset_row[0].answerset_name }}</h1>
-
-        <h2>Custom Properties</h2>
+        <h2 class="title is-2">Custom Properties</h2>
 
         <dl>
             <div>
@@ -25,36 +30,19 @@
             </div>
         </dl>
 
-    <h2><a href="/dialects/{{ dialect }}/sentences">Manipulations</a></h2>
-
-    <h2>Idioms</h2>
-    <p>
-        {{ sql("SELECT count(*) as cnt FROM strategy WHERE strategy_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
-    </p>
-    <div class="table">
-        <div class="table-row">
-            <div class="table-head"></div>
-            <div class="table-head">Idiom</div>
-            <div class="table-head">Meaning</div>
-            <div class="table-head">Number of properties</div>
-        </div>
-        {% for idiom in sql("""SELECT ROW_NUMBER() OVER (ORDER BY strategy_name ASC) AS row_num,
-                                strategy_id, strategy_name, strategy_description, strategy_answerset_id,
-                                COUNT(sd.strategy_data_id) AS properties_cnt
-                            FROM strategy s
-                            JOIN strategy_data sd ON sd.strategy = s.strategy_id
-                            WHERE strategy_answerset_id = :dialect_id
-                            GROUP BY strategy_id
-                            ORDER BY strategy_name ASC;
-                            """, {"dialect_id": dialect_id}) %}
-        <div class="table-row">
-            <div class="table-cell">{{ idiom.row_num }}</div>
-            <div class="table-cell"><a href="/idioms/{{ idiom.strategy_id }}">{{ idiom.strategy_name }}</a></div>
-            <div class="table-cell">{{ idiom.strategy_description }}</div>
-            <div class="table-cell properties">{{ idiom.properties_cnt }}</div>
-        </div>
-        {% endfor %}
+    <div class="tabs is-large is-boxed">
+        <ul class="ml-0">
+            <li class="{{ 'is-active' if page == 'idioms' else '' }}"><a href="/dialects/{{ dialect }}?page=idioms">Idioms</a></li>
+            <li class="{{ 'is-active' if page == 'sentences' else '' }}"><a href="/dialects/{{ dialect }}?page=sentences">Sentences</a></li>
+        </ul>
     </div>
+
+    {% if page == 'idioms' %}
+        {% include "_idioms-table.html" %}
+    {% else %}
+        {% include "_sentences.html" %}
+    {% endif %}
+
 {% else %}
     {{ raise_404("Dialect not found") }}
 {% endif %}
