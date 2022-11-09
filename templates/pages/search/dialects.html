@@ -8,7 +8,7 @@
 
 {% if args %}
 
-    {% set count_query, main_query, wheres_values = build_search_sql(args, 'dialect') %}
+    {% set count_results, main_results, count_query, main_query, wheres_values = execute_search_query(args, 'dialect') %}
 
     {% if args.get('_trace') == '1' %}
         <div class="box">
@@ -19,7 +19,7 @@
     {% endif %}
 
     <p>
-        {{ sql(count_query, wheres_values)[0].cnt }} records found.
+        {{ count_results.rows[0].cnt }} records found.
     </p>
 
     <table class="table is-striped is-hoverable is-fullwidth">

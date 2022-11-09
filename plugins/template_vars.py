@@ -1,5 +1,15 @@
 from datasette import hookimpl
+from datasette.app import Datasette
+from datasette.utils import escape_fts, sqlite3
+from datasette.views.base import DatasetteError
+
 from pyparsing import *
+
+try:
+    datasette = Datasette(files=["./idioms.db"])
+    db = datasette.get_database('idioms')
+except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
+    raise DatasetteError(str(e), title="SQL Error", status=400)
 
 
 def dict_and_keyset(dictionary):
@@ -239,7 +249,7 @@ def build_where_clauses(param, arg):
 
     if param in text_fts_keys:
         arg = arg[0]
-        search_string = arg.strip()
+        search_string = escape_fts(arg.strip())
         if search_string:
             where = build_fts_where(param)
             return [where], [search_string]
@@ -281,6 +291,16 @@ def build_search_sql(args, result_type):
            wheres_values
 
 
+async def execute_search_query(args, result_type):
+    try:
+        count_query, main_query, wheres_values = build_search_sql(args, result_type)
+        count_results = await db.execute(count_query, wheres_values)
+        main_results =  await db.execute(main_query, wheres_values)
+        return count_results, main_results, count_query, main_query, wheres_values
+    except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
+        raise DatasetteError(str(e), title="SQL Error", status=400)
+
+
 def get_interlinear(interlinear_sentence):
     """ Gets the word representations of original and gloss from a sentence,
     and zips the word combinations together.
@@ -296,6 +316,6 @@ def get_interlinear(interlinear_sentence):
 def extra_template_vars(request):
     return {
         "args": request.args,
-        "build_search_sql": build_search_sql,
+        "execute_search_query": execute_search_query,
         "get_interlinear": get_interlinear,
     }

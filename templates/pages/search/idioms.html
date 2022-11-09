@@ -8,7 +8,7 @@
 
 {% if args %}
 
-    {% set count_query, main_query, wheres_values = build_search_sql(args, 'idiom') %}
+    {% set count_results, main_results, count_query, main_query, wheres_values = execute_search_query(args, 'idiom') %}
 
     {% if args.get('_trace') == '1' %}
         <div class="box">
@@ -19,7 +19,7 @@
     {% endif %}
 
     <p>
-        {{ sql(count_query, wheres_values)[0].cnt }} records found.
+        {{ count_results.rows[0].cnt }} records found.
     </p>
 
     <table class="table is-striped is-hoverable is-fullwidth">
@@ -31,7 +31,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for row in sql(main_query, wheres_values) %}
+        {% for row in main_results %}
             <tr>
                 <th>{{ row.row_num }}</th>
                 <td><a href="/idioms/{{ row.strategy_id }}">{{ row.strategy_name }}</a></td>
