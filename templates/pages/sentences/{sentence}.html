@@ -1,7 +1,9 @@
 {% extends "page_base.html" %}
 
-{% set row = sql("SELECT sentence_id, original, gloss, translation, grammaticality
+{% set row = sql("SELECT sentence_id, original, gloss, translation
+    , grammaticality, sentence_answerset_id, strategy_name
     FROM sentence s
+    JOIN strategy i ON i.strategy_id = s.sentence_strategy_id
     WHERE sentence_id = :sentence_id
     ;",
     {"sentence_id": sentence}) %}
@@ -14,9 +16,22 @@
     {% set row = row[0] %}
 
     <h2 class="title is-2">Sentence</h2>
-    {% include "_interlinear.html" %}
+    <div class="columns">
+        <div class="column is-1">
+            <p>id: {{ row.sentence_id }}</p>
+            <p>({{ row.grammaticality }})</p>
+        </div>
+        <div class="column is-11">
+            <p>Idiom: <a href="/idioms/{{ row.sentence_strategy_id }}">{{ row.strategy_name }}</a>
+                <span class="ml-5">
+                    Dialect: <a href="/dialects/{{ row.sentence_answerset_id }}">{{ row.sentence_answerset_id }}</a>
+                </span>
+            </p>
+            <p>{% include "_interlinear.html" %}</p>
+        </div>
+    </div>
 
-    <h3 class="title is-2">Properties</h3>
+    <h3 class="title is-2 mt-4">Properties</h3>
 
     {% set sentence_properties_row = sql(" SELECT pg.group_label
         , COALESCE(pq.question_statement_label, pq.question_label) AS question_label
