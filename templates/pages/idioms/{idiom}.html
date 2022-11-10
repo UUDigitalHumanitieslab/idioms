@@ -12,7 +12,7 @@
     <dl>
         <div>
           <dt>Idiom</dt>
-          <dd style="font-weight: bold;">{{ idiom_row[0].strategy_name }}</dd>
+          <dd class="has-text-weight-bold">{{ idiom_row[0].strategy_name }}</dd>
         </div>
         <div>
             <dt>Meaning</dt>
@@ -57,7 +57,7 @@
 
         {% for row in idiom_properties_row %}
             {% if ns.group_prev != row.group_label %}
-                <div><h3 class="title is-3">{{ row.group_label }}</h3></div>
+                <div><h3 class="title is-3 mt-3">{{ row.group_label }}</h3></div>
                 {% set ns.group_prev = row.group_label %}
             {% endif %}
             <div>
@@ -67,7 +67,7 @@
         {% endfor %}
         </dl>
 
-    {% set sentence_rows = sql("SELECT sentence_id, original, gloss, translation, grammaticality, sentence_strategy_id
+    {% set sentence_rows = sql("SELECT sentence_id, original, grammaticality, sentence_strategy_id
                             FROM sentence s
                             WHERE
                              gloss IS NULL
@@ -78,9 +78,12 @@
 
     {% if sentence_rows %}
         <h3 class="title is-3">Sentences</h3>
-        {% for row in sentence_rows %}
-            {% include "_interlinear.html" %}
-        {% endfor %}
+        <div class="columns is-multiline">
+            {% for row in sentence_rows %}
+                <div class="column is-1">({{ row.grammaticality }})</div>
+                <div class="column is-11"><a href="/sentences/{{ row.sentence_id }}">{{ row.original }}</a></div>
+            {% endfor %}
+        </div>
     {% endif %}
 
 {% else %}
