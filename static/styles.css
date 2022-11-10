@@ -17,30 +17,6 @@
     background-color: #fafafa;
 }
 
-.table {
-    display: table;
-    width: 100%;
-}
-
-.table-row {
-    display: table-row;
-    line-height: 2em;
-}
-
-.table-cell,
-.table-head {
-    display: table-cell;
-    padding: 0.2em;
-}
-
-.table-cell.properties {
-    text-align: center;
-}
-
-.table-head {
-    font-weight: bold;
-}
-
 dl {
     display: table;
 }
@@ -63,10 +39,6 @@ dl>div>dt {
 
 dl>div>dt {
     font-weight: bold;
-}
-
-td {
-    border: none;
 }
 
 p.translation {
