@@ -1,7 +1,7 @@
 {% extends "page_base.html" %}
 
 {% set row = sql("SELECT sentence_id, original, gloss, translation
-    , grammaticality, sentence_answerset_id, strategy_name
+    , grammaticality, sentence_answerset_id, sentence_strategy_id, strategy_name
     FROM sentence s
     JOIN strategy i ON i.strategy_id = s.sentence_strategy_id
     WHERE sentence_id = :sentence_id
