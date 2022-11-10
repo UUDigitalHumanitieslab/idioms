@@ -15,6 +15,35 @@
 
     <h2 class="title is-2">Sentence</h2>
     {% include "_interlinear.html" %}
+
+    <h3 class="title is-2">Properties</h3>
+
+    {% set sentence_properties_row = sql(" SELECT pg.group_label
+        , COALESCE(pq.question_statement_label, pq.question_label) AS question_label
+        , COALESCE(sd.value_text, vd.value_label) AS value
+        FROM sentence_data sd
+        JOIN parameterDefinition pd ON sd.parameter_definition_id = pd.parameter_id
+        JOIN parameterQuestion pq ON pd.parameter_group_id = pq.question_id
+        JOIN parameterGroup pg ON pq.question_parent_id = pg.group_id
+        LEFT JOIN valueDefinition vd
+            ON sd.value_definition_id = vd.value_id
+            AND pd.parameter_value_type_id = vd.value_type_id
+        WHERE sd.sentence = :sentence_id
+        ORDER BY group_label ASC, question_label ASC;
+            ", {"sentence_id": sentence}) %}
+
+        {% set ns = namespace(group_prev=None) %}
+        {% for row in sentence_properties_row %}
+            {% if ns.group_prev != row.group_label %}
+                <div><h3 class="title is-3">{{ row.group_label }}</h3></div>
+                {% set ns.group_prev = row.group_label %}
+            {% endif %}
+        <div class="columns">
+            <div class="column is-3 has-text-weight-bold">{{ row.question_label }}</div>
+            <div class="column is-9">{{ row.value }}</div>
+        </div>
+        {% endfor %}
+
 {% else %}
     {{ raise_404("Sentence not found") }}
 {% endif %}
