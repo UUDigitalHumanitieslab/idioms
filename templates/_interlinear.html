@@ -3,9 +3,6 @@
 {% endif %}
 
 <div class="interlinear block">
-    <div style="float:left;margin-right:1em;">
-        <div>({{ row.grammaticality }})</div>
-    </div>
     {% if interlinear_words %}
         {% for word in interlinear_words %}
         <ruby>{{ word[0] }}

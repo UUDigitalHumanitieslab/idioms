@@ -13,6 +13,10 @@
     margin-bottom: 1.5rem;
 }
 
+.columns.is-striped:nth-child(2n) {
+    background-color: #fafafa;
+}
+
 .table {
     display: table;
     width: 100%;

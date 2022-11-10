@@ -1,21 +1,29 @@
 <p>
     {{ sql("SELECT count(*) as cnt FROM sentence WHERE sentence_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
 </p>
-<div class="table">
-    <div class="table-row">
-        <div class="table-head"></div>
-        <div class="table-head">Sentence</div>
-        <div class="table-head">Idiom</div>
+
+{% for row in sql(""" SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
+                    sentence_id, original, translation, gloss, grammaticality, sentence_answerset_id, sentence_strategy_id,
+                    strategy_name
+                    FROM sentence s
+                    JOIN strategy i ON i.strategy_id = s.sentence_strategy_id
+                    WHERE sentence_answerset_id = :dialect_id
+                    """, {"dialect_id": dialect_id}) %}
+<div class="columns is-striped">
+    <div class="column is-narrow">{{ row.row_num }}</div>
+    <div class="column is-11">
+        <div class="columns">
+            <div class="column is-1">
+                <p><a href="/sentences/{{ row.sentence_id }}">id: {{ row.sentence_id }}</a></p>
+                <p>({{ row.grammaticality }})</p>
+            </div>
+            <div class="column is-11">
+                <p>Idiom: <a href="/idioms/{{ row.sentence_strategy_id }}">{{ row.strategy_name }}</a>
+                    <span class="is-pulled-right">Dialect: {{ row.sentence_answerset_id }}</span>
+                </p>
+                <div>{% include "_interlinear.html" %}</div>
+            </div>
+        </div>
     </div>
-    {% for row in sql(""" SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
-                        sentence_id, original, translation, gloss, grammaticality, sentence_answerset_id, sentence_strategy_id
-                        FROM sentence
-                        WHERE sentence_answerset_id = :dialect_id
-                        """, {"dialect_id": dialect_id}) %}
-    <div class="table-row">
-        <div class="table-cell"><a href="/sentences/{{ row.sentence_id }}">{{ row.row_num }}</a></div>
-        <div class="table-cell">{% include "_interlinear.html" %}</div>
-        <div class="table-cell"><a href="/idioms/{{ row.sentence_strategy_id }}">Idiom</a></div>
-    </div>
-    {% endfor %}
 </div>
+{% endfor %}
