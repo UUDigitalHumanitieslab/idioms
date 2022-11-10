@@ -56,8 +56,9 @@ dl>div>dd {
 }
 
 dl>div>dt {
-    background-color: #d1c6d5;
+    background-color: hsl(0, 0%, 86%);
     min-width: 10em;
+    border-bottom: 3px solid hsl(0, 0%, 96%);
 }
 
 dl>div>dt {
