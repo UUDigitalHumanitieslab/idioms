@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-background-grey-light">
 
 <head>
     <meta charset="UTF-8">
@@ -13,19 +13,19 @@
 
 <body>
     <header>
-        <nav class="container navbar mt-2 mb-4">
+        <nav class="container navbar mt-2 mb-4 px-5 has-background-grey-light">
             {% include "_nav_links.html" %}
         </nav>
     </header>
 
     <main>
-        <div class="container content">
+        <div class="container content has-background-white-ter p-5">
             {% block content %}{% endblock %}
         </div>
     </main>
 
     <footer class="section">
-        <div class="container content">
+        <div class="container content p-5 has-background-primary">
             {% include "_footer.html" %}
         </div>
     </footer>
