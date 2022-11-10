@@ -22,25 +22,26 @@
         {{ sql(count_query, wheres_values)[0].cnt }} records found.
     </p>
 
-    <div class="table">
-        <div class="table-row">
-            <div class="table-head"></div>
-            <div class="table-head"></div>
-            <div class="table-head">Sentence</div>
-        </div>
-
     {% for row in sql(main_query, wheres_values) %}
-        <div class="table-row">
-            <div class="table-cell">{{ row.row_num }}</div>
-            <div class="table-cell"><a href="/sentences/{{ row.sentence_id }}">Details</a></div>
-            <div class="table-cell">
-                <div>Idiom: <a href="/idioms/{{ row.strategy_id }}">{{ row.strategy_name }}</a></div>
-                {% include "_interlinear.html" %}
+    <div class="columns is-striped">
+        <div class="column is-narrow">{{ row.row_num }}</div>
+        <div class="column is-11">
+            <div class="columns">
+                <div class="column is-1">
+                    <p><a href="/sentences/{{ row.sentence_id }}">id: {{ row.sentence_id }}</a></p>
+                    <p>({{ row.grammaticality }})</p>
+                </div>
+                <div class="column is-11">
+                    <p>Idiom: <a href="/idioms/{{ row.strategy_id }}">{{ row.strategy_name }}</a>
+                        <span class="is-pulled-right">Dialect: {{ row.sentence_answerset_id }}</span>
+                    </p>
+                    <div>{% include "_interlinear.html" %}</div>
+                </div>
             </div>
         </div>
+    </div>
     {% endfor %}
 
-    </div>
 {% endif %}
 
 {% endblock %}
