@@ -178,17 +178,25 @@ def parse_search_string(user_search_text):
 
 def build_exists_clause(kind, alias, id, criterion, search_type='param'):
     """ Arguments:
-    - kind: 'strategy', 'sentence'
+    - kind: 'strategy', 'sentence', 'strategy_data', 'sentence_data'
     - alias: 'i', 's'
     - id: parameter_definition_id or fts column
     - criterion: string
     Returns a formatted EXISTS clause as a string.
     """
-    if search_type == 'fts':
+    if search_type == 'fts_main':
         return f"""EXISTS (
             SELECT 1 FROM {kind}_fts
             WHERE {kind}_fts.{kind}_id = {alias}.{kind}_id
              AND {kind}_fts.{id} {criterion}
+        )"""
+    if search_type == 'fts_param':
+        table = kind + '_data_fts'
+        return f"""EXISTS (
+            SELECT 1 FROM {table}
+            WHERE {table}.{kind}_id = {alias}.{kind}_id
+             AND {table}.parameter_definition_id = '{id}'
+             AND {table}.parameter_value {criterion}
         )"""
     else:
         return f"""EXISTS (
@@ -210,20 +218,22 @@ def build_selectlist_where(param, param_values):
         return build_exists_clause('sentence', 's', sentence_list_parameters[param], criterion)
 
 
-def build_textvalue_where(param):
-    criterion = "LIKE '%' || ? || '%'"
+def build_fts_param_where(param):
+    # Search FTS5 index on text parameters from strategy_data/sentence_data tables
+    criterion = "MATCH ?"
     if param in idiom_text_parameter_keys:
-        return build_exists_clause('strategy', 'i', idiom_text_parameters[param], criterion)
+        return build_exists_clause('strategy', 'i', idiom_text_parameters[param], criterion, search_type='fts_param')
     if param in sentence_text_parameter_keys:
-        return build_exists_clause('sentence', 's', sentence_text_parameters[param], criterion)
+        return build_exists_clause('sentence', 's', sentence_text_parameters[param], criterion, search_type='fts_param')
 
 
-def build_fts_where(param):
+def build_fts_main_where(param):
+    # Search FTS5 index from main strategy/sentence tables
     criterion = "MATCH ?"
     if param in idiom_fts_columns_keys:
-        return build_exists_clause('strategy', 'i', idiom_fts_columns[param], criterion, search_type='fts')
+        return build_exists_clause('strategy', 'i', idiom_fts_columns[param], criterion, search_type='fts_main')
     if param in sentence_fts_columns_keys:
-        return build_exists_clause('sentence', 's', sentence_fts_columns[param], criterion, search_type='fts')
+        return build_exists_clause('sentence', 's', sentence_fts_columns[param], criterion, search_type='fts_main')
 
 
 def build_where_clauses(param, arg):
@@ -240,18 +250,16 @@ def build_where_clauses(param, arg):
 
     if param in textparam_keys:
         arg = arg[0] # For text inputs there is just one value
-        text_param_value = arg.strip() # Empty text input fields are always submitted
+        text_param_value = escape_fts(arg.strip()) # Empty text input fields are always submitted
         if text_param_value:
-            values = parse_search_string(text_param_value)
-            if len(values) > 0:
-                where = [build_textvalue_where(param)] * len(values)
-                return where, values
+            where = build_fts_param_where(param)
+            return [where], [text_param_value]
 
     if param in text_fts_keys:
         arg = arg[0]
         search_string = escape_fts(arg.strip())
         if search_string:
-            where = build_fts_where(param)
+            where = build_fts_main_where(param)
             return [where], [search_string]
 
 
