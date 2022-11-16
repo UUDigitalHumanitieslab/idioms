@@ -2,7 +2,7 @@ CREATE VIRTUAL TABLE "strategy_fts" USING FTS5 (
     strategy_id
     , strategy_name
     , strategy_description
-    , tokenize="trigram"
+    , tokenize="unicode61"
 );
 
 INSERT INTO "strategy_fts" (strategy_id, strategy_name, strategy_description)
@@ -14,7 +14,7 @@ CREATE VIRTUAL TABLE "sentence_fts" USING FTS5 (
     , original
     , gloss
     , "translation"
-    , tokenize="trigram"
+    , tokenize="unicode61"
 );
 
 INSERT INTO "sentence_fts" (sentence_id, original, gloss, "translation")
@@ -28,7 +28,7 @@ CREATE VIRTUAL TABLE "strategy_data_fts" USING FTS5 (
     strategy_id
     , parameter_definition_id
     , parameter_value
-    , tokenize="trigram"
+    , tokenize="unicode61"
 );
 
 WITH strategy_parameter_ids AS (
@@ -66,7 +66,7 @@ CREATE VIRTUAL TABLE "sentence_data_fts" USING FTS5 (
     sentence_id
     , parameter_definition_id
     , parameter_value
-    , tokenize="trigram"
+    , tokenize="unicode61"
 );
 
 WITH sentence_parameter_ids AS (
