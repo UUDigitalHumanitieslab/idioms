@@ -250,15 +250,17 @@ def build_where_clauses(param, arg):
 
     if param in textparam_keys:
         arg = arg[0] # For text inputs there is just one value
-        text_param_value = escape_fts(arg.strip()) # Empty text input fields are always submitted
+        text_param_value = arg.strip() # Empty text input fields are always submitted
         if text_param_value:
+            text_param_value = escape_fts(text_param_value)
             where = build_fts_param_where(param)
             return [where], [text_param_value]
 
     if param in text_fts_keys:
         arg = arg[0]
-        search_string = escape_fts(arg.strip())
+        search_string = arg.strip()
         if search_string:
+            search_string = escape_fts(search_string)
             where = build_fts_main_where(param)
             return [where], [search_string]
 
