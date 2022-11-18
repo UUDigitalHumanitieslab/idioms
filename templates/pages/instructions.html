@@ -196,13 +196,13 @@ If you do not select any values in a search criterion, it will not be used in th
 </p>
 
 <p>
-Simple free-text searches require every search term to be present, as a whole or partial word.
-For more complex queries you can use <tt>AND</tt>, <tt>OR</tt>, and negation (a minus sign), enclose <tt>"a string in quotes"</tt> to match it exactly, or search for the keyword <tt>NULL</tt>, which means the field must be empty.
+Simple free-text searches require every search term to be present, as a whole word.
+For more complex queries you can use the boolean operators <code>AND</code>, <code>OR</code>, and <code>NOT</code>. You can enclose <code>"a string in quotes"</code> to match it exactly, or search for the keyword <code>NULL</code>, which means the field must be empty.
 </p>
 
 <p>
 You can click the <b>Reset form</b> button to remove all currently entered criteria and start from scratch.
-After entering your search criteria, click on the <b>Search</b> button to carry out the search.
+After entering your search criteria, click on one of the entity type buttons to carry out the search.
 </p>
 
 {% endblock %}
