@@ -70,46 +70,6 @@ text_fts_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
 
 
 # SQL query constants
-with_clauses = """WITH strategy_parameter_ids AS (
-    SELECT DISTINCT sd.parameter_definition_id
-    FROM strategy_data sd
-    WHERE sd.parameter_definition_id != 'test10'
-    ),
-strategy_parameter_combinations AS (
-    SELECT strategy_id, parameter_definition_id
-    FROM strategy s
-    CROSS JOIN strategy_parameter_ids sp
-    ),
-strategy_data_all AS (
-    -- Note: value_shorttext, value_text, and value_definition_id values are mutually exclusive in the database
-    SELECT spc.strategy_id, spc.parameter_definition_id,
-        IFNULL(COALESCE(sd.value_shorttext, sd.value_text, sd.value_definition_id), '0') AS parameter_value
-    FROM strategy_parameter_combinations spc
-    LEFT JOIN strategy_data sd
-        ON sd.parameter_definition_id = spc.parameter_definition_id
-            AND sd.strategy = spc.strategy_id
-    ),
-sentence_parameter_ids AS (
-    SELECT DISTINCT sd.parameter_definition_id
-    FROM sentence_data sd
-    ),
-sentence_parameter_combinations AS (
-    SELECT s.sentence_id, sp.parameter_definition_id, s.original, s.translation, s.gloss
-    FROM sentence s
-    CROSS JOIN sentence_parameter_ids sp
-    ),
-sentence_data_all AS (
-    -- Note: value_text and value_definition_id values are mutually exclusive in the database
-    SELECT spc.sentence_id, spc.parameter_definition_id,
-        IFNULL(COALESCE(sd.value_text, sd.value_definition_id), '0') AS parameter_value,
-        spc.original
-    FROM sentence_parameter_combinations spc
-    LEFT JOIN sentence_data sd
-        ON sd.parameter_definition_id = spc.parameter_definition_id
-            AND sd.sentence = spc.sentence_id
-    )
-"""
-
 dialect_count_query = """SELECT count(DISTINCT strategy_answerset_id) as cnt
 FROM strategy i
 LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
@@ -296,9 +256,7 @@ def build_search_sql(args, result_type):
     count_query = queries[result_type]['count_query'].format(wheres_str)
     main_query = queries[result_type]['main_query'].format(wheres_str)
 
-    return with_clauses + count_query, \
-           with_clauses + main_query, \
-           wheres_values
+    return count_query, main_query, wheres_values
 
 
 async def execute_search_query(args, result_type):

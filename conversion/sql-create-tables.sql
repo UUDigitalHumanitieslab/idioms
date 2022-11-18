@@ -161,3 +161,45 @@ CREATE INDEX [idx_sentence_data_value_definition_id]
     ON [sentence_data] ([value_definition_id]);
 CREATE INDEX [idx_sentence_data_sentence]
     ON [sentence_data] ([sentence]);
+
+/*
+ * Use views for simpler queries in template_vars.py.
+ */
+CREATE VIEW IF NOT EXISTS strategy_data_all AS
+WITH strategy_parameter_ids AS (
+    SELECT DISTINCT sd.parameter_definition_id
+    FROM strategy_data sd
+    WHERE sd.parameter_definition_id != 'test10'
+    ),
+strategy_parameter_combinations AS (
+    SELECT strategy_id, parameter_definition_id
+    FROM strategy s
+    CROSS JOIN strategy_parameter_ids sp
+    )
+-- Note: value_shorttext, value_text, and value_definition_id values are mutually exclusive in the database
+SELECT spc.strategy_id
+    , spc.parameter_definition_id
+    , IFNULL(COALESCE(sd.value_shorttext, sd.value_text, sd.value_definition_id), '0') AS parameter_value
+FROM strategy_parameter_combinations spc
+LEFT JOIN strategy_data sd
+ ON sd.parameter_definition_id = spc.parameter_definition_id
+ AND sd.strategy = spc.strategy_id;
+
+CREATE VIEW IF NOT EXISTS sentence_data_all AS
+WITH sentence_parameter_ids AS (
+    SELECT DISTINCT sd.parameter_definition_id
+    FROM sentence_data sd
+    ),
+sentence_parameter_combinations AS (
+    SELECT s.sentence_id, sp.parameter_definition_id, s.original, s."translation", s.gloss
+    FROM sentence s
+    CROSS JOIN sentence_parameter_ids sp
+    )
+ -- Note: value_text and value_definition_id values are mutually exclusive in the database
+SELECT spc.sentence_id
+    , spc.parameter_definition_id
+    , IFNULL(COALESCE(sd.value_text, sd.value_definition_id), '0') AS parameter_value
+FROM sentence_parameter_combinations spc
+LEFT JOIN sentence_data sd
+ ON sd.parameter_definition_id = spc.parameter_definition_id
+ AND sd.sentence = spc.sentence_id;
