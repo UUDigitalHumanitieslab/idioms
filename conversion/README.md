@@ -43,4 +43,4 @@ Convert only the relevant tables and columns:
 
 Create the FTS5 virtual tables:
 
-    sqlite3 idioms.db < sql-fts-create.sql
+    sqlite3 idioms.db < sql-create-fts.sql
