@@ -142,17 +142,15 @@ def build_exists_clause(kind, alias, id, criterion, search_type='param'):
     Returns a formatted EXISTS clause as a string.
     """
     if search_type == 'fts_main':
-        return f"""EXISTS (
-            SELECT 1 FROM {kind}_fts
-            WHERE {kind}_fts.{kind}_id = {alias}.{kind}_id
-             AND {kind}_fts.{id} {criterion}
+        return f"""{kind}_id IN (
+            SELECT {kind}_id FROM {kind}_fts
+            WHERE {kind}_fts.{id} {criterion}
         )"""
     if search_type == 'fts_param':
         table = kind + '_data_fts'
-        return f"""EXISTS (
-            SELECT 1 FROM {table}
-            WHERE {table}.{kind}_id = {alias}.{kind}_id
-             AND {table}.parameter_definition_id = '{id}'
+        return f"""{kind}_id IN (
+            SELECT {kind}_id FROM {table}
+            WHERE {table}.parameter_definition_id = '{id}'
              AND {table}.parameter_value {criterion}
         )"""
     else:
