@@ -8,18 +8,18 @@
 
 {% if args %}
 
-    {% set count_results, main_results, count_query, main_query, wheres_values = execute_search_query(args, 'dialect') %}
+    {% set result_count, results, query, wheres_values = execute_search_query(args, 'dialect') %}
 
     {% if args.get('_trace') == '1' %}
         <div class="box">
             <pre>{{ args }}</pre>
             <pre>WHERE values: {{ wheres_values }}</pre>
-            <pre>{{ main_query }}</pre>
+            <pre>{{ query }}</pre>
         </div>
     {% endif %}
 
     <p>
-        {{ count_results.rows[0].cnt }} records found.
+        {{ result_count }} records found.
     </p>
 
     <table class="table is-striped is-hoverable is-fullwidth">
@@ -31,7 +31,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for row in sql(main_query, wheres_values) %}
+        {% for row in results %}
         <tr>
             <th>{{ row.row_num }}</th>
             <td><a href="/dialects/{{ row.strategy_answerset_id }}">{{ row.answerset_name }}</a></td>

@@ -114,15 +114,12 @@ ORDER BY sentence_id ASC;"""
 
 queries = {
     'dialect': {
-        'count_query': dialect_count_query,
         'main_query': dialect_main_query
     },
     'idiom': {
-        'count_query': idiom_count_query,
         'main_query': idiom_main_query
     },
     'sentence': {
-        'count_query': sentence_count_query,
         'main_query': sentence_main_query
     }
 }
@@ -253,18 +250,17 @@ def build_search_sql(args, result_type):
 
     wheres_str = '\n AND '.join(wheres)
 
-    count_query = queries[result_type]['count_query'].format(wheres_str)
-    main_query = queries[result_type]['main_query'].format(wheres_str)
+    query = queries[result_type]['main_query'].format(wheres_str)
 
-    return count_query, main_query, wheres_values
+    return query, wheres_values
 
 
 async def execute_search_query(args, result_type):
     try:
-        count_query, main_query, wheres_values = build_search_sql(args, result_type)
-        count_results = await db.execute(count_query, wheres_values)
-        main_results =  await db.execute(main_query, wheres_values)
-        return count_results, main_results, count_query, main_query, wheres_values
+        query, wheres_values = build_search_sql(args, result_type)
+        results =  await db.execute(query, wheres_values)
+        result_count = len(results)
+        return result_count, results, query, wheres_values
     except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
         raise DatasetteError(str(e), title="SQL Error", status=400)
 

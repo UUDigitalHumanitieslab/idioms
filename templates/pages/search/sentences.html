@@ -8,21 +8,21 @@
 
 {% if args %}
 
-    {% set count_results, main_results, count_query, main_query, wheres_values = execute_search_query(args, 'sentence') %}
+    {% set result_count, results, query, wheres_values = execute_search_query(args, 'sentence') %}
 
     {% if args.get('_trace') == '1' %}
         <div class="box">
             <pre>{{ args }}</pre>
             <pre>WHERE values: {{ wheres_values }}</pre>
-            <pre>{{ main_query }}</pre>
+            <pre>{{ query }}</pre>
         </div>
     {% endif %}
 
     <p>
-        {{ count_results.rows[0].cnt }} records found.
+        {{ result_count }} records found.
     </p>
 
-    {% for row in sql(main_query, wheres_values) %}
+    {% for row in results %}
     <div class="columns is-striped">
         <div class="column is-narrow">{{ row.row_num }}</div>
         <div class="column is-11">
