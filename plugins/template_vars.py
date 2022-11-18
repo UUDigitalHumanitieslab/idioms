@@ -1,6 +1,8 @@
+import re
+
 from datasette import hookimpl
 from datasette.app import Datasette
-from datasette.utils import escape_fts, sqlite3
+from datasette.utils import sqlite3
 from datasette.views.base import DatasetteError
 
 from pyparsing import *
@@ -10,6 +12,21 @@ try:
     db = datasette.get_database('idioms')
 except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
     raise DatasetteError(str(e), title="SQL Error", status=400)
+
+
+# Based on escape_fts() from datasette.
+# Modified to not escape boolean operators.
+_escape_fts_re = re.compile(r'\s+|(".*?")')
+
+def escape_fts(query):
+    # If query has unbalanced ", add one at end
+    if query.count('"') % 2:
+        query += '"'
+    parts = _escape_fts_re.split(query)
+    parts = [p for p in parts if p and p != '""']
+    return " ".join(
+        f'"{part}"' if not part.startswith('"') and not part in ['AND', 'OR', 'NOT'] else part for part in parts
+    )
 
 
 def dict_and_keyset(dictionary):
