@@ -29,7 +29,7 @@
       </dl>
 
     <h2 class="title is-2">Properties</h2>
-    {% set interlinear_rows = sql("SELECT original, gloss, translation, grammaticality, sentence_strategy_id
+    {% set interlinear_rows = sql("SELECT sentence_id, original, gloss, translation, grammaticality, sentence_strategy_id
                                         FROM sentence s
                                         WHERE translation IS NOT NULL
                                          AND sentence_strategy_id = :strategy_id;",
@@ -37,7 +37,15 @@
 
         <h3 class="title is-3">Gloss and translation</h3>
         {% for row in interlinear_rows %}
-            {% include "_interlinear.html" %}
+            <div class="columns">
+                <div class="column is-1">
+                    <p><a href="/sentences/{{ row.sentence_id }}">id: {{ row.sentence_id }}</a></p>
+                    <p>({{ row.grammaticality }})</p>
+                </div>
+                <div class="column is-11">
+                    <div>{% include "_interlinear.html" %}</div>
+                </div>
+            </div>
         {% endfor %}
 
     {% set idiom_properties_row = sql(" SELECT pg.group_label, pq.question_label, COALESCE(sd.value_shorttext, vd.value_label) AS value
