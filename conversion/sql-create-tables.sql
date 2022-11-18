@@ -83,8 +83,8 @@ CREATE INDEX [idx_answerset_data_answerset]
 -- strategy definition
 CREATE TABLE [strategy] (
    [strategy_id] INTEGER PRIMARY KEY,
-   [strategy_name] TEXT,
-   [strategy_description] TEXT,
+   [strategy_name] TEXT COLLATE NOCASE,
+   [strategy_description] TEXT COLLATE NOCASE,
    [strategy_answerset_id] TEXT,
    FOREIGN KEY([strategy_answerset_id]) REFERENCES [answerset]([answerset_id])
 );
@@ -101,8 +101,8 @@ CREATE INDEX [idx_strategy_strategy_answerset_id]
 CREATE TABLE [strategy_data] (
    [strategy_data_id] INTEGER PRIMARY KEY,
    [parameter_definition_id] TEXT,
-   [value_shorttext] TEXT,
-   [value_text] TEXT,
+   [value_shorttext] TEXT COLLATE NOCASE,
+   [value_text] TEXT COLLATE NOCASE,
    [value_definition_id] TEXT,
    [strategy] INTEGER,
    FOREIGN KEY([parameter_definition_id]) REFERENCES [parameterDefinition]([parameter_id]),
@@ -125,9 +125,9 @@ CREATE INDEX [idx_strategy_data_strategy]
 -- sentence definition
 CREATE TABLE [sentence] (
    [sentence_id] INTEGER PRIMARY KEY,
-   [original] TEXT,
-   [translation] TEXT,
-   [gloss] TEXT,
+   [original] TEXT COLLATE NOCASE,
+   [translation] TEXT COLLATE NOCASE,
+   [gloss] TEXT COLLATE NOCASE,
    [grammaticality] TEXT,
    [sentence_answerset_id] TEXT,
    [sentence_strategy_id] INTEGER,
@@ -145,7 +145,7 @@ CREATE INDEX [idx_sentence_sentence_strategy_id]
 CREATE TABLE [sentence_data] (
    [sentence_data_id] INTEGER PRIMARY KEY,
    [parameter_definition_id] TEXT,
-   [value_text] TEXT,
+   [value_text] TEXT COLLATE NOCASE,
    [value_definition_id] TEXT,
    [sentence] INTEGER,
    FOREIGN KEY([parameter_definition_id]) REFERENCES [parameterDefinition]([parameter_id]),
