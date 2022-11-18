@@ -87,12 +87,6 @@ text_fts_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
 
 
 # SQL query constants
-dialect_count_query = """SELECT count(DISTINCT strategy_answerset_id) as cnt
-FROM strategy i
-LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
-JOIN answerset a ON i.strategy_answerset_id = a.answerset_id
-WHERE {};"""
-
 dialect_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
  strategy_answerset_id, answerset_name, answerset_description
 FROM strategy i
@@ -103,11 +97,6 @@ GROUP BY answerset_name
 ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
 
 # Table "strategy" refers to idioms, therefore table alias "i"
-idiom_count_query = """SELECT count(DISTINCT strategy_id) as cnt
-FROM strategy i
-LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
-WHERE {};"""
-
 idiom_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
  strategy_id, strategy_name, strategy_description, strategy_answerset_id
 FROM strategy i
@@ -115,11 +104,6 @@ LEFT JOIN sentence s ON s.sentence_strategy_id = i.strategy_id
 WHERE {}
 GROUP BY strategy_id, strategy_name, strategy_description
 ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
-
-sentence_count_query = """SELECT count(DISTINCT sentence_id) as cnt
-FROM sentence s
-JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
-WHERE {};"""
 
 sentence_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
  sentence_id, original, gloss, translation, grammaticality,
