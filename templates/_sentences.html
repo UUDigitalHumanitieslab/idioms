@@ -8,6 +8,7 @@
                     FROM sentence s
                     JOIN strategy i ON i.strategy_id = s.sentence_strategy_id
                     WHERE sentence_answerset_id = :dialect_id
+                    ORDER BY i.strategy_id ASC
                     """, {"dialect_id": dialect_id}) %}
 <div class="columns is-striped">
     <div class="column is-narrow">{{ row.row_num }}</div>
