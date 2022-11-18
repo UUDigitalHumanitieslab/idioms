@@ -40,3 +40,7 @@ First create the tables and indexes in a new database:
 Convert only the relevant tables and columns:
 
     while IFS=: read table sql; do db-to-sqlite mysql://root:idiomsdb@127.0.0.1:3307/idiomsdb idioms.db --sql="$sql" --output="$table"; echo "Imported $table"; done < sql-import-selected.txt
+
+Create the FTS5 virtual tables:
+
+    sqlite3 idioms.db < sql-fts-create.sql

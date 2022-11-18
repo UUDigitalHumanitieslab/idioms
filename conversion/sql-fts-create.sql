@@ -1,3 +1,6 @@
+/*
+ * Create FTS5 index for strategy text parameters
+ */
 CREATE VIRTUAL TABLE "strategy_fts" USING FTS5 (
     strategy_id
     , strategy_name
@@ -9,6 +12,9 @@ INSERT INTO "strategy_fts" (strategy_id, strategy_name, strategy_description)
 SELECT strategy_id, strategy_name, strategy_description
 FROM strategy;
 
+/*
+ * Create FTS5 index for sentence text parameters
+ */
 CREATE VIRTUAL TABLE "sentence_fts" USING FTS5 (
     sentence_id
     , original
