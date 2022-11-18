@@ -1,0 +1,11 @@
+valueType:SELECT type_id, type_label FROM valueType;
+valueDefinition:SELECT value_id, value_label, value_type_id FROM valueDefinition;
+parameterGroup:SELECT group_id, group_label, group_entity FROM parameterGroup;
+parameterQuestion:SELECT question_id, question_label, question_statement_label, question_parent_id FROM parameterQuestion;
+parameterDefinition:SELECT parameter_id, parameter_name, parameter_group_id, parameter_value_type_id FROM parameterDefinition;
+answerset:SELECT answerset_id, answerset_name, answerset_description FROM answerset;
+answerset_data:SELECT answerset_data_id, parameter_definition_id, value_shorttext, value_text, answerset FROM answerset_data;
+strategy:SELECT strategy_id, strategy_name, strategy_description, strategy_answerset_id FROM strategy;
+strategy_data:SELECT strategy_data_id, parameter_definition_id, value_shorttext, value_text,value_definition_id, strategy FROM strategy_data;
+sentence:SELECT sentence_id, original, translation, gloss, grammaticality, sentence_answerset_id, sentence_strategy_id FROM sentence;
+sentence_data:SELECT sentence_data_id, parameter_definition_id, value_text, value_definition_id, sentence FROM sentence_data;

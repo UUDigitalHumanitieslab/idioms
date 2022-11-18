@@ -33,5 +33,10 @@ Install dependencies for copying MySQL data to a SQLite database:
 
 ### Convert to SQLite
 
-    db-to-sqlite mysql://root:idiomsdb@127.0.0.1:3307/idiomsdb data/idioms.db --all
+First create the tables and indexes in a new database:
 
+    sqlite3 idioms.db < sql-create-tables.sql
+
+Convert only the relevant tables and columns:
+
+    while IFS=: read table sql; do db-to-sqlite mysql://root:idiomsdb@127.0.0.1:3307/idiomsdb idioms.db --sql="$sql" --output="$table"; echo "Imported $table"; done < sql-import-selected.txt
