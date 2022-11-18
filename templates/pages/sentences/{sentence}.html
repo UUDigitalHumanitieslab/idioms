@@ -47,6 +47,10 @@
         ORDER BY group_label ASC, question_label ASC;
             ", {"sentence_id": sentence}) %}
 
+        {% if not sentence_properties_row %}
+            <p>The reference sentence does not have custom properties.</p>
+        {% endif %}
+
         {% set ns = namespace(group_prev=None) %}
         {% for row in sentence_properties_row %}
             {% if ns.group_prev != row.group_label %}
