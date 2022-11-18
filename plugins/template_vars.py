@@ -127,7 +127,7 @@ sentence_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS 
 FROM sentence s
 JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
 WHERE {}
-ORDER BY sentence_id ASC;"""
+ORDER BY i.strategy_id ASC;"""
 
 queries = {
     'dialect': {
