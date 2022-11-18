@@ -5,7 +5,6 @@ from datasette.app import Datasette
 from datasette.utils import sqlite3
 from datasette.views.base import DatasetteError
 
-from pyparsing import *
 
 try:
     datasette = Datasette(files=["./idioms.db"])
@@ -124,14 +123,6 @@ queries = {
         'main_query': sentence_main_query
     }
 }
-
-
-def parse_search_string(user_search_text):
-    quoted_string.setParseAction(removeQuotes)
-    word = Word(srange("[a-zA-Z0-9_]"), srange("[a-zA-Z0-9_]"))
-    phrases_pattern = ZeroOrMore(quoted_string) + ZeroOrMore(word)
-    phrases = phrases_pattern.parse_string(user_search_text).asList()
-    return phrases
 
 
 def build_exists_clause(kind, alias, id, criterion, search_type='param'):
