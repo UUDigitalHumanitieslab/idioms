@@ -8,4 +8,4 @@ answerset_data:SELECT answerset_data_id, parameter_definition_id, value_shorttex
 strategy:SELECT strategy_id, strategy_name, strategy_description, strategy_answerset_id FROM strategy;
 strategy_data:SELECT strategy_data_id, parameter_definition_id, value_shorttext, value_text,value_definition_id, strategy FROM strategy_data;
 sentence:SELECT sentence_id, original, translation, gloss, grammaticality, sentence_answerset_id, sentence_strategy_id FROM sentence;
-sentence_data:SELECT sentence_data_id, parameter_definition_id, value_text, value_definition_id, sentence FROM sentence_data;
+sentence_data:SELECT sentence_data_id, parameter_definition_id, value_text, value_definition_id, sentence AS sentence_id FROM sentence_data;

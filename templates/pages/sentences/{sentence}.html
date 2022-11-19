@@ -43,7 +43,7 @@
         LEFT JOIN valueDefinition vd
             ON sd.value_definition_id = vd.value_id
             AND pd.parameter_value_type_id = vd.value_type_id
-        WHERE sd.sentence = :sentence_id
+        WHERE sd.sentence_id = :sentence_id
         ORDER BY group_label ASC, question_label ASC;
             ", {"sentence_id": sentence}) %}
 

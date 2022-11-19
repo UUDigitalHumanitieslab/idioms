@@ -147,10 +147,10 @@ CREATE TABLE [sentence_data] (
    [parameter_definition_id] TEXT,
    [value_text] TEXT COLLATE NOCASE,
    [value_definition_id] TEXT,
-   [sentence] INTEGER,
+   [sentence_id] INTEGER,
    FOREIGN KEY([parameter_definition_id]) REFERENCES [parameterDefinition]([parameter_id]),
    FOREIGN KEY([value_definition_id]) REFERENCES [valueDefinition]([value_id]),
-   FOREIGN KEY([sentence]) REFERENCES [sentence]([sentence_id])
+   FOREIGN KEY([sentence_id]) REFERENCES [sentence]([sentence_id])
 );
 
 CREATE INDEX [idx_sentence_data_parameter_definition_id]
@@ -159,8 +159,8 @@ CREATE INDEX [idx_sentence_data_value_text]
     ON [sentence_data] ([value_text]);
 CREATE INDEX [idx_sentence_data_value_definition_id]
     ON [sentence_data] ([value_definition_id]);
-CREATE INDEX [idx_sentence_data_sentence]
-    ON [sentence_data] ([sentence]);
+CREATE INDEX [idx_sentence_data_sentence_id]
+    ON [sentence_data] ([sentence_id]);
 
 /*
  * Use views for simpler queries in template_vars.py.
@@ -202,4 +202,4 @@ SELECT spc.sentence_id
 FROM sentence_parameter_combinations spc
 LEFT JOIN sentence_data sd
  ON sd.parameter_definition_id = spc.parameter_definition_id
- AND sd.sentence = spc.sentence_id;
+ AND sd.sentence_id = spc.sentence_id;
