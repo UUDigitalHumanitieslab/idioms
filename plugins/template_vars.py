@@ -7,7 +7,7 @@ from datasette.views.base import DatasetteError
 
 
 try:
-    datasette = Datasette(files=["./idioms.db"])
+    datasette = Datasette(files=["./data/idioms.db"])
     db = datasette.get_database('idioms')
 except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
     raise DatasetteError(str(e), title="SQL Error", status=400)
