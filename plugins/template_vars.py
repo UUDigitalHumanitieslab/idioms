@@ -250,9 +250,9 @@ async def execute_search_query(args, result_type):
         query, wheres_values = build_search_sql(args, result_type)
         results =  await db.execute(query, wheres_values)
         result_count = len(results)
-        return result_count, results, query, wheres_values
+        return result_count, results, query, wheres_values, None
     except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
-        raise DatasetteError(str(e), title="SQL Error", status=400)
+        return None, None, None, None, str(e)
 
 
 def get_interlinear(interlinear_sentence):
