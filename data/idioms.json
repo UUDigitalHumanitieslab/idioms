@@ -1,0 +1,114 @@
+{
+  "idioms": {
+    "hash": "963e3aed2cb2221ff43f7bc97b6ee8298e5787e36be27ea244ad9826458117de",
+    "size": 10145792,
+    "file": "data/idioms.db",
+    "tables": {
+      "valueType": {
+        "count": 22
+      },
+      "valueDefinition": {
+        "count": 227
+      },
+      "parameterGroup": {
+        "count": 10
+      },
+      "parameterQuestion": {
+        "count": 25
+      },
+      "parameterDefinition": {
+        "count": 26
+      },
+      "answerset": {
+        "count": 13
+      },
+      "answerset_data": {
+        "count": 26
+      },
+      "strategy": {
+        "count": 7333
+      },
+      "strategy_data": {
+        "count": 47699
+      },
+      "sentence": {
+        "count": 2258
+      },
+      "sentence_data": {
+        "count": 6022
+      },
+      "strategy_fts_data": {
+        "count": 139
+      },
+      "strategy_fts_idx": {
+        "count": 134
+      },
+      "strategy_fts_content": {
+        "count": 7333
+      },
+      "strategy_fts_docsize": {
+        "count": 7333
+      },
+      "strategy_fts_config": {
+        "count": 1
+      },
+      "sentence_fts_data": {
+        "count": 42
+      },
+      "sentence_fts_idx": {
+        "count": 40
+      },
+      "sentence_fts_content": {
+        "count": 2258
+      },
+      "sentence_fts_docsize": {
+        "count": 2258
+      },
+      "sentence_fts_config": {
+        "count": 1
+      },
+      "strategy_data_fts_data": {
+        "count": 80
+      },
+      "strategy_data_fts_idx": {
+        "count": 31
+      },
+      "strategy_data_fts_content": {
+        "count": 14666
+      },
+      "strategy_data_fts_docsize": {
+        "count": 14666
+      },
+      "strategy_data_fts_config": {
+        "count": 1
+      },
+      "sentence_data_fts_data": {
+        "count": 40
+      },
+      "sentence_data_fts_idx": {
+        "count": 29
+      },
+      "sentence_data_fts_content": {
+        "count": 2258
+      },
+      "sentence_data_fts_docsize": {
+        "count": 2258
+      },
+      "sentence_data_fts_config": {
+        "count": 1
+      },
+      "strategy_fts": {
+        "count": 7333
+      },
+      "sentence_fts": {
+        "count": 2258
+      },
+      "strategy_data_fts": {
+        "count": 14666
+      },
+      "sentence_data_fts": {
+        "count": 2258
+      }
+    }
+  }
+}
