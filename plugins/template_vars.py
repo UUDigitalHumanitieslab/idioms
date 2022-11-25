@@ -115,15 +115,9 @@ WHERE {}
 ORDER BY i.strategy_id, s.sentence_id ASC;"""
 
 queries = {
-    'dialect': {
-        'main_query': dialect_main_query
-    },
-    'idiom': {
-        'main_query': idiom_main_query
-    },
-    'sentence': {
-        'main_query': sentence_main_query
-    }
+    'dialect': dialect_main_query,
+    'idiom': idiom_main_query,
+    'sentence': sentence_main_query
 }
 
 
@@ -242,7 +236,7 @@ def build_search_sql(args, result_type):
 
     wheres_str = '\n AND '.join(wheres)
 
-    query = queries[result_type]['main_query'].format(wheres_str)
+    query = queries[result_type].format(wheres_str)
 
     return query, wheres_values
 
