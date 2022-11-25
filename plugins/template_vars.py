@@ -24,8 +24,9 @@ def escape_fts(query):
         query += '"'
     parts = _escape_fts_re.split(query)
     parts = [p for p in parts if p and p != '""']
+    unquoted_keywords = ['AND', 'OR', 'NOT', '*']
     return " ".join(
-        f'"{part}"' if not part.startswith('"') and not part in ['AND', 'OR', 'NOT', '*'] else part for part in parts
+        f'"{part}"' if not part.startswith('"') and not part in unquoted_keywords else part for part in parts
     )
 
 
