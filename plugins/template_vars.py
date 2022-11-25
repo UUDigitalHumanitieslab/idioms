@@ -104,13 +104,13 @@ WHERE {}
 GROUP BY strategy_id, strategy_name, strategy_description
 ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
 
-sentence_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY sentence_id ASC) AS row_num,
+sentence_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY i.strategy_id, s.sentence_id ASC) AS row_num,
  sentence_id, original, gloss, translation, grammaticality,
  strategy_id, strategy_name, strategy_answerset_id, sentence_answerset_id
 FROM sentence s
 JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
 WHERE {}
-ORDER BY i.strategy_id ASC;"""
+ORDER BY i.strategy_id, s.sentence_id ASC;"""
 
 queries = {
     'dialect': {
