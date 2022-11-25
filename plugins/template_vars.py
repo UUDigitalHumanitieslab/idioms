@@ -7,6 +7,7 @@ from datasette.views.base import DatasetteError
 
 
 try:
+    # TODO: this should reuse datasette/db instance?
     datasette = Datasette(files=["./data/idioms.db"])
     db = datasette.get_database('idioms')
 except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
