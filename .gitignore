@@ -7,3 +7,6 @@ data/
 
 # ASDF
 .tool-versions
+
+# JetBrains
+.idea/
