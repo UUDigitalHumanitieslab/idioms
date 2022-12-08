@@ -5,7 +5,6 @@ from datasette.app import Datasette
 from datasette.utils import sqlite3
 from datasette.views.base import DatasetteError
 
-
 try:
     # TODO: this should reuse datasette/db instance?
     datasette = Datasette(files=["./data/idioms.db"])
@@ -13,10 +12,10 @@ try:
 except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
     raise DatasetteError(str(e), title="SQL Error", status=400)
 
-
 # Based on escape_fts() from datasette.
 # Modified to not escape boolean operators.
 _escape_fts_re = re.compile(r'\s+|(".*?")')
+
 
 def escape_fts(query):
     # If query has unbalanced ", add one at end
@@ -26,12 +25,13 @@ def escape_fts(query):
     parts = [p for p in parts if p and p != '""']
     unquoted_keywords = ['AND', 'OR', 'NOT', '*']
     return " ".join(
-        f'"{part}"' if not part.startswith('"') and not part in unquoted_keywords else part for part in parts
+        f'"{part}"' if not part.startswith('"') and part not in unquoted_keywords else part for part in parts
     )
 
 
 def dict_and_keyset(dictionary):
     return dictionary, set(dictionary.keys())
+
 
 # Mappings between form submission parameters (name attribute),
 # and parameter identifiers recorded in the database.
@@ -81,11 +81,9 @@ sentence_fts_columns, sentence_fts_columns_keys = dict_and_keyset({
     'Translation': 'translation',
 })
 
-
 selectlist_keys = set('Dialect') | idiom_list_parameter_keys | sentence_list_parameter_keys
 textparam_keys = idiom_text_parameter_keys | sentence_text_parameter_keys
 text_fts_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
-
 
 # SQL query constants
 dialect_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
@@ -192,8 +190,8 @@ def build_where_clauses(param, arg):
             return [where], values
 
     if param in textparam_keys:
-        arg = arg[0] # For text inputs there is just one value
-        text_param_value = arg.strip() # Empty text input fields are always submitted
+        arg = arg[0]  # For text inputs there is just one value
+        text_param_value = arg.strip()  # Empty text input fields are always submitted
         if text_param_value:
             text_param_value = escape_fts(text_param_value)
             where = build_fts_param_where(param)
@@ -207,22 +205,21 @@ def build_where_clauses(param, arg):
             where = build_fts_main_where(param)
             return [where], [search_string]
 
-
     if param == 'SentenceID':
         arg = arg[0]
         int_param = arg if arg != '' and arg.isdigit else None
         if int_param:
             return ["sentence_id = ?"], [int_param]
 
-    return [], [] # Fallback
+    return [], []  # Fallback
 
 
 def build_search_sql(args, result_type):
     """ args is the request.args MultiParams object.
     result_type: idiom, sentence, or dialect.
     """
-    wheres = [] # A list of where-clause strings
-    wheres_values = [] # A list of values to provide as argument for ?-style SQL parameters
+    wheres = []  # A list of where-clause strings
+    wheres_values = []  # A list of values to provide as argument for ?-style SQL parameters
 
     for param in args.keys():
         arg = args.getlist(param)
@@ -244,7 +241,7 @@ def build_search_sql(args, result_type):
 async def execute_search_query(args, result_type):
     try:
         query, wheres_values = build_search_sql(args, result_type)
-        results =  await db.execute(query, wheres_values)
+        results = await db.execute(query, wheres_values)
         result_count = len(results)
         return result_count, results, query, wheres_values, None
     except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
