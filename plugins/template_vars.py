@@ -1,16 +1,9 @@
 import re
 
 from datasette import hookimpl
-from datasette.app import Datasette
 from datasette.utils import sqlite3
 from datasette.views.base import DatasetteError
 
-try:
-    # TODO: this should reuse datasette/db instance?
-    datasette = Datasette(files=["./data/idioms.db"])
-    db = datasette.get_database('idioms')
-except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
-    raise DatasetteError(str(e), title="SQL Error", status=400)
 
 # Based on escape_fts() from datasette.
 # Modified to not escape boolean operators.
@@ -238,16 +231,6 @@ def build_search_sql(args, result_type):
     return query, wheres_values
 
 
-async def execute_search_query(args, result_type):
-    try:
-        query, wheres_values = build_search_sql(args, result_type)
-        results = await db.execute(query, wheres_values)
-        result_count = len(results)
-        return result_count, results, query, wheres_values, None
-    except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
-        return None, None, None, None, str(e)
-
-
 def get_interlinear(interlinear_sentence):
     """ Gets the word representations of original and gloss from a sentence,
     and zips the word combinations together.
@@ -260,7 +243,17 @@ def get_interlinear(interlinear_sentence):
 
 
 @hookimpl
-def extra_template_vars(request):
+def extra_template_vars(datasette, request):
+    async def execute_search_query(args, result_type):
+        db = datasette.get_database()
+        try:
+            query, wheres_values = build_search_sql(args, result_type)
+            results = await db.execute(query, wheres_values)
+            result_count = len(results)
+            return result_count, results, query, wheres_values, None
+        except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
+            return None, None, None, None, str(e)
+
     return {
         "args": request.args,
         "execute_search_query": execute_search_query,
