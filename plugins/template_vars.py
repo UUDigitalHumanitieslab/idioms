@@ -2,7 +2,6 @@ import re
 
 from datasette import hookimpl
 from datasette.utils import sqlite3
-from datasette.views.base import DatasetteError
 
 
 # Based on escape_fts() from datasette.
