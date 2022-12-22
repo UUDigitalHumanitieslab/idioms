@@ -73,7 +73,7 @@ sentence_fts_columns, sentence_fts_columns_keys = dict_and_keyset({
     'Translation': 'translation',
 })
 
-selectlist_keys = set('Dialect') | idiom_list_parameter_keys | sentence_list_parameter_keys
+selectlist_keys = set(['Dialect']) | idiom_list_parameter_keys | sentence_list_parameter_keys
 textparam_keys = idiom_text_parameter_keys | sentence_text_parameter_keys
 text_fts_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
 
