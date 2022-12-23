@@ -74,8 +74,8 @@ sentence_fts_columns, sentence_fts_columns_keys = dict_and_keyset({
 })
 
 selectlist_keys = set(['Dialect']) | idiom_list_parameter_keys | sentence_list_parameter_keys
-textparam_keys = idiom_text_parameter_keys | sentence_text_parameter_keys
-text_fts_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
+text_param_keys = idiom_text_parameter_keys | sentence_text_parameter_keys
+text_main_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
 
 # SQL query constants
 dialect_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
@@ -181,7 +181,7 @@ def build_where_clauses(param, arg):
             where = build_selectlist_where(param, values)
             return [where], values
 
-    if param in textparam_keys:
+    if param in text_param_keys:
         arg = arg[0]  # For text inputs there is just one value
         text_param_value = arg.strip()  # Empty text input fields are always submitted
         if text_param_value:
@@ -189,7 +189,7 @@ def build_where_clauses(param, arg):
             where = build_fts_param_where(param)
             return [where], [text_param_value]
 
-    if param in text_fts_keys:
+    if param in text_main_keys:
         arg = arg[0]
         search_string = arg.strip()
         if search_string:
