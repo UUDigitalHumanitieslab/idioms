@@ -1,0 +1,27 @@
+parameter_id	parameter_name	parameter_group_id	parameter_value_type_id
+Alienability1	answer	Alienability	Alienability
+Aspect1	answer	Aspect	Aspect
+DeterminerManipulations1	answer	DeterminerManipulations	DeterminerManipulations
+DODeterminer1	answer	DOType	DOType
+ExternalPossessionManipulation	answer	ExternalPossessionManipulation	ExternalPossessionManipulation
+FutureWordenManipulations1	answer	FutureWordenManipulations	FutureWordenManipulations
+GenStructure1	answer	GenStructure	
+Gloss1	examples	Gloss	
+IdiomNotes1	answer	IdiomNotes	
+Location1	answer	Location	
+Modality1	answer	Modality	Modality
+ModalityManipulations1	answer	ModalityManipulations	ModalityManipulations
+Modifier1	answer	Modifier	Modifier
+OpenAnimacy1	answer	OpenAnimacy	Animacy
+OpenPosition1	answer	OpenPosition	OpenPosition
+PossessiveManipulations1	answer	PossessiveManipulations	PossessiveManipulations
+PossType1	answer	PossType	PossType
+Property1	answer	Property	Properties
+s:judgments1	answer	s:judgments	
+s:judgmentsCom	Comments	s:judgments	
+Source1	answer	Source	
+SpecialVerb1	answer	SpecialVerb	Verb
+Tense1	answer	Tense	Tense
+TenseVoiceAspectManipulations1	answer	TenseVoiceAspectManipulations	TenseVoiceAspectManipulations
+test10	what	testJudgement	Animacy
+Voice1	answer	Voice	Voice

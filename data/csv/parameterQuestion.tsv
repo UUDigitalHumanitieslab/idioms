@@ -1,0 +1,26 @@
+question_id	question_label	question_statement_label	question_parent_id
+Alienability	"Alienability of possession"		Group3
+Aspect	Aspect		Group1
+DeterminerManipulations	"How was the idiom manipulated (w.r.t. the determiner)?"	"Determiner manipulation"	Manipulations
+DOType	"Direct object type"		Group2
+ExternalPossessionManipulation	"How was the idiom manipulated (w.r.t. external possession)?"	"External possession construction manipulation"	Manipulations
+FutureWordenManipulations	"How was the idiom manipulated (w.r.t. the future with 'worden' construction)?"	"Future with 'worden' construction manipulation"	Manipulations
+GenStructure	"General structure"		Group2
+Gloss	"Gloss and translation"		Group4
+IdiomNotes	"Notes, comments, to-do notes"	Notes	Group3
+Location	"Principal location"		acctLanguage
+Modality	Modality		Group1
+ModalityManipulations	"How was the idiom manipulated (w.r.t. modality)?"	"Modality manipulation"	Manipulations
+Modifier	"Is the DO modified (by an adjective)?"		Group2
+OpenAnimacy	"Animacy of the open position"		Group2
+OpenPosition	"Open position"		Group2
+PossessiveManipulations	"How was the idiom manipulated (w.r.t. possession)?"	"Possessive construction manipulation"	Manipulations
+PossType	"How is possession expressed?"		Group3
+Property	"What is the manipulated property?"	"Manipulated idiom property"	Manipulations
+s:judgments	"Speaker judgments"		sentGeneral
+Source	Source		acctLanguage
+SpecialVerb	"Is the verb either ""zijn"" or ""hebben""?"		Group2
+Tense	Tense		Group1
+TenseVoiceAspectManipulations	"How was the idiom manipulated (w.r.t. tense/voice/aspect)?"	"Tense/voice/aspect manipulation"	Manipulations
+testJudgement	"Speaker judgements on stimuli (accepted idioms only)"	"Speaker judgements on stimuli"	Group3
+Voice	Voice		Group1

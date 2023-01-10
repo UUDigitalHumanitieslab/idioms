@@ -1,0 +1,23 @@
+type_id	type_label
+Alienability	Alienability
+Animacy	Animacy
+Aspect	Aspect
+boolean	Boolean
+certainty	Certainty
+DeterminerManipulations	"Determiner Manipulations"
+DOType	"DO type"
+ExternalPossessionManipulation	"External Possession Manipulations"
+FutureWordenManipulations	"Future-Worden Manipulations"
+Missing	"Missing values"
+Modality	Modality
+ModalityManipulations	"Modality Manipulations"
+Modifier	Modifier
+OpenAnimacy	"Open animacy"
+OpenPosition	"Open position"
+PossessiveManipulations	"Possessive Manipulations"
+PossType	"Possession type"
+Properties	"Manipulated Properties"
+Tense	Tense
+TenseVoiceAspectManipulations	"Tense-Voice-Aspect Manipulations"
+Verb	Verb
+Voice	Voice

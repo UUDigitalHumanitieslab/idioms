@@ -1,0 +1,11 @@
+group_id	group_label	group_entity
+acctLanguage	"Dialect information"	answerset
+ansConsultant	"Language consultant"	answerset
+AsSession	Session	answerset
+Group1	"Verbal properties"	strategy
+Group2	Structure	strategy
+Group3	Possession	strategy
+Group4	Translation	strategy
+Manipulations	Manipulations	sentence
+sentGeneral	General	sentence
+testing	"Questions for testing the system (ignore them)"	strategy

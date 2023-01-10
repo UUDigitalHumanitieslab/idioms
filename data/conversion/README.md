@@ -45,3 +45,11 @@ Import only the relevant tables and columns from MySQL:
 Create the FTS5 virtual tables:
 
     sqlite3 idioms.db < sql-create-fts.sql
+
+## CSV
+
+Store the data in CSVs to allow for manual corrections and keep code and data versions in sync.
+
+    mv idioms.db idioms_from_mysql.db
+    TABLES='valueType valueDefinition parameterGroup parameterQuestion parameterDefinition answerset answerset_data strategy strategy_data sentence sentence_data'
+    for table in $TABLES; do sqlite3 idioms_from_mysql.db ".headers on" ".mode csv" '.separator "\t"' ".once csv/$table.tsv" "select * from $table"; done

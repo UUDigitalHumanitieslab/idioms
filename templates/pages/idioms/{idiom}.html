@@ -31,7 +31,7 @@
     <h2 class="title is-2">Properties</h2>
     {% set interlinear_rows = sql("SELECT sentence_id, original, gloss, translation, grammaticality, sentence_strategy_id
                                         FROM sentence s
-                                        WHERE translation IS NOT NULL
+                                        WHERE translation != ''
                                          AND sentence_strategy_id = :strategy_id;",
                                         {"strategy_id": idiom}) %}
 
@@ -78,8 +78,8 @@
     {% set sentence_rows = sql("SELECT sentence_id, original, grammaticality, sentence_strategy_id
                             FROM sentence s
                             WHERE
-                             gloss IS NULL
-                             AND translation IS NULL
+                             gloss = ''
+                             AND translation = ''
                              AND sentence_strategy_id = :strategy_id
                             ;",
                             {"strategy_id": idiom}) %}
