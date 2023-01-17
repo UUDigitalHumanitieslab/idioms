@@ -28,11 +28,11 @@
         <div class="column is-narrow">{{ row.row_num }}</div>
         <div class="column is-11">
             <div class="columns">
-                <div class="column is-1">
+                <div class="column is-3">
                     <p><a href="/sentences/{{ row.sentence_id }}">id: {{ row.sentence_id }}</a></p>
-                    <p>({{ row.grammaticality }})</p>
+                    <p class="is-italic">{{ row.grammaticality }}</p>
                 </div>
-                <div class="column is-11">
+                <div class="column is-9">
                     <p>Idiom: <a href="/idioms/{{ row.strategy_id }}">{{ row.strategy_name }}</a>
                         <span class="is-pulled-right">Dialect: {{ row.sentence_answerset_id }}</span>
                     </p>

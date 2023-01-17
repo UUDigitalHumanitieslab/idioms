@@ -29,20 +29,22 @@
       </dl>
 
     <h2 class="title is-2">Properties</h2>
-    {% set interlinear_rows = sql("SELECT sentence_id, original, gloss, translation, grammaticality, sentence_strategy_id
-                                        FROM sentence s
-                                        WHERE translation != ''
-                                         AND sentence_strategy_id = :strategy_id;",
-                                        {"strategy_id": idiom}) %}
+    {% set interlinear_rows = sql("SELECT sentence_id, original, gloss, translation,
+                                    convert_gramm(grammaticality) AS grammaticality,
+                                    sentence_strategy_id
+                                   FROM sentence s
+                                   WHERE translation != ''
+                                    AND sentence_strategy_id = :strategy_id;",
+                                   {"strategy_id": idiom}) %}
 
         <h3 class="title is-3">Gloss and translation</h3>
         {% for row in interlinear_rows %}
             <div class="columns">
-                <div class="column is-1">
+                <div class="column is-3">
                     <p><a href="/sentences/{{ row.sentence_id }}">id: {{ row.sentence_id }}</a></p>
-                    <p>({{ row.grammaticality }})</p>
+                    <p class="is-italic">{{ row.grammaticality }}</p>
                 </div>
-                <div class="column is-11">
+                <div class="column is-9">
                     <div>{% include "_interlinear.html" %}</div>
                 </div>
             </div>
@@ -75,10 +77,12 @@
         {% endfor %}
         </dl>
 
-    {% set sentence_rows = sql("SELECT sentence_id, original, grammaticality, sentence_strategy_id
+    {% set sentence_rows = sql("SELECT sentence_id, original,
+                                convert_gramm(grammaticality) AS grammaticality,
+                                sentence_strategy_id
                             FROM sentence s
-                            WHERE
-                             gloss = ''
+                            WHERE 1
+                             AND gloss = ''
                              AND translation = ''
                              AND sentence_strategy_id = :strategy_id
                             ;",
@@ -88,8 +92,8 @@
         <h3 class="title is-3">Sentences</h3>
         <div class="columns is-multiline">
             {% for row in sentence_rows %}
-                <div class="column is-1">({{ row.grammaticality }})</div>
-                <div class="column is-11"><a href="/sentences/{{ row.sentence_id }}">{{ row.original }}</a></div>
+                <div class="column is-3 is-italic">{{ row.grammaticality }}</div>
+                <div class="column is-9"><a href="/sentences/{{ row.sentence_id }}">{{ row.original }}</a></div>
             {% endfor %}
         </div>
     {% endif %}

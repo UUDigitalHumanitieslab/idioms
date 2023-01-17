@@ -1,7 +1,8 @@
 {% extends "page_base.html" %}
 
-{% set row = sql("SELECT sentence_id, original, gloss, translation
-    , grammaticality, sentence_answerset_id, sentence_strategy_id, strategy_name
+{% set row = sql("SELECT sentence_id, original, gloss, translation,
+     convert_gramm(grammaticality) AS grammaticality,
+     sentence_answerset_id, sentence_strategy_id, strategy_name
     FROM sentence s
     JOIN strategy i ON i.strategy_id = s.sentence_strategy_id
     WHERE sentence_id = :sentence_id
@@ -17,11 +18,11 @@
 
     <h2 class="title is-2">Sentence</h2>
     <div class="columns">
-        <div class="column is-1">
+        <div class="column is-3">
             <p>id: {{ row.sentence_id }}</p>
-            <p>({{ row.grammaticality }})</p>
+            <p class="is-italic">{{ row.grammaticality }}</p>
         </div>
-        <div class="column is-11">
+        <div class="column is-9">
             <p>Idiom: <a href="/idioms/{{ row.sentence_strategy_id }}">{{ row.strategy_name }}</a>
                 <span class="ml-5">
                     Dialect: <a href="/dialects/{{ row.sentence_answerset_id }}">{{ row.sentence_answerset_id }}</a>

@@ -97,7 +97,7 @@ GROUP BY strategy_id, strategy_name, strategy_description
 ORDER BY strategy_answerset_id ASC, strategy_name ASC;"""
 
 sentence_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY i.strategy_id, s.sentence_id ASC) AS row_num,
- sentence_id, original, gloss, translation, grammaticality,
+ sentence_id, original, gloss, translation, convert_gramm(grammaticality) AS grammaticality,
  strategy_id, strategy_name, strategy_answerset_id, sentence_answerset_id
 FROM sentence s
 JOIN strategy i ON s.sentence_strategy_id = i.strategy_id
@@ -108,6 +108,16 @@ queries = {
     'dialect': dialect_main_query,
     'idiom': idiom_main_query,
     'sentence': sentence_main_query
+}
+
+# Maps the sentence.grammaticality values to a textual representation
+grammaticality = {
+    'ok': 'Mostly acceptable',
+    '?': 'Moderately acceptable',
+    '%': 'Acceptability varies by speaker',
+    '?*': 'Barely acceptable',
+    '*': 'Mostly not acceptable',
+    'Unknown': 'Unknown',
 }
 
 
@@ -239,6 +249,24 @@ def get_interlinear(interlinear_sentence):
     interlinear = list(zip(words_original, words_gloss))
 
     return interlinear
+
+
+def get_grammaticality_text(gramm):
+    """
+    :param gramm: string
+    :return: string
+    """
+    return grammaticality[gramm]
+
+
+@hookimpl
+def prepare_connection(conn):
+    """ Register a custom SQL function to convert the grammaticality judgment text value.
+    https://docs.python.org/3.8/library/sqlite3.html#sqlite3.Connection.create_function
+    """
+    conn.create_function(
+        "convert_gramm", 1, get_grammaticality_text
+    )
 
 
 @hookimpl
