@@ -1,3 +1,4 @@
 datasette
 datasette-gunicorn
 datasette-template-sql
+pytest
