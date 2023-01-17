@@ -2,7 +2,7 @@
   "idioms": {
     "hash": "87489de0cda0c64247e4d25051a2277115cb61efe23e5e55ca9372e155db6c01",
     "size": 10670080,
-    "file": "data/idioms.db",
+    "file": "idioms.db",
     "tables": {
       "valueType": {
         "count": 22
