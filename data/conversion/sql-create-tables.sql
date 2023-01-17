@@ -162,6 +162,7 @@ CREATE INDEX [idx_sentence_data_value_definition_id]
 CREATE INDEX [idx_sentence_data_sentence_id]
     ON [sentence_data] ([sentence_id]);
 
+
 /*
  * Use views for simpler queries in template_vars.py.
  */
@@ -177,14 +178,14 @@ strategy_parameter_combinations AS (
     CROSS JOIN strategy_parameter_ids sp
     )
 -- Note: value_shorttext, value_text, and value_definition_id values are mutually exclusive in the database
--- NULLIF is used because of empty string values instead of NULLs due to CSV import
 SELECT spc.strategy_id
     , spc.parameter_definition_id
-    , IFNULL(COALESCE(NULLIF(sd.value_shorttext, ''), NULLIF(sd.value_text, ''), NULLIF(sd.value_definition_id, '')), '0') AS parameter_value
+    , IFNULL(COALESCE(sd.value_shorttext, sd.value_text, sd.value_definition_id), '0') AS parameter_value
 FROM strategy_parameter_combinations spc
 LEFT JOIN strategy_data sd
  ON sd.parameter_definition_id = spc.parameter_definition_id
  AND sd.strategy = spc.strategy_id;
+
 
 CREATE VIEW IF NOT EXISTS sentence_data_all AS
 WITH sentence_parameter_ids AS (
@@ -197,10 +198,9 @@ sentence_parameter_combinations AS (
     CROSS JOIN sentence_parameter_ids sp
     )
 -- Note: value_text and value_definition_id values are mutually exclusive in the database
--- NULLIF is used because of empty string values instead of NULLs due to CSV import
 SELECT spc.sentence_id
     , spc.parameter_definition_id
-    , IFNULL(COALESCE(NULLIF(sd.value_text, ''), NULLIF(sd.value_definition_id, '')), '0') AS parameter_value
+    , IFNULL(COALESCE(sd.value_text, sd.value_definition_id), '0') AS parameter_value
 FROM sentence_parameter_combinations spc
 LEFT JOIN sentence_data sd
  ON sd.parameter_definition_id = spc.parameter_definition_id
