@@ -1,16 +1,25 @@
-import shlex
-import subprocess
+import os
+import pathlib
+import pytest
 
 from datasette.app import Datasette
-import pytest
+
+
+APP_ROOT = pathlib.Path(__file__).parents[1].resolve()
 
 
 @pytest.fixture(scope="session")
-def datasette():
-    # TODO: convert to Python script
-    # res = subprocess.call(shlex.split("bash scripts/create-db.sh"))
-    # if res != 0:
-    #     raise Exception("Database creation was not successful.")
-    # else:
-    datasette = Datasette(files=["./idioms.db"])
-    return datasette
+def idiomsdb():
+    settings = {
+        "num_sql_threads": 1,
+    }
+    ds = Datasette(
+        files=[os.path.join(APP_ROOT, 'idioms.db')],
+        immutables=[],
+        plugins_dir='plugins',
+        settings=settings,
+        inspect_data='inspect-data.json',
+        static_mounts=[("static", os.path.join(APP_ROOT, 'static'))],
+        template_dir='templates',
+    )
+    return ds

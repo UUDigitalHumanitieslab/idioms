@@ -1,8 +1,9 @@
 import pytest
-from .fixtures import datasette
+
+from .fixtures import idiomsdb
 
 
 @pytest.mark.asyncio
-async def test_frontpage_default_html(datasette):
-    response = await datasette.client.get("/")
-    assert "<title>Datasette: idioms</title>" in response.text
+async def test_frontpage_default_html(idiomsdb):
+    response = await idiomsdb.client.get("/")
+    assert "<title>Database of Dutch Dialect Idioms (DaDDI)</title>" in response.text
