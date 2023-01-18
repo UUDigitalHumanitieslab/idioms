@@ -10,3 +10,6 @@ data/
 
 # JetBrains
 .idea/
+
+# pytest
+__pycache__
