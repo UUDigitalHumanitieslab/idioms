@@ -75,6 +75,10 @@ pluggy==1.0.0
     #   datasette
     #   pytest
 pytest==7.2.1
+    # via
+    #   -r requirements.in
+    #   pytest-asyncio
+pytest-asyncio==0.20.3
     # via -r requirements.in
 python-multipart==0.0.5
     # via asgi-csrf
