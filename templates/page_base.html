@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
     {% block extra_head %}{% endblock %}
+    {# Use extra_js_urls so the script is also included when rendered via Datasette's own base.html #}
+    {% for url in extra_js_urls %}
+        <script src="{{ url.url }}" {% if url.sri %} integrity="{{ url.sri }}" crossorigin="anonymous"{% endif %}>
+        </script>
+    {% endfor %}
 </head>
 
 <body>
