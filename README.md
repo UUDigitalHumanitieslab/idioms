@@ -28,7 +28,7 @@ Install Datasette dependencies:
 
 Import the data into a SQLite database:
 
-    bash scripts/create-db.sh
+    python scripts/create-db.py
 
 Alternatively, download [idioms.db](https://dutchdialectidioms.uu.nl/idioms.db) and place it in the root directory of the project.
 
