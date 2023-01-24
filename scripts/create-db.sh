@@ -18,7 +18,10 @@ for table in $TABLES ; \
 # to NULLs on import (cf. https://github.com/simonw/sqlite-utils/issues/488)
 # Restore NULLs so we don't need NULLIF()
 sqlite3 idioms.db 'UPDATE sentence_data SET value_text = NULL WHERE value_text = ""'
+sqlite3 idioms.db 'UPDATE sentence_data SET value_definition_id = NULL WHERE value_definition_id = ""'
 sqlite3 idioms.db 'UPDATE strategy_data SET value_shorttext = NULL WHERE value_shorttext = ""'
+sqlite3 idioms.db 'UPDATE strategy_data SET value_text = NULL WHERE value_text = ""'
+sqlite3 idioms.db 'UPDATE strategy_data SET value_definition_id = NULL WHERE value_definition_id = ""'
 sqlite3 idioms.db 'UPDATE parameterQuestion SET question_label = NULL WHERE question_label = ""'
 sqlite3 idioms.db 'UPDATE parameterQuestion SET question_statement_label = NULL WHERE question_statement_label = ""'
 sqlite3 idioms.db 'UPDATE valueDefinition SET value_label = NULL WHERE value_label = ""'
