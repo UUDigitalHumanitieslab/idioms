@@ -8,7 +8,9 @@
 
 {% if args %}
 
-    {% set result_count, results, query, wheres_values, error = execute_search_query(args, 'idiom') %}
+    {% set result_count, results, query, search_criteria, error = execute_search_query(args, 'idiom') %}
+
+    <pre>{{ search_criteria }}</pre>
 
     {% if args.get('_trace') == '1' %}
         <div class="box">

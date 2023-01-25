@@ -1,3 +1,4 @@
+from collections import defaultdict
 import re
 
 from datasette import hookimpl
@@ -76,6 +77,9 @@ sentence_fts_columns, sentence_fts_columns_keys = dict_and_keyset({
 selectlist_keys = set(['Dialect']) | idiom_list_parameter_keys | sentence_list_parameter_keys
 text_param_keys = idiom_text_parameter_keys | sentence_text_parameter_keys
 text_main_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
+text_keys = text_param_keys | text_main_keys
+idiom_keys = idiom_list_parameter_keys | idiom_text_parameter_keys | idiom_fts_columns_keys
+sentence_keys = sentence_list_parameter_keys | sentence_text_parameter_keys | sentence_fts_columns_keys | set(['SentenceID'])
 
 # SQL query constants
 dialect_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
@@ -240,6 +244,35 @@ def build_search_sql(args, result_type):
     return query, wheres_values
 
 
+def get_param_category(param):
+    if param in idiom_keys:
+        return 'Idiom'
+    if param in sentence_keys:
+        return 'Sentence'
+    if param == 'SentenceID':
+        return 'Dialect'
+    return None
+
+
+def get_search_criteria(args):
+    """ Process the GET parameters for display on the search results pages.
+    :param args: request.args
+    :return: dictionary
+    """
+    search_criteria = defaultdict(dict)
+    for param in args.keys():
+        category = get_param_category(param)
+        param_values = args.getlist(param)
+        if param in text_keys or param == 'SentenceID':
+            criterion = param_values[0].strip()
+        if param in selectlist_keys:
+            criterion = ', '.join(list(filter(None, param_values)))
+        if criterion:
+            search_criteria[category].update({param: criterion})
+
+    return search_criteria
+
+
 def get_interlinear(interlinear_sentence):
     """ Gets the word representations of original and gloss from a sentence,
     and zips the word combinations together.
@@ -277,7 +310,8 @@ def extra_template_vars(datasette, request):
             query, wheres_values = build_search_sql(args, result_type)
             results = await db.execute(query, wheres_values)
             result_count = len(results)
-            return result_count, results, query, wheres_values, None
+            search_criteria = get_search_criteria(args)
+            return result_count, results, query, search_criteria, None
         except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
             return None, None, None, None, str(e)
 
