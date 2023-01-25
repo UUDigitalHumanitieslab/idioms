@@ -1,5 +1,6 @@
 datasette
 datasette-gunicorn
+git+https://github.com/UUDigitalHumanitieslab/datasette-matomo@feature/tracking-code#egg=datasette-matomo
 datasette-template-sql
 pytest
 pytest-asyncio
