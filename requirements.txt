@@ -33,7 +33,7 @@ datasette==0.64.1
     #   datasette-template-sql
 datasette-gunicorn==0.1.1
     # via -r requirements.in
-datasette-matomo @ git+https://github.com/UUDigitalHumanitieslab/datasette-matomo@feature/tracking-code
+datasette-matomo==0.1.0
     # via -r requirements.in
 datasette-template-sql==1.0.2
     # via -r requirements.in
