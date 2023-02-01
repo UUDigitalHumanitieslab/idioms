@@ -1,5 +1,6 @@
 datasette
 datasette-gunicorn
+datasette-matomo
 datasette-template-sql
 pytest
 pytest-asyncio
