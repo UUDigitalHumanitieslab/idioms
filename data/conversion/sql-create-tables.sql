@@ -205,3 +205,79 @@ FROM sentence_parameter_combinations spc
 LEFT JOIN sentence_data sd
  ON sd.parameter_definition_id = spc.parameter_definition_id
  AND sd.sentence_id = spc.sentence_id;
+
+
+/*
+ * The values in parameter_map are needed to join with other database values
+ * in order to display the labels for searched parameters.
+ * Note that part of the list contains the same values as the dicts defined in
+ * template_vars.py, but there are differences for the keys which are not
+ * referring to parameters in the _data tables.
+ */
+CREATE TABLE parameter_map (
+  param_get text NOT NULL,
+  param_db text NOT NULL
+ );
+
+INSERT INTO parameter_map
+VALUES
+('Alienability', 'Alienability1'),
+('PossType', 'PossType1'),
+('IdiomNotes', 'IdiomNotes1'),
+('OpenAnimacy', 'OpenAnimacy1'),
+('DODeterminer', 'DODeterminer1'),
+('GenStructure', 'GenStructure1'),
+('Modifier', 'Modifier1'),
+('SpecialVerb', 'SpecialVerb1'),
+('OpenPosition', 'OpenPosition1'),
+('Aspect', 'Aspect1'),
+('Modality', 'Modality1'),
+('Tense', 'Tense1'),
+('Voice', 'Voice1'),
+('Judgments', 's:judgments1'),
+('DeterminerManipulations', 'DeterminerManipulations1'),
+('ExternalPossessionManipulation', 'ExternalPossessionManipulation'),
+('FutureWordenManipulations', 'FutureWordenManipulations1'),
+('Property1', 'Property1'),
+('ModalityManipulations', 'ModalityManipulations1'),
+('PossessiveManipulations', 'PossessiveManipulations1'),
+('TenseVoiceAspectManipulations', 'TenseVoiceAspectManipulations1');
+
+
+CREATE VIEW parameter_labels AS
+WITH parameter_labels AS (
+ SELECT
+  pm.param_get AS param_get,
+  pd.parameter_id AS parameter_id,
+  pg.group_entity AS group_entity,
+  pg.group_label AS group_label,
+  COALESCE(pq.question_statement_label, pq.question_label) AS question_statement
+ FROM parameterDefinition pd
+ JOIN parameterQuestion pq
+  ON pd.parameter_group_id = pq.question_id
+ JOIN parameterGroup pg
+  ON pq.question_parent_id = pg.group_id
+JOIN parameter_map pm
+ ON pm.param_db = pd.parameter_id
+ WHERE pg.group_entity != 'answerset'
+  AND pg.group_label != 'Translation'
+  AND pd.parameter_id != 'test10'
+  AND pd.parameter_id != 's:judgmentsCom'
+ )
+SELECT
+ param_get,
+ parameter_id,
+ REPLACE(REPLACE(group_entity, 'strategy' , 'Idiom'), 'sentence', 'Sentence') AS group_entity,
+ group_label,
+ question_statement
+FROM parameter_labels
+UNION ALL
+SELECT * FROM ( VALUES
+  -- Values not available by JOINing.
+  ('Dialect', 'Dialect', 'Dialect', 'Dialect ID', NULL),
+  ('Original', 'Original', 'Sentence', 'Original', NULL),
+  ('Gloss', 'Gloss', 'Sentence', 'Gloss', NULL),
+  ('Translation', 'Translation', 'Sentence', 'Translation', NULL),
+  ('SentenceID', 'SentenceID', 'Sentence', 'Sentence ID', NULL)
+ )
+ORDER BY group_entity ASC, group_label ASC, question_statement ASC;
