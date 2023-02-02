@@ -14,19 +14,19 @@
 <h2 class="title is-2" id="Database_structure">Database structure</h2>
 
 <p>
-The database contains three types of entities: <b>Dialects, Idioms, and Sentences</b>.
-These are organised hierarchically: each idiom in the database belongs to one dialect only (even though similar or even identical idioms may sometimes be found in several dialects), and each sentence in the database is also linked to a single idiom.
+    The database contains three types of entities: <b>Dialects, Idioms, and Sentences</b>.
+    These are organised hierarchically: each idiom in the database belongs to one dialect only (even though similar or even identical idioms may sometimes be found in several dialects), and each sentence in the database is also linked to a single idiom.
 </p>
 
 <p>
-The <a href="/dialects">Browse</a> option will first take you to the list of dialects.
-The entry for each of the dialects gives the principal location where the data was collected, and the list of dictionaries or grammars used as sources, followed by a list of all the idioms belonging to the dialect.
+    The <a href="/dialects">Browse</a> option will first take you to the list of dialects.
+    The entry for each of the dialects gives the principal location where the data was collected, and the list of dictionaries or grammars used as sources, followed by a list of all the idioms belonging to the dialect.
 </p>
 
 <h3 class="title is-3" id="Idiom_information">Idiom information</h3>
 
 <p>
-The list of idiom properties includes voice, tense, aspect, and modal information; furthermore, the following structural properties are recorded:
+    The list of idiom properties includes voice, tense, aspect, and modal information; furthermore, the following structural properties are recorded:
 </p>
 
 <ul>
@@ -57,15 +57,15 @@ The list of idiom properties includes voice, tense, aspect, and modal informatio
 </ul>
 
 <p>
-Some idioms are also provided with English glosses and translations (the ones used in questionnaires, see below).
-The abbreviations employed in glosses are standard and straightforward, with the exception of gender morphology, which requires a clarification.
-In dialects with a three-way gender distinction, the abbreviations are (F)eminine, (M)asculine, and (N)euter, while in dialects with a two-way system, (N)euter stands in opposition to NN for non-neuter, i.e. common gender.
+    Some idioms are also provided with English glosses and translations (the ones used in questionnaires, see below).
+    The abbreviations employed in glosses are standard and straightforward, except gender morphology, which requires a clarification.
+    In dialects with a three-way gender distinction, the abbreviations are (F)eminine, (M)asculine, and (N)euter, while in dialects with a two-way system, (N)euter stands in opposition to NN for non-neuter, i.e. common gender.
 </p>
 
 <h3 class="title is-3" id="Manipulated_idioms"> Manipulated idioms </h3>
 
 <p>
-A number of idioms have been used in questionnaires presented to native speakers of the dialects, with the goal of establishing the extent to which idioms are dependent on the functional material, and determining the level of morphosyntactic flexibility they allow (see also the home page of the  database).
+A number of idioms have been used in questionnaires presented to native speakers of the dialects, with the goal of establishing the extent to which idioms are dependent on the functional material, and determining the level of morphosyntactic flexibility they allow (see also the home page of the database).
 Each of these idioms is linked to several test sentences containing a manipulated form of the idiom.
 The properties listed for each sentence, in turn, include the test property of the base idiom we are interested in (e.g. deontic modality, or definite determiner), the way the idiom was manipulated in the sentence (e.g. (change to) epistemic modality, or topicalization of the DP), and the judgments speakers provided for the sentence.
 </p>
@@ -101,14 +101,14 @@ An aggregate acceptability (note that this always refers to the availability of 
         The non-responsive values, i.e. “Not asked” and “Base idiom unknown” are ignored (for the purpose of this calculation only)
     </li>
     <li>
-        If the judgments contain both “Yes” and “No”, even just one of each, we mark it “%” (“acceptability varies by speaker”)
+        If the judgments contain both “Yes” and “No”, even just one of each, we mark it <span class="is-italic">acceptability varies by speaker</span>
     </li>
 
     <li> When speakers judge something marginal, we pay more attention to those who had a definite opinion. In particular:
         <ul>
-            <li>if there are more “Yes” than “Marginal” judgments, we mark it “ok”; </li>
-            <li>if there are more “No” than “Marginal” judgments, we mark it “*”. </li>
-            <li> If there are more “Marginal” than “Yes” (respectively “No") judgments, or an equal number of them, mark it “?” for “Moderately acceptable” (respectively “?*” for “Barely acceptable”) </li>
+            <li>if there are more “Yes” than “Marginal” judgments, we mark it <span class="is-italic">Mostly acceptable</span></li>
+            <li>if there are more “No” than “Marginal” judgments, we mark it <span class="is-italic">Mostly not acceptable</span></li>
+            <li>If there are more “Marginal” than “Yes” (respectively “No") judgments, or an equal number of them, mark it <span class="is-italic">Moderately acceptable</span> or <span class="is-italic">Barely acceptable</span></li>
         </ul>
     </li>
 </ul>
@@ -120,24 +120,24 @@ To summarize:
 <table>
     <tbody>
         <tr>
-            <td>ok </td>
-            <td> “Yes” and (optionally) “Marginal” only, majority is “Yes” </td>
+            <td class="is-italic">Mostly acceptable</td>
+            <td>“Yes” and (optionally) “Marginal” only, majority is “Yes”</td>
         </tr>
         <tr>
-            <td>? </td>
-            <td> “Yes” and “Marginal” only, no “Yes” majority </td>
+            <td class="is-italic">Moderately acceptable</td>
+            <td>“Yes” and “Marginal” only, no “Yes” majority</td>
         </tr>
         <tr>
-            <td>% </td>
-            <td> Both “yes” and “no” responses received </td>
+            <td class="is-italic">Acceptability varies by speaker</td>
+            <td>Both “yes” and “no” responses received</td>
         </tr>
         <tr>
-            <td>?* </td>
-            <td> “No” and “Marginal” only, no “No” majority </td>
+            <td class="is-italic">Barely acceptable</td>
+            <td>“No” and “Marginal” only, no “No” majority</td>
         </tr>
         <tr>
-            <td>* </td>
-            <td> “No” and (optionally) “Marginal” only, majority is “No” </td>
+            <td class="is-italic">Mostly not acceptable</td>
+            <td>“No” and (optionally) “Marginal” only, majority is “No”</td>
         </tr>
     </tbody>
 </table>
@@ -148,24 +148,24 @@ Note that while these judgment aggregates provide a useful summary, all individu
 <h2 id="Search_options">Search options</h2>
 
 <p>
-The <a href="">Search</a> page allows you to search for idioms or test sentences, using a combination of selection criteria.
+    The <a href="">Search</a> page allows you to search for idioms, test sentences, or dialects, using a combination of selection criteria.
+    The left three buttons on the search form lead to results of these respective types.
+    The search buttons are shown on both top and bottom to minimize scrolling after selecting your criteria.
+    You can only choose one, but you can click on the appropriate links in a results listing to view related entities.
 </p>
 
 <p>
-The top portion of the Search page allows you to choose whether the result of your search should be a list of idioms or a list of test sentences.
-You can only choose one, but you can click on the appropriate links in a results listing to view other entities.
+    The remainder of the Search page consists of three sections, with search criteria for dialects, idioms, and sentences.
+    You can combine search criteria from as many sections as you wish, regardless of the result type you choose.
+    For example, you can choose to search for idioms, and specify that the translation of test sentences must contain the word drunk; you will then see a list of idioms linked to such sentences.
+    Note that idioms of three dialects (Brees, Dendermonds, Leeds) have no recorded manipulated sentences.
+    Using any sentence property in a search will therefore always exclude results from those dialects.
 </p>
 
 <p>
-The remainder of the Search page consists of three sections, with search criteria for dialects, idioms, and sentences.
-You can combine search criteria from as many sections as you wish, regardless of the result type you have chosen.
-For example, you can choose to search for idioms, and specify that the translation of test sentences must contain the word drunk; you will then see a list of idioms linked to such sentences.
-</p>
-
-<p>
-The three sections are collapsed by default.
-Click on a header to expand the section and show its contents.
-<b>To select multiple elements in a list of search options, hold down the Control key as you click:</b>
+    The three sections are collapsed by default.
+    Click on a header to expand the section and show its contents.
+    To select multiple elements in a list, hold down the <code>Ctrl</code> or <code>Cmd</code> key as you click.
 </p>
 
 <table>
@@ -175,34 +175,35 @@ Click on a header to expand the section and show its contents.
             <td>selects a single element. </td>
         </tr>
         <tr>
-            <td>Clicking while holding down the Control key (“control-click”) </td>
+            <td>Clicking while holding down the <code>Ctrl</code> (or <code>Cmd</code>) key</td>
             <td>adds this element to the elements already selected.</td>
         </tr>
         <tr>
-            <td>Control-clicking on a selected element </td>
-            <td> de-selects this element. </td>
+            <td>Ctrl-clicking on a selected element </td>
+            <td>de-selects this element.</td>
         </tr>
         <tr>
-            <td>Clicking while holding down the Shift key (“shift-click”) </td>
-            <td> selects all elements between the click and the last element clicked. </td>
+            <td>Clicking while holding down the <code>Shift</code> key</td>
+            <td>selects all elements between the click and the last element clicked.</td>
         </tr>
     </tbody>
 </table>
 
 <p>
-If you select multiple values in a criterion, a record matching any one of them will be shown.
-If you search by multiple search criteria, a record must match all of them to be shown.
-If you do not select any values in a search criterion, it will not be used in the search.
+    If you select multiple values in a criterion, a record matching any one of them will be shown.
+    If you search by multiple search criteria, a record must match all of them to be shown.
+    If you do not select any values in a search criterion, it will not be used in the search.
 </p>
 
 <p>
-Simple free-text searches require every search term to be present, as a whole word.
-For more complex queries you can use the boolean operators <code>AND</code>, <code>OR</code>, and <code>NOT</code>. You can enclose <code>"a string in quotes"</code> to match it exactly, or search for the keyword <code>NULL</code>, which means the field must be empty.
+    Simple free-text searches require every search term to be present, as a whole word.
+    For more complex queries you can use the boolean operators <code>AND</code>, <code>OR</code>, and <code>NOT</code>.
+    You can enclose <code>"a string in quotes"</code> to match it exactly, or search for the keyword <code>NULL</code>, which means the field must be empty.
 </p>
 
 <p>
-You can click the <b>Reset form</b> button to remove all currently entered criteria and start from scratch.
-After entering your search criteria, click on one of the entity type buttons to carry out the search.
+    You can click the <b>Reset form</b> button to remove all currently entered criteria and start from scratch.
+    After entering your search criteria, click on one of the entity type buttons to carry out the search.
 </p>
 
 {% endblock %}
