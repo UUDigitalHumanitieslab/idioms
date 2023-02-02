@@ -8,15 +8,7 @@
 
 {% if args %}
 
-    {% set result_count, results, query, wheres_values, error = execute_search_query(args, 'dialect') %}
-
-    {% if args.get('_trace') == '1' %}
-        <div class="box">
-            <pre>{{ args }}</pre>
-            <pre>WHERE values: {{ wheres_values }}</pre>
-            <pre>{{ query }}</pre>
-        </div>
-    {% endif %}
+    {% set result_count, results, query, error = execute_search_query('dialect') %}
 
     {% if results != None %}
     <p>

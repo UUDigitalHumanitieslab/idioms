@@ -26,9 +26,9 @@ def dict_and_keyset(dictionary):
     return dictionary, set(dictionary.keys())
 
 
-# Mappings between form submission parameters (name attribute),
+# Mappings between form submission GET parameters (= HTML name attribute),
 # and parameter identifiers recorded in the database.
-# Keys may be shortened to cut down on URL character length.
+# GET parameters could be shortened to cut down on URL character length.
 
 idiom_list_parameters, idiom_list_parameter_keys = dict_and_keyset({
     'Voice': 'Voice1',
@@ -74,12 +74,12 @@ sentence_fts_columns, sentence_fts_columns_keys = dict_and_keyset({
     'Translation': 'translation',
 })
 
-selectlist_keys = set(['Dialect']) | idiom_list_parameter_keys | sentence_list_parameter_keys
+selectlist_keys = {'Dialect'} | idiom_list_parameter_keys | sentence_list_parameter_keys
 text_param_keys = idiom_text_parameter_keys | sentence_text_parameter_keys
 text_main_keys = idiom_fts_columns_keys | sentence_fts_columns_keys
 text_keys = text_param_keys | text_main_keys
 idiom_keys = idiom_list_parameter_keys | idiom_text_parameter_keys | idiom_fts_columns_keys
-sentence_keys = sentence_list_parameter_keys | sentence_text_parameter_keys | sentence_fts_columns_keys | set(['SentenceID'])
+sentence_keys = sentence_list_parameter_keys | sentence_text_parameter_keys | sentence_fts_columns_keys | {'SentenceID'}
 
 # SQL query constants
 dialect_main_query = """SELECT ROW_NUMBER() OVER (ORDER BY strategy_answerset_id ASC, strategy_name ASC) AS row_num,
@@ -130,7 +130,7 @@ def build_exists_clause(kind, alias, id, criterion, search_type='param'):
     - kind: 'strategy', 'sentence', 'strategy_data', 'sentence_data'
     - alias: 'i', 's'
     - id: parameter_definition_id or fts column
-    - criterion: string
+    - criterion: ?-placeholder strings
     Returns a formatted EXISTS clause as a string.
     """
     if search_type == 'fts_main':
@@ -244,31 +244,23 @@ def build_search_sql(args, result_type):
     return query, wheres_values
 
 
-def get_param_category(param):
-    if param in idiom_keys:
-        return 'Idiom'
-    if param in sentence_keys:
-        return 'Sentence'
-    if param == 'SentenceID':
-        return 'Dialect'
-    return None
-
-
-def get_search_criteria(args):
-    """ Process the GET parameters for display on the search results pages.
+def filter_search_criteria(args):
+    """ Filter empty GET parameter values and non-integer sentenceID.
     :param args: request.args
-    :return: dictionary
+    :return: dictionary of param and searched value
     """
-    search_criteria = defaultdict(dict)
+    search_criteria = {}
     for param in args.keys():
-        category = get_param_category(param)
         param_values = args.getlist(param)
-        if param in text_keys or param == 'SentenceID':
+        if param in text_keys:
             criterion = param_values[0].strip()
+        if param == 'SentenceID':
+            value = param_values[0].strip()
+            criterion = value if value != '' and value.isdigit else None
         if param in selectlist_keys:
-            criterion = ', '.join(list(filter(None, param_values)))
+            criterion = list(filter(None, param_values))
         if criterion:
-            search_criteria[category].update({param: criterion})
+            search_criteria[param] = criterion
 
     return search_criteria
 
@@ -304,19 +296,36 @@ def prepare_connection(conn):
 
 @hookimpl
 def extra_template_vars(datasette, request):
-    async def execute_search_query(args, result_type):
+    args = request.args
+
+    async def execute_search_query(result_type):
         db = datasette.get_database()
         try:
             query, wheres_values = build_search_sql(args, result_type)
             results = await db.execute(query, wheres_values)
             result_count = len(results)
-            search_criteria = get_search_criteria(args)
-            return result_count, results, query, search_criteria, None
+            return result_count, results, query, None
         except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
-            return None, None, None, None, str(e)
+            return None, None, None, str(e)
+
+    async def get_search_params_display():
+        db = datasette.get_database()
+        result = await db.execute('SELECT * FROM parameter_labels')
+        parameter_display_labels_obj = {}
+        for row in result:
+            label = ': '.join(list(filter(None, [row['group_entity'], row['group_label'], row['question_statement']])))
+            parameter_display_labels_obj[row['param_get']] = label
+        criteria = filter_search_criteria(args)
+        display = defaultdict(dict)
+        for param, values in criteria.items():
+            label = parameter_display_labels_obj[param]
+            value = ', '.join(values) if isinstance(values, list) else values
+            display[label] = value
+        return display
 
     return {
         "args": request.args,
         "execute_search_query": execute_search_query,
         "get_interlinear": get_interlinear,
+        "get_search_params_display": get_search_params_display,
     }
