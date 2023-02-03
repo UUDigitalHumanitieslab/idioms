@@ -31,35 +31,57 @@ async def test_dialect_sentences(idiomsdb):
 @pytest.mark.asyncio
 async def test_search_idioms_parameters(idiomsdb):
     # Result type: Idioms; Search on Dialect + Idiom + Sentence properties
-    response = await idiomsdb.client.get('/search/idioms?Dialect=Dendermonds&Dialect=Drents&Dialect=Gronings&Idiom=&Meaning=&GenStructure=&OpenAnimacy=Animate&OpenAnimacy=Inanimate&IdiomNotes=&SentenceID=&Original=&Gloss=&Translation=&Judgments=&Property1=DefiniteDeterminer')
+    response = await idiomsdb.client.get('/search/idioms?Dialect=Dendermonds&Dialect=Drents&Dialect=Gronings&GenStructure=&OpenAnimacy=Animate&OpenAnimacy=Inanimate&Property1=DefiniteDeterminer')
     assert '2 records found' in response.text
 
 
 @pytest.mark.asyncio
 async def test_search_idioms_fts_1(idiomsdb):
-    response = await idiomsdb.client.get('/search/idioms?Idiom=&Meaning=&GenStructure=&IdiomNotes=&SentenceID=&Original=&Gloss=get.PTCP&Translation=&Judgments=')
+    response = await idiomsdb.client.get('/search/idioms?Gloss=get.PTCP')
     assert '2 records found' in response.text
 
 
 @pytest.mark.asyncio
 async def test_search_idioms_fts_2(idiomsdb):
-    response = await idiomsdb.client.get('/search/idioms?Idiom=&Meaning=&GenStructure=V+DO&IdiomNotes=&SentenceID=&Original=&Gloss=&Translation=&Judgments=')
+    response = await idiomsdb.client.get('/search/idioms?GenStructure=V+DO')
     assert '3900 records found' in response.text
 
 
 @pytest.mark.asyncio
 async def test_search_idioms_fts_3(idiomsdb):
-    response = await idiomsdb.client.get('/search/idioms?Idiom=&Meaning=&GenStructure="V+DO"&IdiomNotes=&SentenceID=&Original=&Gloss=&Translation=&Judgments=')
+    response = await idiomsdb.client.get('/search/idioms?GenStructure="V+DO"')
     assert '3764 records found' in response.text
 
 
 @pytest.mark.asyncio
 async def test_search_sentences_1(idiomsdb):
-    response = await idiomsdb.client.get('/search/sentences?Idiom=&Meaning=&Voice=Passive&Voice=0&GenStructure=&IdiomNotes=&SentenceID=&Original=&Gloss=&Translation=intelligent&Judgments=')
+    response = await idiomsdb.client.get('/search/sentences?Voice=Passive&Voice=0&Translation=intelligent')
     assert '1 records found' in response.text
 
 
 @pytest.mark.asyncio
 async def test_search_dialects_1(idiomsdb):
-    response = await idiomsdb.client.get('/search/dialects?Idiom=&Meaning=&GenStructure=&IdiomNotes=&SentenceID=&Original=&Gloss=&Translation=&Judgments=&DeterminerManipulations=Passive&DeterminerManipulations=EventivePassive&DeterminerManipulations=Active')
+    response = await idiomsdb.client.get('/search/dialects?&DeterminerManipulations=Passive&DeterminerManipulations=EventivePassive&DeterminerManipulations=Active')
     assert '10 records found' in response.text
+
+
+@pytest.mark.asyncio
+async def test_search_fts_nulls(idiomsdb):
+    response = await idiomsdb.client.get('/search/sentences?Translation=NULL')
+    assert '1944 records found' in response.text
+
+
+@pytest.mark.asyncio
+async def test_search_fts_prefix_token(idiomsdb):
+    response = await idiomsdb.client.get('/search/idioms?Meaning=gevolg+*')
+    assert '8 records found' in response.text
+
+
+@pytest.mark.asyncio
+async def test_search_fts_boolean_operators(idiomsdb):
+    response = await idiomsdb.client.get('/search/idioms?Idiom=ergens+AND+zijn')
+    assert '10 records found' in response.text
+    response = await idiomsdb.client.get('/search/sentences?Translation=NULL+OR+have')
+    assert '2016 records found' in response.text
+    response = await idiomsdb.client.get('/search/idioms?Idiom=hebben+NOT+in')
+    assert '369 records found' in response.text
