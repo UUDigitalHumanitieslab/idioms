@@ -41,6 +41,8 @@ for table in tables:
 # CSV cannot encode NULL values, and there's no good way to convert empty strings
 # to NULLs on import (cf. https://github.com/simonw/sqlite-utils/issues/488)
 # Restore NULLs so we don't need NULLIF()
+cur.execute('UPDATE sentence SET "translation" = NULL WHERE "translation" = ""')
+cur.execute('UPDATE sentence SET gloss = NULL WHERE gloss = ""')
 cur.execute('UPDATE sentence_data SET value_text = NULL WHERE value_text = ""')
 cur.execute('UPDATE sentence_data SET value_definition_id = NULL WHERE value_definition_id = ""')
 cur.execute('UPDATE strategy_data SET value_shorttext = NULL WHERE value_shorttext = ""')

@@ -24,7 +24,10 @@ CREATE VIRTUAL TABLE "sentence_fts" USING FTS5 (
 );
 
 INSERT INTO "sentence_fts" (sentence_id, original, gloss, "translation")
-SELECT sentence_id, original, gloss, "translation"
+SELECT sentence_id
+     , original
+     , IFNULL(gloss, 'NULL')
+     , IFNULL("translation", 'NULL')
 FROM sentence;
 
 /*
