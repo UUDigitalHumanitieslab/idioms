@@ -274,10 +274,12 @@ FROM parameter_labels
 UNION ALL
 SELECT * FROM ( VALUES
   -- Values not available by JOINing.
-  ('Dialect', 'Dialect', 'Dialect', 'Dialect ID', NULL),
-  ('Original', 'Original', 'Sentence', 'Original', NULL),
-  ('Gloss', 'Gloss', 'Sentence', 'Gloss', NULL),
-  ('Translation', 'Translation', 'Sentence', 'Translation', NULL),
-  ('SentenceID', 'SentenceID', 'Sentence', 'Sentence ID', NULL)
+  ('Dialect', NULL, 'Dialect', 'Dialect ID', NULL),
+  ('Idiom', NULL, 'Idiom', 'Idiom', NULL),
+  ('Meaning', NULL, 'Idiom', 'Meaning', NULL),
+  ('Original', NULL, 'Sentence', 'Original', NULL),
+  ('Gloss', NULL, 'Sentence', 'Gloss', NULL),
+  ('Translation', NULL, 'Sentence', 'Translation', NULL),
+  ('SentenceID', NULL, 'Sentence', 'Sentence ID', NULL)
  )
 ORDER BY group_entity ASC, group_label ASC, question_statement ASC;
