@@ -183,53 +183,42 @@ def build_fts_main_where(param):
         return build_exists_clause('sentence', 's', sentence_fts_columns[param], criterion, search_type='fts_main')
 
 
-def build_where_clauses(param, arg):
-    """ Converts a single search parameter into one or more WHERE-clause strings.
-    Takes the parameter name and its text value as arguments.
-    Returns a list of WHERE-clause strings and a list of values corresponding to ?-style
-    parameter placeholders."""
+def build_where_expressions(param, value):
+    """ Converts a search parameter into a WHERE expression
+    Takes the parameter name and its value as arguments.
+    Value is a string for text input, a list of strings for select list input.
+    Returns a list of WHERE-clause strings and a list of values corresponding to
+    SQL parameters (placeholders)."""
 
     if param in selectlist_keys:
-        values = list(filter(None, arg))
-        if len(values) > 0:
-            where = build_selectlist_where(param, values)
-            return [where], values
+        where = build_selectlist_where(param, value)
+        return [where], value
 
     if param in text_param_keys:
-        arg = arg[0]  # For text inputs there is just one value
-        text_param_value = arg.strip()  # Empty text input fields are always submitted
-        if text_param_value:
-            text_param_value = escape_fts(text_param_value)
-            where = build_fts_param_where(param)
-            return [where], [text_param_value]
+        text_param_value = escape_fts(value)
+        where = build_fts_param_where(param)
+        return [where], [text_param_value]
 
     if param in text_main_keys:
-        arg = arg[0]
-        search_string = arg.strip()
-        if search_string:
-            search_string = escape_fts(search_string)
-            where = build_fts_main_where(param)
-            return [where], [search_string]
+        search_string = escape_fts(value)
+        where = build_fts_main_where(param)
+        return [where], [search_string]
 
     if param == 'SentenceID':
-        arg = arg[0]
-        # Return regardless of whether it's a number
-        if arg:
-            return ["sentence_id = ?"], [arg]
+        return ["sentence_id = ?"], [value]
 
     return [], []  # Fallback
 
 
-def build_search_sql(args, result_type):
-    """ args is the request.args MultiParams object.
+def build_search_sql(criteria, result_type):
+    """ args is a dict of search criteria.
     result_type: idiom, sentence, or dialect.
     """
     wheres = []  # A list of where-clause strings
     wheres_values = []  # A list of values to provide as argument for ?-style SQL parameters
 
-    for param in args.keys():
-        arg = args.getlist(param)
-        where, where_values = build_where_clauses(param, arg)
+    for param in criteria.keys():
+        where, where_values = build_where_expressions(param, criteria[param])
         wheres.extend(where)
         wheres_values.extend(where_values)
 
@@ -239,7 +228,7 @@ def build_search_sql(args, result_type):
 
     wheres_str = '\n AND '.join(wheres)
 
-    # Subsitute anonymous ?-parameters with numbered ones (:1)
+    # Subsitute anonymous ?-parameters with named parameters (numbered :0 etc.)
     wheres_str_split = wheres_str.split('?')
     i = 0
     wheres_str_numbered = ''
@@ -304,10 +293,12 @@ def prepare_connection(conn):
 
 @hookimpl
 def extra_template_vars(datasette, request):
+    criteria = filter_search_criteria(request.args)
+
     async def execute_search_query(result_type):
         db = datasette.get_database()
         try:
-            query, wheres_values = build_search_sql(request.args, result_type)
+            query, wheres_values = build_search_sql(criteria, result_type)
             results = await db.execute(query, wheres_values)
             result_count = len(results)
             return result_count, results, query, wheres_values, None
@@ -321,7 +312,6 @@ def extra_template_vars(datasette, request):
         for row in result:
             label = ': '.join(list(filter(None, [row['group_entity'], row['group_label'], row['question_statement']])))
             parameter_display_labels_obj[row['param_get']] = label
-        criteria = filter_search_criteria(request.args)
         display = defaultdict(dict)
         for param, values in criteria.items():
             label = parameter_display_labels_obj[param]
