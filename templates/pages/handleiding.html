@@ -10,5 +10,170 @@
 
 {% block content %}
 <h1 class="title is-1">Handleiding</h1>
-<p>Under construction</p>
+
+<h2 class="title is-2" id="Structuur">Structuur van de databank</h2>
+
+<p>
+    De databank bevat <b>dialecten, idiomen, en zinnen</b>.
+    Deze zijn als volgt hiërarchisch georganiseerd: ieder idioom behoort tot slechts één dialect (ook al vinden we in verschillende dialecten soms vergelijkbare idiomen terug), en elke zin in de databank hoort bij slechts één idioom.
+</p>
+
+<p>
+    Door op <b><a href="/dialects">Browse</a></b> te klikken krijgt u een lijst van alle dialecten te zien.
+    Wanneer u doorklikt op de Details van een specifiek dialect, krijgt u de hoofdlocatie te zien waar de data verzameld is, een lijst met woordenboeken, grammatica's, en idioticons die als bronnen gebruikt zijn, en ten slotte een lijst van alle idiomen die bij dat dialect horen.
+</p>
+
+<h3 class="title is-3" id="Eigenschappen_van_idiomen">Eigenschappen van idiomen</h3>
+
+<p>
+    Van ieder idioom wordt aangegeven of het in de actieve of passieve vorm is gesteld, in de tegenwoordige of verleden tijd, en of er aspectuele of modale hulpwerkwoorden aanwezig zijn.
+    Daarbovenop worden ook de volgende structurele eigenschappen geïnventariseerd:
+</p>
+
+<ul>
+    <li>Algemene syntactische structuur van het idioom, bijv. V DO PP = een werkwoord gevolgd door een direct object gevolgd door een voorzetselconstituent;</li>
+    <li>De eventuele open (= niet-idiomatische) posities die het idioom bevat: IO, DO, PP, of een combinatie hiervan; </li>
+    <li>De animaatheid van de open positie;</li>
+    <li>De keuze van het werkwoord: <i>hebben</i> of <i>zijn</i>;</li>
+    <li>De eigenschappen van het direct object, bijv. bepaald, onbepaald, met of zonder kwantificeerder, gemodificeerd of niet, etc.;</li>
+    <li>De aanwezigheid van een possessieve structuur en het type ervan, bijv. bezittelijk voornaamwoord, voorzetselconstituent, een externe bezitter, vervreemdbaar of onvervreemdbaar bezit.</li>
+</ul>
+
+<p>
+    De idiomen die deel uitmaakten van de vragenlijsten (zie hieronder voor toelichting) zijn voorzien van twee Engelse vertalingen: een letterlijke woord-voor-woordvertaling en een meer vrije, vlotte vertaling.
+    In de woord-voor-woordvertalingen worden standaardafkortingen gebruikt om morfosyntactische informatie weer te geven (bijv. SG = singular, PTCP = participle, etc.), maar bij het weergeven van genusinformatie wordt een onderscheid gemaakt tussen dialecten die een drieledig genussysteem hebben (F(eminine), M(asculine), en N(euter)) en dialecten die twee verschillende genera onderscheiden (N(euter) en N(on)N(euter)).
+</p>
+
+<h3 class="title is-3" id="Gemanipuleerde_idiomen">Gemanipuleerde idiomen</h3>
+
+<p>
+    Een aantal idiomen zijn aan de hand van vragenlijsten voorgelegd aan moedertaalsprekers van de onderzochte dialecten.
+    Het doel van die bevraging was om te achterhalen enerzijds in hoeverre de figuurlijke betekenis van idiomen bepaald wordt door de functiewoorden in die idiomen, en anderzijds in hoeverre idiomen morfosyntactisch manipuleerbaar zijn (zie ook de beschrijving van het project <i>The syntax of idioms</i> op onze homepagina).
+    Elk idioom is dus gekoppeld aan een reeks testzinnen die telkens een iets andere variant van het idioom weergeven.
+    Voor elke testzin wordt in de databank weergegeven welke eigenschap gemanipuleerd wordt (bijv. de aanwezigheid van een modaal hulpwerkwoord, of de bepaaldheid van het direct object), de aard van de manipulatie (bijv. deontische modaliteit wordt vervangen door epistemische modaliteit, of het direct object wordt vooropgeplaatst), en de oordelen die moedertaalsprekers gaven aan die gemanipuleerde vorm.
+</p>
+
+<p>
+    Die oordelen kunnen de volgende waarden aannemen:
+</p>
+
+<ul>
+    <li>Yes: de figuurlijke betekenis is aanwezig, zelfs met deze manipulatie;</li>
+    <li>No: de figuurlijke betekenis is afwezig met deze manipulatie;</li>
+    <li>Marginal: de figuurlijke betekenis is marginaal aanwezig met deze  manipulatie;</li>
+    <li>Base idiom unknown: de informant kent dit idioom niet, ongeacht of er een manipulatie plaatsvindt;</li>
+    <li>Not asked: deze manipulatie werd niet voorgelegd aan deze informant.</li>
+</ul>
+
+<p>
+    Aangezien er voor ieder dialect verschillende moedertaalsprekers bevraagd zijn, worden de oordelen van individuele informanten samengenomen tot een gecombineerd oordeel. Dat gezamenlijke oordeel wordt op de volgende manier berekend:
+</p>
+
+<ul>
+    <li>De oordelen “Base idiom unknown” en “Not asked” worden niet meegenomen in het bepalen van het gecombineerde oordeel;</li>
+    <li>Als de individuele oordelen zowel “Yes” als “No” bevatten (ongeacht in welke verhouding en ongeacht of er ook “Marginal”-oordelen zijn), is het gecombineerde oordeel <span class="is-italic">Acceptability varies by speaker</span>;</li>
+    <li>Als de individuele oordelen allemaal “Yes” of allemaal “No” zijn, dan is het gecombineerde oordeel respectievelijk <span class="is-italic">Mostly acceptable</span> en <span class="is-italic">Mostly not acceptable</span>;</li>
+    <li>Als de individuele oordelen zowel “Yes” als “Marginal” bevatten (maar geen “No”), dan is de verhouding van de oordelen doorslaggevend: zijn de “Yes”-oordelen in de meerderheid, dan is het gecombineerde oordeel <span class="is-italic">Mostly acceptable</span>, en als de “Marginal”-oordelen in de meerderheid zijn of de oordelen zijn evenredig verdeeld, dan is het gecombineerde oordeel <span class="is-italic">Moderately acceptable</span>;</li>
+    <li>Als de individuele oordelen zowel “No” als “Marginal” bevatten (maar geen “Yes”), dan is de verhouding van de oordelen doorslaggevend: zijn de “No”-oordelen in de meerderheid, dan is het gecombineerde oordeel <span class="is-italic">Mostly not acceptable</span>, en als de “Marginal”-oordelen in de meerderheid zijn of de oordelen zijn evenredig verdeeld, dan is het gecombineerde oordeel <span class="is-italic">Barely acceptable</span>.</li>
+</ul>
+
+<p>
+    Samenvattend:
+</p>
+
+<table>
+    <tbody>
+        <tr>
+            <td class="is-italic">Mostly acceptable</td>
+            <td>alleen “Yes” of meerderheid “Yes” en minderheid “Marginal”</td>
+        </tr>
+        <tr>
+            <td class="is-italic">Moderately acceptable</td>
+            <td>meerderheid “Marginal” en minderheid “Yes” of evenredige verdeling tussen “Yes” en “Marginal” </td>
+        </tr>
+        <tr>
+            <td class="is-italic">Acceptability varies by speaker</td>
+            <td>zowel “Yes”- als “No”-oordelen </td>
+        </tr>
+        <tr>
+            <td class="is-italic">Barely acceptable</td>
+            <td> meerderheid “Marginal” en minderheid “No” of evenredige verdeling tussen “No” en “Marginal” </td>
+        </tr>
+        <tr>
+            <td class="is-italic">Mostly not acceptable</td>
+            <td>alleen “No” of meerderheid “No” en minderheid “Marginal”</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    Merk op dat behalve dit gecombineerde oordeel alle individuele oordelen ook steeds worden weergegeven voor iedere testzin.
+</p>
+
+<h2 class="title is-2" id="Zoek">Zoekmogelijkheden</h2>
+
+<p>
+    Door op <b><a href="/search">Search</a></b> te klikken kunt u de databank doorzoeken op basis van door u gedefinieerde zoekcriteria.
+</p>
+
+<p>
+    De linker drie buttons "Idiom", "Sentence", en "Dialect" van het zoekformulier leiden tot resultaten van hun respectievelijke type.
+    Deze buttons zijn zowel bovenaan als onderaan het formulier beschikbaar om minder ver te hoeven scrollen door de subformulieren.
+    U kunt slechts een van de drie tegelijkertijd kiezen, maar op de resultatenpagina kunt u wel meteen doorklikken naar de gerelateerde informatie.
+</p>
+
+<p>
+    De rest van de zoekpagina bestaat uit drie secties (“Dialect”, “Idiom”, “Sentence”), die u kunt openklappen door op de titel van de sectie te klikken.
+    In deze secties kunt u zoekcriteria definiëren.
+    U kunt zoveel zoekcriteria combineren als u wilt, ook uit verschillende secties tegelijkertijd en ongeacht welke type zoeksresultaten u kiest.
+    Merk op dat de idiomen uit drie dialecten (Brees, Dendermonds, Leeds) geen bijbehorende zinsmanipulaties hebben.
+    Het zoeken op criteria onder "Sentence" betekent dan ook dat er geen resultaten uit deze drie dialecten zullen zijn (ook als u op type "Idiom" zoekt).
+</p>
+
+<p>
+    Als u verschillende waarden in één lijst met zoekcriteria wilt selecteren, dient u de <code>Ctrl</code> (of <code>Cmd</code>) toets ingedrukt te houden terwijl u klikt.
+</p>
+
+<table>
+    <tbody>
+        <tr>
+            <td>klikken op een waarde van een zoekcriterium</td>
+            <td>die waarde selecteren</td>
+        </tr>
+        <tr>
+            <td>klikken op een waarde van een zoekcriterium terwijl u de <code>Ctrl</code>-toets
+        ingedrukt houdt</td>
+            <td>die waarde toevoegen aan een eerdere selectie</td>
+        </tr>
+        <tr>
+            <td>klikken op een reeds geselecteerde waarde terwijl u de <code>Ctrl</code>-toets ingedrukt houdt</td>
+            <td>die waarde verwijderen uit een eerdere selectie</td>
+        </tr>
+        <tr>
+            <td>klikken terwijl u de <code>Shift</code>-toets ingedrukt houdt</td>
+            <td>alle waarden selecteren tussen diegene waar u op klikt en de volgende waar u op klikt</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    Als u van één zoekcriterium verschillende waarden selecteert, dan krijgt u alle zoekresultaten die aan minstens één van die waarden voldoen.
+    Als u verschillende zoekcriteria selecteert, dan krijgt u zoekresultaten die aan alle zoekcriteria voldoen.
+    Zoekcriteria of waarden van zoekcriteria die niet geselecteerd worden, maken geen deel uit van de zoekopdracht.
+</p>
+
+<p>
+    Indien u zoekvelden gebruikt waar vrije tekst kan worden ingegeven, dan krijgt u enkel zoekresultaten die al de door u ingegeven zoektermen bevatten (als woord of als deel van een woord).
+    U kunt ook meer complexe zoekopdrachten geven door gebruik te maken van de logische operatoren <code>AND</code>, <code>OR</code>, <code>NOT</code>.
+    Gebruik <code>"dubbele aanhalingstekens"</code> om enkel exacte kopieën van de gehele zoekterm te verkrijgen, en <code>NULL</code> om te zoeken op een leeg veld.
+    Het is ook mogelijk te zoeken op alleen het begin van een woord met behulp van de <code>*</code> wildcard, bijvoorbeeld: <code>zeg *</code> geeft voorkomens van zowel "zeg" als "zeggen" (de spatie tussen de zoekterm en * is vereist).
+</p>
+
+<p>
+    Klik op <b>Reset form</b> om alle ingevoerde criteria te verwijderen en opnieuw te beginnen.
+    Nadat u uw zoekcriteria hebt ingegeven, kunt u op <b>Search</b> klikken om de zoekopdracht uit te voeren.
+</p>
+
+</div>
+
 {% endblock %}
