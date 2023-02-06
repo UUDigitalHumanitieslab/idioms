@@ -1,3 +1,9 @@
+div.logo img {
+    height: 64px;
+    margin: 1em 1em 1em 0;
+    display: inline;
+}
+
 .form-quarter {
     width: calc(25% - 0.75rem);
     min-width: 12rem;
