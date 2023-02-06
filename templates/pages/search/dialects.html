@@ -8,20 +8,28 @@
 
 {% if args %}
 
-    {% set result_count, results, query, error = execute_search_query('dialect') %}
+    {% set result_count, results, query, wheres_values, error = execute_search_query('dialect') %}
 
     {% set search_criteria = get_search_params_display() %}
 
     <details class="content">
         <summary>Search criteria</summary>
-        <dl>
-            {% for search_label, value in search_criteria.items() %}
-                <div>
-                    <dt>{{ search_label }}</dt>
-                    <dd>{{ value }}</dd>
-                </div>
-            {% endfor %}
-        </dl>
+        <div class="box">
+            <dl>
+                {% for search_label, value in search_criteria.items() %}
+                    <div>
+                        <dt>{{ search_label }}</dt>
+                        <dd>{{ value }}</dd>
+                    </div>
+                {% endfor %}
+            </dl>
+        </div>
+        {% if args.get('_trace') == '1' %}
+            <div class="box">
+                <pre>{{ query }}</pre>
+                <pre>WHERE values: {{ wheres_values }}</pre>
+            </div>
+        {% endif %}
     </details>
 
     {% if results != None %}

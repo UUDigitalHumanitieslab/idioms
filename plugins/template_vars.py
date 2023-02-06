@@ -213,9 +213,9 @@ def build_where_clauses(param, arg):
 
     if param == 'SentenceID':
         arg = arg[0]
-        int_param = arg if arg != '' and arg.isdigit else None
-        if int_param:
-            return ["sentence_id = ?"], [int_param]
+        # Return regardless of whether it's a number
+        if arg:
+            return ["sentence_id = ?"], [arg]
 
     return [], []  # Fallback
 
@@ -239,24 +239,32 @@ def build_search_sql(args, result_type):
 
     wheres_str = '\n AND '.join(wheres)
 
-    query = queries[result_type].format(wheres_str)
+    # Subsitute anonymous ?-parameters with numbered ones (:1)
+    wheres_str_split = wheres_str.split('?')
+    i = 0
+    wheres_str_numbered = ''
+    for s in wheres_str_split:
+        wheres_str_numbered += s
+        if i < len(wheres_str_split) - 1:
+            wheres_str_numbered += f":{i}"
+        i += 1
+    query = queries[result_type].format(wheres_str_numbered)
+    wheres_obj = dict([(str(i), value) for i, value in enumerate(wheres_values)])
 
-    return query, wheres_values
+    return query, wheres_obj
 
 
 def filter_search_criteria(args):
-    """ Filter empty GET parameter values and non-integer sentenceID.
-    :param args: request.args
+    """ Filter empty GET parameter values.
+    :param args: request.args MultiParams object
     :return: dictionary of param and searched value
     """
     search_criteria = {}
     for param in args.keys():
+        criterion = None
         param_values = args.getlist(param)
-        if param in text_keys:
+        if param in text_keys or param == 'SentenceID':
             criterion = param_values[0].strip()
-        if param == 'SentenceID':
-            value = param_values[0].strip()
-            criterion = value if value != '' and value.isdigit else None
         if param in selectlist_keys:
             criterion = list(filter(None, param_values))
         if criterion:
@@ -296,17 +304,15 @@ def prepare_connection(conn):
 
 @hookimpl
 def extra_template_vars(datasette, request):
-    args = request.args
-
     async def execute_search_query(result_type):
         db = datasette.get_database()
         try:
-            query, wheres_values = build_search_sql(args, result_type)
+            query, wheres_values = build_search_sql(request.args, result_type)
             results = await db.execute(query, wheres_values)
             result_count = len(results)
-            return result_count, results, query, None
+            return result_count, results, query, wheres_values, None
         except (sqlite3.OperationalError, sqlite3.DatabaseError) as e:
-            return None, None, None, str(e)
+            return None, None, None, None, str(e)
 
     async def get_search_params_display():
         db = datasette.get_database()
@@ -315,7 +321,7 @@ def extra_template_vars(datasette, request):
         for row in result:
             label = ': '.join(list(filter(None, [row['group_entity'], row['group_label'], row['question_statement']])))
             parameter_display_labels_obj[row['param_get']] = label
-        criteria = filter_search_criteria(args)
+        criteria = filter_search_criteria(request.args)
         display = defaultdict(dict)
         for param, values in criteria.items():
             label = parameter_display_labels_obj[param]
