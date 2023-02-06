@@ -4553,7 +4553,7 @@ strategy_id	strategy_name	strategy_description	strategy_answerset_id
 4762	"In het midden in bed liggen"	"Het grootste voordeel aan zijn kant krijgen"	Brees
 4763	"Daar tegen hebben al veel vogelkes gekakt"	"Iets zal wel flink wat tijd duren"	Brees
 4764	"Onder den draad doorgekruipen zijn"	"Hij is vreemd gegaan"	Brees
-4765	"Aan het dunnen(dinnen?) zijn"	"Diaree hebben"	Brees
+4765	"Aan het dunnen(dinnen?) zijn"	Diarree hebben	Brees
 4766	"Boven aard liggen"	"De overledene is nog niet begraven"	Brees
 4767	"Met een ei zitten"	"Een probleem of veel zorgen hebben"	Brees
 4768	"Op eieren lopen"	"Heel voorzichtig lopen"	Brees
@@ -4719,7 +4719,7 @@ strategy_id	strategy_name	strategy_description	strategy_answerset_id
 4928	"Zijn hand staat verkeerd"	"Niet van werken houden;  niet handig zijn"	Brees
 4929	"Ik kan niet vliegen"	"Ik kan niet alles tegelijkertijd doen"	Brees
 4930	"Daar is geen zalf aan te strijken"	"Daar is niets aan te verhelpen"	Brees
-4931	"Aan het schijten zijn"	"Diaree hebben of bang zijn"	Brees
+4931	"Aan het schijten zijn"	Diarree hebben of bang zijn	Brees
 4932	"Het zal gaan stuiven"	"Het zal er allicht warm aan toegaan"	Brees
 4933	"Ik kan niet toveren/heksen"	"Ik vermag geen verschillende dingen tegelijk te doen"	Brees
 4934	"Zich werken te bersten"	"Zich ""dood"" werken"	Brees
