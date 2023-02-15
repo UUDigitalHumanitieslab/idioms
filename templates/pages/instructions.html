@@ -199,6 +199,7 @@ Note that while these judgment aggregates provide a useful summary, all individu
     Simple free-text searches require every search term to be present, as a whole word.
     For more complex queries you can use the boolean operators <code>AND</code>, <code>OR</code>, and <code>NOT</code>.
     You can enclose <code>"a string in quotes"</code> to match it exactly, or search for the keyword <code>NULL</code>, which means the field must be empty.
+    It is also possible to search on a word-initial string using the <code>*</code> wildcard, for example: <code>zeg *</code> gives results for both "zeg" and "zeggen" (the space between the search term and * character is required).
 </p>
 
 <p>
