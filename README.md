@@ -36,3 +36,9 @@ Alternatively, download [idioms.db](https://dutchdialectidioms.uu.nl/idioms.db) 
 
     source .env/bin/activate
     datasette serve .
+
+## License
+
+The [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) applies to database contents contained in the folder `data/csv`, as well as: `templates/index.html`, `templates/pages/{about,handleiding,instructions}.html`.
+
+The [3-Clause BSD License](https://opensource.org/license/bsd-3-clause/) applies to all other `.html` files, as well as files matching these extensions: `.py`, `.sql`, `.yml`, `.md`, `.in`, `.txt`, `.css`, `.json`.
