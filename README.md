@@ -36,3 +36,9 @@ Alternatively, download [idioms.db](https://dutchdialectidioms.uu.nl/idioms.db) 
 
     source .env/bin/activate
     datasette serve .
+
+## License
+
+The data are licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
+The source code is licensed under the [3-Clause BSD License](https://opensource.org/license/bsd-3-clause/).
+See the `LICENSE` file for details.
