@@ -1,5 +1,6 @@
 Creative Commons Attribution 4.0 International License
-(https://creativecommons.org/licenses/by/4.0/)
+To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
+or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 - Applies to database contents contained in the folder data/csv, as well as:
   templates/index.html, templates/pages/{about,handleiding,instructions}.html.
 
@@ -11,7 +12,7 @@ The 3-Clause BSD License (https://opensource.org/license/bsd-3-clause/)
 
 BSD 3-Clause License
 
-Copyright (c) 2023, UU Digital Humanities Lab
+Copyright (c) 2023, Digital Humanities Lab, Utrecht University
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

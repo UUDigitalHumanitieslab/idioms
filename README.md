@@ -39,6 +39,6 @@ Alternatively, download [idioms.db](https://dutchdialectidioms.uu.nl/idioms.db) 
 
 ## License
 
-The [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) applies to database contents contained in the folder `data/csv`, as well as: `templates/index.html`, `templates/pages/{about,handleiding,instructions}.html`.
-
-The [3-Clause BSD License](https://opensource.org/license/bsd-3-clause/) applies to all other `.html` files, as well as files matching these extensions: `.py`, `.sql`, `.yml`, `.md`, `.in`, `.txt`, `.css`, `.json`.
+The data are licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
+The source code is licensed under the [3-Clause BSD License](https://opensource.org/license/bsd-3-clause/).
+See the `LICENSE` file for details.
