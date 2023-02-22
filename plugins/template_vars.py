@@ -114,16 +114,6 @@ queries = {
     'sentence': sentence_main_query
 }
 
-# Maps the sentence.grammaticality values to a textual representation
-grammaticality = {
-    'ok': 'Mostly acceptable',
-    '?': 'Moderately acceptable',
-    '%': 'Acceptability varies by speaker',
-    '?*': 'Barely acceptable',
-    '*': 'Mostly not acceptable',
-    'Unknown': 'Unknown',
-}
-
 
 def build_exists_clause(kind, alias, id, criterion, search_type='param'):
     """ Arguments:
@@ -274,11 +264,15 @@ def get_interlinear(interlinear_sentence):
 
 
 def get_grammaticality_text(gramm):
-    """
-    :param gramm: string
-    :return: string
-    """
-    return grammaticality[gramm]
+    # Maps the sentence.grammaticality values to a textual representation
+    return {
+        'ok': 'Mostly acceptable',
+        '?': 'Moderately acceptable',
+        '%': 'Acceptability varies by speaker',
+        '?*': 'Barely acceptable',
+        '*': 'Mostly not acceptable',
+        'Unknown': 'Unknown',
+    }[gramm]
 
 
 @hookimpl
