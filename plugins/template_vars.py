@@ -45,7 +45,7 @@ idiom_list_parameters, idiom_list_parameter_keys = dict_and_keyset({
 })
 
 sentence_list_parameters, sentence_list_parameter_keys = dict_and_keyset({
-    'Property1': 'Property1',
+    'ManipulatedProperty': 'Property1',
     'DeterminerManipulations': 'DeterminerManipulations1',
     'ModalityManipulations': 'ModalityManipulations1',
     'PossessiveManipulations': 'PossessiveManipulations1',

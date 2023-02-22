@@ -31,7 +31,7 @@ async def test_dialect_sentences(idiomsdb):
 @pytest.mark.asyncio
 async def test_search_idioms_parameters(idiomsdb):
     # Result type: Idioms; Search on Dialect + Idiom + Sentence properties
-    response = await idiomsdb.client.get('/search/idioms?Dialect=Dendermonds&Dialect=Drents&Dialect=Gronings&GenStructure=&OpenAnimacy=Animate&OpenAnimacy=Inanimate&Property1=DefiniteDeterminer')
+    response = await idiomsdb.client.get('/search/idioms?Dialect=Dendermonds&Dialect=Drents&Dialect=Gronings&GenStructure=&OpenAnimacy=Animate&OpenAnimacy=Inanimate&ManipulatedProperty=DefiniteDeterminer')
     assert '2 records found' in response.text
 
 

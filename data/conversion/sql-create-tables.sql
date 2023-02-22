@@ -238,7 +238,7 @@ VALUES
 ('DeterminerManipulations', 'DeterminerManipulations1'),
 ('ExternalPossessionManipulation', 'ExternalPossessionManipulation'),
 ('FutureWordenManipulations', 'FutureWordenManipulations1'),
-('Property1', 'Property1'),
+('ManipulatedProperty', 'Property1'),
 ('ModalityManipulations', 'ModalityManipulations1'),
 ('PossessiveManipulations', 'PossessiveManipulations1'),
 ('TenseVoiceAspectManipulations', 'TenseVoiceAspectManipulations1');
