@@ -56,4 +56,6 @@ cur.execute('UPDATE valueDefinition SET value_label = NULL WHERE value_label = "
 print("Creating FTS5 virtual tables")
 cur.executescript(sql_create_fts)
 
+conn.commit()
+conn.close()
 print("Finished database creation.")
