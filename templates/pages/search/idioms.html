@@ -33,14 +33,14 @@
     </details>
 
     {% if results != None %}
-    <p>
-        {{ result_count }} records found.
-    </p>
 
     <table class="table is-striped is-hoverable is-fullwidth">
+        <caption class="has-text-left">
+            {{ result_count }} records found.
+        </caption>
         <thead>
             <tr>
-                <th></th>
+                <th>#</th>
                 <th>Idiom</th>
                 <th>Meaning</th>
             </tr>

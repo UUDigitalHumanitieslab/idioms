@@ -1,11 +1,10 @@
-<p>
-    {{ sql("SELECT count(*) as cnt FROM strategy WHERE strategy_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
-</p>
-
 <table class="table is-striped is-hoverable is-fullwidth">
+    <caption class="has-text-left">
+        {{ sql("SELECT count(*) as cnt FROM strategy WHERE strategy_answerset_id = :dialect_id", {"dialect_id": dialect_id})[0].cnt }} records found.
+    </caption>
     <thead>
         <tr>
-            <th></div>
+            <th>#</th>
             <th>Idiom</th>
             <th>Meaning</th>
             <th>Number of properties</th>
