@@ -33,7 +33,7 @@
                                     convert_gramm(grammaticality) AS grammaticality,
                                     sentence_strategy_id
                                    FROM sentence s
-                                   WHERE translation != ''
+                                   WHERE translation IS NOT NULL
                                     AND sentence_strategy_id = :strategy_id;",
                                    {"strategy_id": idiom}) %}
 
@@ -82,8 +82,8 @@
                                 sentence_strategy_id
                             FROM sentence s
                             WHERE 1
-                             AND gloss = ''
-                             AND translation = ''
+                             AND gloss IS NULL
+                             AND translation IS NULL
                              AND sentence_strategy_id = :strategy_id
                             ;",
                             {"strategy_id": idiom}) %}
