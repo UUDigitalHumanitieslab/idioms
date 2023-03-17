@@ -29,6 +29,14 @@ async def test_dialect_sentences(idiomsdb):
 
 
 @pytest.mark.asyncio
+async def test_idiom_sentences(idiomsdb):
+    response = await idiomsdb.client.get('/idioms/78')
+    # Presence of manipulated sentences for the idiom
+    for i in range(570, 578):
+        assert f'href="/sentences/{i}"' in response.text
+
+
+@pytest.mark.asyncio
 async def test_search_idioms_parameters(idiomsdb):
     # Result type: Idioms; Search on Dialect + Idiom + Sentence properties
     response = await idiomsdb.client.get('/search/idioms?Dialect=Dendermonds&Dialect=Drents&Dialect=Gronings&GenStructure=&OpenAnimacy=Animate&OpenAnimacy=Inanimate&ManipulatedProperty=DefiniteDeterminer')
