@@ -11,5 +11,8 @@ data/
 # JetBrains
 .idea/
 
+# VSCode
+.vscode/
+
 # pytest
 __pycache__
