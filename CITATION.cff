@@ -1,0 +1,64 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Database of Dutch Dialect Idioms application
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - name: >-
+      Research Software Lab, Centre for Digital
+      Humanities, Utrecht University
+    city: Utrecht
+    country: NL
+    website: >-
+      https://cdh.uu.nl/centre-for-digital-humanities/research-software-lab/
+repository-code: 'https://github.com/CentreForDigitalHumanities/idioms'
+url: 'https://dutchdialectidioms.uu.nl/'
+abstract: >-
+  Customized Datasette application for browsing and
+  searching the Database of Dutch Dialect Idioms dataset.
+keywords:
+  - Datasette
+  - search
+  - linguistics
+  - baked data
+license: BSD-3-Clause
+version: 0.2.0
+date-released: '2023-03-22'
+references:
+  - title: Database of Dutch Dialect Idioms
+    type: database
+    authors:
+      - given-names: 'N'
+        family-names: Corver
+      - family-names: van Craenenbroeck
+        given-names: J
+      - given-names: E
+        family-names: Boef
+      - given-names: A
+        family-names: Dimitriadis
+      - family-names: Doreleijers
+        given-names: K
+      - given-names: W
+        family-names: Harwood
+      - family-names: Hladnik
+        given-names: M
+      - given-names: L
+        family-names: Koring
+      - given-names: S
+        family-names: Leufkens
+      - given-names: T
+        family-names: Temmerman
+    repository-code: 'https://github.com/CentreForDigitalHumanities/idioms/tree/main/data'
+    url: 'https://dutchdialectidioms.uu.nl/'
+    keywords:
+      - Dutch language
+      - idioms
+      - syntax
+      - linguistics
+    license: CC-BY-4.0
+    version: 0.2.0
+    date-released: '2023-03-22'
