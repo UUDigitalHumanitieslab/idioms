@@ -1,0 +1,34 @@
+references:
+  - title: Database of Dutch Dialect Idioms
+    type: dataset
+    authors:
+      - given-names: 'N'
+        family-names: Corver
+      - family-names: van Craenenbroeck
+        given-names: J
+      - given-names: E
+        family-names: Boef
+      - given-names: A
+        family-names: Dimitriadis
+      - family-names: Doreleijers
+        given-names: K
+      - given-names: W
+        family-names: Harwood
+      - family-names: Hladnik
+        given-names: M
+      - given-names: L
+        family-names: Koring
+      - given-names: S
+        family-names: Leufkens
+      - given-names: T
+        family-names: Temmerman
+    repository-code: 'https://github.com/CentreForDigitalHumanities/idioms/tree/main/data'
+    url: 'https://dutchdialectidioms.uu.nl/'
+    keywords:
+      - Dutch language
+      - idioms
+      - syntax
+      - linguistics
+    license: CC-BY-4.0
+    version: 0.2.0
+    date-released: '2023-03-22'
